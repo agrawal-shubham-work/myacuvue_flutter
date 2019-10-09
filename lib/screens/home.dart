@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/screens/about_me.dart';
+import 'package:my_acuvue_flutter/screens/about_myacuvue.dart';
+import 'package:my_acuvue_flutter/screens/contact_us.dart';
+import 'package:my_acuvue_flutter/screens/eye_care_center_web.dart';
+import 'package:my_acuvue_flutter/screens/membership.dart';
+import 'package:my_acuvue_flutter/screens/notification.dart';
+import 'package:my_acuvue_flutter/screens/promotions_and_events_web.dart';
+import 'package:my_acuvue_flutter/screens/refer_and_earn.dart';
+import 'package:my_acuvue_flutter/screens/settings.dart';
+import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'trial.dart';
-import 'package:my_acuvue_flutter/utilities/home_drawer.dart';
 
 class Home extends StatefulWidget {
   static const String route = '/home';
@@ -9,53 +18,134 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      color: Colors.yellow,
-      home: DefaultTabController(
-        length: 4,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('MuAcuvue™'),
+  Drawer getNavDrawer(BuildContext context) {
+    GestureDetector getNavItem(var icon, String s, String routeName) {
+      return GestureDetector(
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: Colors.grey.shade500),
+            ),
           ),
-          drawer: AppDrawer(),
-          body: TabBarView(
-            children: [
-              PlaceholderWidget(Colors.red),
-              PlaceholderWidget(Colors.orange),
-              PlaceholderWidget(Colors.yellow),
-              PlaceholderWidget(Colors.blueAccent),
-            ],
-          ),
-          bottomNavigationBar: TabBar(
-            tabs: [
-              Tab(
-                icon: Icon(Icons.home),
-                text: 'Home',
+          padding: EdgeInsets.all(15.0),
+          child: Row(
+            children: <Widget>[
+              Icon(
+                icon,
+                color: Color(0xFF013F7C),
               ),
-              Tab(
-                icon: Icon(Icons.star),
-                text: 'Points',
+              SizedBox(
+                width: 10.0,
               ),
-              Tab(
-                icon: Icon(Icons.attach_money),
-                text: 'Rewards',
-              ),
-              Tab(
-                icon: Icon(Icons.store_mall_directory),
-                text: 'Store',
+              Text(
+                s,
+                style: TextStyle(color: Color(0xFF013F7C)),
               )
             ],
-            labelColor: Colors.blue,
-            unselectedLabelColor: Colors.blue,
-            indicatorSize: TabBarIndicatorSize.label,
-            indicatorPadding: EdgeInsets.all(5.0),
-            indicatorColor: Colors.red,
           ),
         ),
+        onTap: () {
+          setState(() {
+            Navigator.of(context).pop();
+            Navigator.of(context).pushNamed(routeName);
+          });
+        },
+      );
+    }
+
+    var myNavChildren = [
+      getNavItem(Icons.face, "My Profile", AboutMe.routeName),
+      getNavItem(
+          Icons.remove_red_eye, "Eye Care Center", SplashScreen.routeName),
+      getNavItem(
+          Icons.home, "Promotion and Events", PromotionsAndEvents.routeName),
+      getNavItem(Icons.attach_money, "Refer and Earn", ReferAndEarn.routeName),
+      getNavItem(Icons.card_giftcard, "Membership", Membership.routeName),
+      getNavItem(Icons.home, "About MyAcuvue", AboutMyAcuvue.routeName),
+      getNavItem(Icons.settings, "Settings", Settings.routeName),
+      getNavItem(Icons.notifications, "Notifications", Notifications.routeName),
+      getNavItem(Icons.contact_phone, "Contact us", ContactUs.routeName),
+    ];
+
+    ListView listView = ListView(children: myNavChildren);
+
+    return Drawer(
+      child: listView,
+    );
+  }
+
+  BottomNavigationBar buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      onTap: onTapped,
+      currentIndex: currentTabIndex,
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.home,
+            color: Color(0xFF0137FC),
+          ),
+          title: Text(
+            "Home",
+            style: kDrawerTextStyle,
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.star_border,
+            color: Color(0xFF0137FC),
+          ),
+          title: Text(
+            "Points",
+            style: kDrawerTextStyle,
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.attach_money,
+            color: Color(0xFF0137FC),
+          ),
+          title: Text(
+            "Rewards",
+            style: kDrawerTextStyle,
+          ),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.store,
+            color: Color(0xFF0137FC),
+          ),
+          title: Text(
+            "Store",
+            style: kDrawerTextStyle,
+          ),
+        )
+      ],
+    );
+  }
+
+  int currentTabIndex = 0;
+
+  List<Widget> tabs = [
+    PlaceholderWidget(Colors.green),
+    PlaceholderWidget(Colors.orange),
+    PlaceholderWidget(Colors.blue),
+    PlaceholderWidget(Colors.redAccent)
+  ];
+  onTapped(int index) {
+    setState(() {
+      currentTabIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("MyAcuvue"),
       ),
+      body: tabs[currentTabIndex],
+      drawer: SafeArea(child: getNavDrawer(context)),
+      bottomNavigationBar: buildBottomNavigationBar(),
     );
   }
 }

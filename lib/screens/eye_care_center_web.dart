@@ -1,9 +1,8 @@
 import 'package:my_acuvue_flutter/utilities/WebViewContainer.dart';
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/utilities/home_drawer.dart';
 
 class SplashScreen extends StatefulWidget {
-  static const String route = '/';
+  static const String routeName = '/splash';
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -13,10 +12,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Google'),
+        title: Text('Eye Care Center'),
       ),
-      drawer: AppDrawer(),
-      body: webViewCreate("https://google.com"),
+      body: webViewCreate("https://www.acuvue.com.sg/app/myacuvue-ehc"),
     );
   }
 }
