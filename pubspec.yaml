@@ -16,6 +16,8 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
+
+
 dependencies:
   flutter:
     sdk: flutter
@@ -28,6 +30,8 @@ dependencies:
   url_launcher: ^4.0.2
   flutter_datetime_picker: ^1.2.6
   intl: ^0.16.0
+  carousel_pro: ^1.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +51,7 @@ flutter:
 
   assets:
     - images/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -73,3 +78,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

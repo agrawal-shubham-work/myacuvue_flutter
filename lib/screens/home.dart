@@ -3,6 +3,7 @@ import 'package:my_acuvue_flutter/screens/about_me.dart';
 import 'package:my_acuvue_flutter/screens/about_myacuvue.dart';
 import 'package:my_acuvue_flutter/screens/contact_us.dart';
 import 'package:my_acuvue_flutter/screens/eye_care_center_web.dart';
+import 'package:my_acuvue_flutter/screens/main_home.dart';
 import 'package:my_acuvue_flutter/screens/membership.dart';
 import 'package:my_acuvue_flutter/screens/notification.dart';
 import 'package:my_acuvue_flutter/screens/promotions_and_events_web.dart';
@@ -126,7 +127,7 @@ class _HomeState extends State<Home> {
   int currentTabIndex = 0;
 
   List<Widget> tabs = [
-    PlaceholderWidget(Colors.green),
+    MainHome(),
     PlaceholderWidget(Colors.orange),
     PlaceholderWidget(Colors.blue),
     PlaceholderWidget(Colors.redAccent)

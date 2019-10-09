@@ -4,6 +4,7 @@ import 'package:my_acuvue_flutter/screens/about_myacuvue.dart';
 import 'package:my_acuvue_flutter/screens/contact_us.dart';
 import 'package:my_acuvue_flutter/screens/membership.dart';
 import 'package:my_acuvue_flutter/screens/notification.dart';
+import 'package:my_acuvue_flutter/screens/promotion_bannner.dart';
 import 'package:my_acuvue_flutter/screens/promotions_and_events_web.dart';
 import 'package:my_acuvue_flutter/screens/refer_and_earn.dart';
 import 'package:my_acuvue_flutter/screens/settings.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         PlaceholderWidget.routeName: (BuildContext contexst) =>
             PlaceholderWidget(Colors.red),
         SplashScreen.routeName: (BuildContext context) => SplashScreen(),
+        PromotionBanner.routeName: (BuildContext context) => PromotionBanner(),
       },
     );
   }

@@ -144,16 +144,21 @@ class _AboutMeState extends State<AboutMe> {
                 });
               }, _selectedContactLenses),
             ),
-            TextFormFieldWidget(
-              'How long have you worn contact lenses?',
-              true,
-              DropDownMainWidget(contactLenseListMonth, (String value) {
-                setState(() {
-                  _selectedContactLenseMonth = value;
-                  validateFields();
-                });
-              }, _selectedContactLenseMonth),
-            ),
+            _selectedContactLenses == 'No' || _selectedContactLenses == null
+                ? SizedBox(
+                    width: 0.0,
+                    height: 0.0,
+                  )
+                : TextFormFieldWidget(
+                    'How long have you worn contact lenses?',
+                    true,
+                    DropDownMainWidget(contactLenseListMonth, (String value) {
+                      setState(() {
+                        _selectedContactLenseMonth = value;
+                        validateFields();
+                      });
+                    }, _selectedContactLenseMonth),
+                  ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text('Privacy Policy', style: kPrivacyHeading),

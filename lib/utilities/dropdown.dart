@@ -18,23 +18,42 @@ class DropDownMainWidget extends StatelessWidget {
             border: Border.all(color: Colors.grey)),
         child: Padding(
           padding: EdgeInsets.all(10.0),
-          child: DropdownButton<String>(
-            style: TextStyle(
-              color: Color(0xFf013F7C),
-            ),
-            hint: Text("Select"),
-            value: selectedValue == '' ? 'Select' : selectedValue,
-            items: dataList.map((String value) {
-              return new DropdownMenuItem<String>(
-                value: value,
-                child: new Text(value),
-              );
-            }).toList(),
-            isExpanded: true,
-            onChanged: onTap,
-          ),
+          child: selectedAndroidPicker(
+              selectedValue: selectedValue, dataList: dataList, onTap: onTap),
         ),
       ),
+    );
+  }
+}
+
+class selectedAndroidPicker extends StatelessWidget {
+  const selectedAndroidPicker({
+    Key key,
+    @required this.selectedValue,
+    @required this.dataList,
+    @required this.onTap,
+  }) : super(key: key);
+
+  final String selectedValue;
+  final List<String> dataList;
+  final Function onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      style: TextStyle(
+        color: Color(0xFf013F7C),
+      ),
+      hint: Text("Select"),
+      value: selectedValue == '' ? 'Select' : selectedValue,
+      items: dataList.map((String value) {
+        return new DropdownMenuItem<String>(
+          value: value,
+          child: new Text(value),
+        );
+      }).toList(),
+      isExpanded: true,
+      onChanged: onTap,
     );
   }
 }
