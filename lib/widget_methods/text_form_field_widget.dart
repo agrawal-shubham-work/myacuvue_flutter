@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+
 class TextFormFieldWidget extends StatelessWidget {
   final String heading;
   final bool isMandatory;
@@ -24,12 +25,12 @@ class TextFormFieldWidget extends StatelessWidget {
                   )),
               isMandatory
                   ? Text(
-                '*',
-                style: kMandatorySign,
-              )
+                      '*',
+                      style: kMandatorySign,
+                    )
                   : SizedBox(
-                width: 0.0,
-              ),
+                      width: 0.0,
+                    ),
             ],
           ),
           childFunct

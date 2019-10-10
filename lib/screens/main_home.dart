@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/utilities/image_slider.dart';
+import 'package:my_acuvue_flutter/widget_methods/image_slider.dart';
 
 class MainHome extends StatefulWidget {
   @override

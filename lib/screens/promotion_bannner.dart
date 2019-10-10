@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/utilities/background_image_widget.dart';
+import 'package:my_acuvue_flutter/widget_methods/background_image_widget.dart';
 
 class PromotionBanner extends StatelessWidget {
   static const String routeName = '/promotionbanner';

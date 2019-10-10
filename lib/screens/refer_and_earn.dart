@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
-import 'package:my_acuvue_flutter/utilities/para_style_widget.dart';
-import 'package:my_acuvue_flutter/utilities/background_image_widget.dart';
+import 'package:my_acuvue_flutter/widget_methods/para_style_widget.dart';
+import 'package:my_acuvue_flutter/widget_methods/background_image_widget.dart';
 
 class ReferAndEarn extends StatefulWidget {
   static const String routeName = '/refer';

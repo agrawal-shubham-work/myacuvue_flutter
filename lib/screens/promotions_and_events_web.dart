@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/utilities/WebViewContainer.dart';
+import 'package:my_acuvue_flutter/widget_methods/WebViewContainer.dart';
 
 class PromotionsAndEvents extends StatefulWidget {
   static const String routeName = '/promotions';
