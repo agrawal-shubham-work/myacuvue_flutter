@@ -31,6 +31,7 @@ dependencies:
   flutter_datetime_picker: ^1.2.6
   intl: ^0.16.0
   carousel_pro: ^1.0.0
+  google_maps_flutter: ^0.5.21+7
 
 
 dev_dependencies:
