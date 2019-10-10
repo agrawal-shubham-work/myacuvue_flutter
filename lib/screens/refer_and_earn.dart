@@ -27,6 +27,9 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                SizedBox(
+                  height: 100.0,
+                ),
                 PrivacyParaWidget('Refer a friend', kPrivacyHeading),
                 Text(
                   mReferSubHeading,
@@ -37,6 +40,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                   child: Text(
                     mReferSubPara,
                     style: kReferSubPara,
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Container(

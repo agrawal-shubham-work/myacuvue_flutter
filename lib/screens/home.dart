@@ -4,6 +4,7 @@ import 'package:my_acuvue_flutter/screens/about_myacuvue.dart';
 import 'package:my_acuvue_flutter/screens/contact_us.dart';
 import 'package:my_acuvue_flutter/screens/eye_care_center_web.dart';
 import 'package:my_acuvue_flutter/screens/main_home.dart';
+import 'package:my_acuvue_flutter/screens/main_store.dart';
 import 'package:my_acuvue_flutter/screens/membership.dart';
 import 'package:my_acuvue_flutter/screens/notification.dart';
 import 'package:my_acuvue_flutter/screens/promotions_and_events_web.dart';
@@ -130,7 +131,7 @@ class _HomeState extends State<Home> {
     MainHome(),
     PlaceholderWidget(Colors.orange),
     PlaceholderWidget(Colors.blue),
-    PlaceholderWidget(Colors.redAccent)
+    MainStore()
   ];
   onTapped(int index) {
     setState(() {
@@ -142,7 +143,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("MyAcuvue"),
+        title: Text("MyAcuvue™"),
       ),
       body: tabs[currentTabIndex],
       drawer: SafeArea(child: getNavDrawer(context)),

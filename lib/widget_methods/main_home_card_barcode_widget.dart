@@ -9,7 +9,6 @@ class MainHomeBarCodeContainer extends StatelessWidget {
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 8.0),

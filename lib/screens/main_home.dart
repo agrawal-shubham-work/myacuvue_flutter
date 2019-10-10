@@ -13,7 +13,10 @@ class _MainHomeState extends State<MainHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: <Widget>[CreateImageSlider(), MainHomeListView()],
+        children: <Widget>[
+          CreateImageSlider(),
+          MainHomeListView(),
+        ],
       ),
     );
   }

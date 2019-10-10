@@ -86,7 +86,7 @@ class _AboutMeState extends State<AboutMe> {
                   _firstname = value;
                   validateFields();
                 });
-              }, _firstNameController),
+              }, _firstNameController, 50),
             ),
             TextFormFieldWidget(
               'Last Name',
@@ -96,7 +96,7 @@ class _AboutMeState extends State<AboutMe> {
                   _lastname = value;
                   validateFields();
                 });
-              }, _lastNameController),
+              }, _lastNameController, 50),
             ),
             TextFormFieldWidget(
               'Gender',
@@ -122,7 +122,7 @@ class _AboutMeState extends State<AboutMe> {
                   _email = value;
                   validateFields();
                 });
-              }, _emailController),
+              }, _emailController, 50),
             ),
             TextFormFieldWidget(
               'NRIC/FIN Number',
@@ -132,7 +132,7 @@ class _AboutMeState extends State<AboutMe> {
                   _nric = value;
                   validateFields();
                 });
-              }, _nricController),
+              }, _nricController, 9),
             ),
             TextFormFieldWidget(
               'Do you wear Spectacles?',
