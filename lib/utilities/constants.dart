@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+final String mHomeCardHeading = "MyACUVUE Membership Card";
+final String mHomeCardSubHeading =
+    "Scan this at your optical Store to\n enjoy your Member Privileges!";
+
+final String mHomeReferCardHeading = "Refer and Earn";
+final String mHomeReferCardSubHeading =
+    "Earn a reward with every successful referral";
+
 final String mReferSubHeading = 'Share and be rewarded';
 final String mReferSubPara =
     "Each friend you will enjoy @20 welcome reward.For every friend who registers their profile via MyAcuvue app with your unique referal link and makes their first purchase,a @30 referal reward is your";
@@ -19,6 +27,11 @@ const kDrawerTextStyle = TextStyle(
 const kMandatorySign = TextStyle(color: Colors.red);
 const kPrivacyHeading = TextStyle(
     color: Color(0xFF013F7C), fontSize: 16.0, fontWeight: FontWeight.w900);
+const kHomeHeading =
+    TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w900);
+const kHomeReferHeading = TextStyle(
+    color: Colors.blueAccent, fontSize: 18.0, fontWeight: FontWeight.w900);
+const kHomeSubHeading = TextStyle(color: Colors.grey, fontSize: 16.0);
 const kPrivacyPara = TextStyle(color: Color(0xFF013F7C), fontSize: 12.0);
 const kReferPara = TextStyle(color: Color(0xFF013F7C), fontSize: 14.0);
 const kReferSubPara = TextStyle(

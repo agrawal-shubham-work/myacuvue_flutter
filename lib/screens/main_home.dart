@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/widget_methods/image_slider.dart';
+import 'package:my_acuvue_flutter/widget_methods/main_home_list_widget.dart';
 
 class MainHome extends StatefulWidget {
   @override
@@ -7,12 +9,11 @@ class MainHome extends StatefulWidget {
 }
 
 class _MainHomeState extends State<MainHome> {
-  int _current = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: <Widget>[CreateImageSlider()],
+        children: <Widget>[CreateImageSlider(), MainHomeListView()],
       ),
     );
   }
