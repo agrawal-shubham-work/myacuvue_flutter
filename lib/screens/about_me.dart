@@ -41,9 +41,11 @@ class _AboutMeState extends State<AboutMe> {
         _lastname.length == 0 ||
         _email.length == 0 ||
         _nric.length == 0 ||
-        _selectedGender == null ||
-        _selectedSpectacles == null ||
-        _selectedContactLenses == null) {
+        _selectedGender.length == 0 ||
+        _selectedSpectacles.length == 0 ||
+        _selectedContactLenses.length == 0 ||
+        !checkPrivacyState2 ||
+        !checkPrivacyState1) {
       buttonColor = Colors.grey;
     } else {
       if (_selectedContactLenses == 'No') {

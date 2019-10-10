@@ -5,8 +5,13 @@ class TextFieldMainWidget extends StatelessWidget {
   final TextInputType type;
   final Function tapFunc;
   final TextEditingController controller;
-  TextFieldMainWidget(@required this.hintText, @required this.type,
-      @required this.tapFunc, @required this.controller);
+
+  TextFieldMainWidget(
+    @required this.hintText,
+    @required this.type,
+    @required this.tapFunc,
+    @required this.controller,
+  );
 
   @override
   Widget build(BuildContext context) {
