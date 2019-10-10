@@ -45,7 +45,7 @@ class selectedAndroidPicker extends StatelessWidget {
         color: Color(0xFf013F7C),
       ),
       hint: Text("Select"),
-      value: selectedValue == '' ? 'Select' : selectedValue,
+      value: checkSelectedValue(selectedValue),
       items: dataList.map((String value) {
         return new DropdownMenuItem<String>(
           value: value,
@@ -55,5 +55,12 @@ class selectedAndroidPicker extends StatelessWidget {
       isExpanded: true,
       onChanged: onTap,
     );
+  }
+
+  checkSelectedValue(String selectedValue) {
+    if (selectedValue == '')
+      return 'Select';
+    else
+      return selectedValue;
   }
 }

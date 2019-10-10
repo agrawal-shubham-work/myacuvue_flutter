@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/utilities/background_image_widget.dart';
 
 class PromotionBanner extends StatelessWidget {
   static const String routeName = '/promotionbanner';
@@ -8,10 +9,7 @@ class PromotionBanner extends StatelessWidget {
       appBar: AppBar(
         title: Text('Promotion Banner'),
       ),
-      body: Image.asset(
-        "images/promotionbanner.jpg",
-        fit: BoxFit.fill,
-      ),
+      body: BackgroundImage("images/promotionbanner.jpg"),
     );
   }
 }

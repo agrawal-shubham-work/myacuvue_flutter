@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+final String mReferSubHeading = 'Share and be rewarded';
+final String mReferSubPara =
+    "Each friend you will enjoy @20 welcome reward.For every friend who registers their profile via MyAcuvue app with your unique referal link and makes their first purchase,a @30 referal reward is your";
 final String mPrivacyPara1 =
     'Acuvue collects your personal information to enable us to administer and promote the Offer. Your PI may be provided to third parties assisting in the conduct of the Offer, including our web site hosting service provider, suppliers and deliverers. Your PI will be processed and stored by our web site hosting service provider in Japan, if the PI requested is not provided you may not participate in the Offer. By participating int the Offer you consent to the use of your PI. Subject also to your express consent, which you may give us by opting in below, we may send you specially offers and updates about Acuvue products. You have the tight to access update and request correction ofyou PI, and such request as well as any enquiries or complaints about how we handle your PI contained in our Privacy Policy';
 final String mPrivacyPara2 =
@@ -17,6 +20,14 @@ const kMandatorySign = TextStyle(color: Colors.red);
 const kPrivacyHeading = TextStyle(
     color: Color(0xFF013F7C), fontSize: 16.0, fontWeight: FontWeight.w900);
 const kPrivacyPara = TextStyle(color: Color(0xFF013F7C), fontSize: 12.0);
+const kReferPara = TextStyle(color: Color(0xFF013F7C), fontSize: 14.0);
+const kReferSubPara = TextStyle(
+  color: Colors.grey,
+  fontSize: 14.0,
+);
+const kReferBtn =
+    TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w800);
+
 const kFormHeadingStyle = TextStyle(color: Color(0xFF013F7C));
 const List<String> genderList = ['Male', 'Female', 'Others'];
 const List<String> spectacleList = ['Yes', 'No'];

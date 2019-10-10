@@ -1,10 +1,12 @@
+import 'package:my_acuvue_flutter/utilities/text_form_field_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
-import 'package:my_acuvue_flutter/utilities/textformfield.dart';
+import 'package:my_acuvue_flutter/utilities/text_form_field_main_widget.dart';
 import 'package:my_acuvue_flutter/utilities/dropdown.dart';
 import 'package:my_acuvue_flutter/utilities/datetimepicker.dart';
 import 'package:my_acuvue_flutter/utilities/checkbox.dart';
+import 'package:my_acuvue_flutter/utilities/para_style_widget.dart';
 
 class AboutMe extends StatefulWidget {
   static const String routeName = '/aboutme';
@@ -41,11 +43,17 @@ class _AboutMeState extends State<AboutMe> {
         _nric.length == 0 ||
         _selectedGender == null ||
         _selectedSpectacles == null ||
-        _selectedContactLenses == null ||
-        _selectedContactLenseMonth == null) {
+        _selectedContactLenses == null) {
       buttonColor = Colors.grey;
     } else {
-      buttonColor = Color(0xFf013F7C);
+      if (_selectedContactLenses == 'No') {
+        buttonColor = Color(0xFf013F7C);
+      } else {
+        if (_selectedContactLenseMonth != null)
+          buttonColor = Color(0xFf013F7C);
+        else
+          buttonColor = Colors.grey;
+      }
     }
   }
 
@@ -140,6 +148,8 @@ class _AboutMeState extends State<AboutMe> {
               DropDownMainWidget(contactLenseList, (String value) {
                 setState(() {
                   _selectedContactLenses = value;
+                  if (value == 'No') _selectedContactLenseMonth = null;
+                  print(_selectedContactLenseMonth);
                   validateFields();
                 });
               }, _selectedContactLenses),
@@ -215,56 +225,4 @@ class _AboutMeState extends State<AboutMe> {
   }
 }
 
-class PrivacyParaWidget extends StatelessWidget {
-  final String paraText;
-  final TextStyle style;
 
-  PrivacyParaWidget(this.paraText, this.style);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Text(paraText, style: style),
-    );
-  }
-}
-
-class TextFormFieldWidget extends StatelessWidget {
-  final String heading;
-  final bool isMandatory;
-  final Widget childFunct;
-
-  TextFormFieldWidget(
-      @required this.heading, @required this.isMandatory, this.childFunct);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Column(
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Container(
-                  margin: EdgeInsets.only(right: 2.0),
-                  child: Text(
-                    '$heading',
-                    style: kFormHeadingStyle,
-                  )),
-              isMandatory
-                  ? Text(
-                      '*',
-                      style: kMandatorySign,
-                    )
-                  : SizedBox(
-                      width: 0.0,
-                    ),
-            ],
-          ),
-          childFunct
-        ],
-      ),
-    );
-  }
-}
