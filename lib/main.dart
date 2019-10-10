@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/screens/about_me.dart';
 import 'package:my_acuvue_flutter/screens/about_myacuvue.dart';
 import 'package:my_acuvue_flutter/screens/contact_us.dart';
+import 'package:my_acuvue_flutter/screens/main_map.dart';
 import 'package:my_acuvue_flutter/screens/membership.dart';
 import 'package:my_acuvue_flutter/screens/notification.dart';
 import 'package:my_acuvue_flutter/screens/promotion_bannner.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
             PlaceholderWidget(Colors.red),
         SplashScreen.routeName: (BuildContext context) => SplashScreen(),
         PromotionBanner.routeName: (BuildContext context) => PromotionBanner(),
+        MainMap.routeName: (BuildContext context) => MainMap(),
       },
     );
   }

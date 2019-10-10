@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/screens/main_map.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/widget_methods/para_style_widget.dart';
 
@@ -17,8 +18,13 @@ class _MainStoreState extends State<MainStore> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(
-              child: Image.asset("images/add_ecp_normal.png"),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(MainMap.routeName);
+              },
+              child: Container(
+                child: Image.asset("images/add_ecp_normal.png"),
+              ),
             ),
             PrivacyParaWidget('Select ECP', kStoreHeading),
             Text(
