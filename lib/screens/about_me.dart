@@ -159,18 +159,9 @@ class _AboutMeState extends State<AboutMe> {
                       });
                     }, _selectedContactLenseMonth),
                   ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text('Privacy Policy', style: kPrivacyHeading),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(mPrivacyPara1, style: kPrivacyPara),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(mPrivacyPara2, style: kPrivacyPara),
-            ),
+            PrivacyParaWidget('Privacy Policy', kPrivacyHeading),
+            PrivacyParaWidget(mPrivacyPara1, kPrivacyPara),
+            PrivacyParaWidget(mPrivacyPara2, kPrivacyPara),
             CheckBoxMainWidgetState(checkPrivacyState1, mCheckPrivacyPara1,
                 (bool state) {
               setState(() {
@@ -220,6 +211,21 @@ class _AboutMeState extends State<AboutMe> {
           ],
         ),
       )),
+    );
+  }
+}
+
+class PrivacyParaWidget extends StatelessWidget {
+  final String paraText;
+  final TextStyle style;
+
+  PrivacyParaWidget(this.paraText, this.style);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Text(paraText, style: style),
     );
   }
 }
