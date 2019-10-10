@@ -3,6 +3,10 @@ import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/widget_methods/para_style_widget.dart';
 
 class MainHomeReferWidget extends StatelessWidget {
+  final Function onTap;
+
+  MainHomeReferWidget(this.onTap);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,6 +26,7 @@ class MainHomeReferWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5.0)),
               margin: EdgeInsets.all(10.0),
               child: FlatButton(
+                onPressed: onTap,
                 child: Center(
                     child: Text(
                   "Explore",
