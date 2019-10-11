@@ -3,9 +3,12 @@ import 'map_card_details.dart';
 
 class MapBoxes extends StatelessWidget {
   final String storeName, storeAddress;
+  final int currentIndex;
+  final int selectedIndex;
   final Function onTaped;
 
-  MapBoxes(this.storeName, this.storeAddress, this.onTaped);
+  MapBoxes(this.storeName, this.storeAddress, this.currentIndex,
+      this.selectedIndex, this.onTaped);
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +19,16 @@ class MapBoxes extends StatelessWidget {
         child: new FittedBox(
           child: Material(
             color: Colors.white,
-            elevation: 5.0,
-            borderRadius: BorderRadius.circular(24.0),
+            elevation: 10.0,
             shadowColor: Color(0x802196F3),
             child: Container(
+              color: selectedIndex == currentIndex
+                  ? Colors.green.shade200
+                  : Colors.white,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: myDetailsContainer1(storeName, storeAddress),
+                padding: const EdgeInsets.all(10.0),
+                child: myDetailsContainer1(
+                    storeName, storeAddress, currentIndex, selectedIndex),
               ),
             ),
           ),

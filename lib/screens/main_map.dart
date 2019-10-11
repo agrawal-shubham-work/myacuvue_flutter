@@ -11,6 +11,7 @@ class MainMap extends StatefulWidget {
 }
 
 class _MainMapState extends State<MainMap> {
+  int selectedIndex = 0;
   Completer<GoogleMapController> _controller = Completer();
   Markers markers = Markers();
   @override
@@ -42,30 +43,55 @@ class _MainMapState extends State<MainMap> {
             SizedBox(
               width: 10.0,
             ),
-            MapBoxes('AZPEC OPTICS',
+            MapBoxes(
+                'AZPEC OPTICS',
                 'BLK 762 JURONG WEST ST 75 #01-274 GEK POH Shopping CTR SINGAPORE 640762, JURONG, JURONG',
-                () {
+                1,
+                selectedIndex, () {
               _gotoLocation(1.348928, 103.697599);
+              setState(() {
+                selectedIndex = 1;
+              });
             }),
-            MapBoxes('KAI JOO OPTOMETRY (EAST POINT MALL)',
+            MapBoxes(
+                'KAI JOO OPTOMETRY (EAST POINT MALL)',
                 '3 simei street 6 #01-30 eastpoint mall singapore 528833 Changi /simei',
-                () {
+                2,
+                selectedIndex, () {
               _gotoLocation(1.342757, 103.953052);
+              setState(() {
+                selectedIndex = 2;
+              });
             }),
-            MapBoxes('OBLIQUE OPTICS PTE LTD',
+            MapBoxes(
+                'OBLIQUE OPTICS PTE LTD',
                 '2 handy road, #01-07 the cathay Dhoby ghaut/ central 63692066',
-                () {
+                3,
+                selectedIndex, () {
               _gotoLocation(1.299521, 103.847612);
+              setState(() {
+                selectedIndex = 3;
+              });
             }),
-            MapBoxes('PEARL\'S OPTICAL CO P/L (PEOPLE\'S PARK CENTRE)',
+            MapBoxes(
+                'PEARL\'S OPTICAL CO P/L (PEOPLE\'S PARK CENTRE)',
                 '101 up cross st #02-24 people\'s park ctr singapore 058357 Tanjong pagar/chinatown 65325110',
-                () {
+                4,
+                selectedIndex, () {
               _gotoLocation(1.285904, 103.843991);
+              setState(() {
+                selectedIndex = 4;
+              });
             }),
-            MapBoxes('Spectacle Hut ( Great World City 2)',
+            MapBoxes(
+                'Spectacle Hut ( Great World City 2)',
                 '#01-130 great world city, 1 kim seng promenade, singapore 237994 River valley',
-                () {
+                5,
+                selectedIndex, () {
               _gotoLocation(1.293609, 103.832006);
+              setState(() {
+                selectedIndex = 5;
+              });
             }),
           ],
         ),
