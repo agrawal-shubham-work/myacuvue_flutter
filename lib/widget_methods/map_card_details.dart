@@ -11,7 +11,7 @@ class myDetailsContainer1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300.0,
+      width: 320.0,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

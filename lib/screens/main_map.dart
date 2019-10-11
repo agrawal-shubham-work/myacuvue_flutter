@@ -14,10 +14,20 @@ class MainMap extends StatefulWidget {
 }
 
 class _MainMapState extends State<MainMap> {
-  int selectedIndex = 0;
+  static int selectedIndex = 0;
   Completer<GoogleMapController> _controller = Completer();
   Markers markers = Markers();
-  List<MapBoxes> mapBox = [];
+  List<Widget> mapBox = [];
+
+  Future<void> _gotoLocation(double lat, double long) async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: LatLng(lat, long),
+      zoom: 15,
+      tilt: 50.0,
+      bearing: 45.0,
+    )));
+  }
 
   Future<String> _loadData() async {
     return await rootBundle.loadString('assets/map_json.json');
@@ -32,19 +42,14 @@ class _MainMapState extends State<MainMap> {
     int count = 0;
     Map decoded = jsonDecode(jsonString);
     for (var map in decoded['Location']) {
-      count++;
-      /*mapBox.add(MapBoxes(map['Name'],map['Address'],count,selectedIndex,(){
-        _gotoLocation(map['Lat'], map['Long']);
-        setState(() {
-          selectedIndex=count;
-        });
-      }));*/
+      setState(() {
+        count++;
+      });
     }
   }
 
   @override
   void initState() {
-    loadCrossword();
     super.initState();
   }
 
@@ -74,12 +79,9 @@ class _MainMapState extends State<MainMap> {
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: <Widget>[
-            SizedBox(
-              width: 10.0,
-            ),
             MapBoxes(
                 'AZPEC OPTICS',
-                'BLK 762 JURONG WEST ST 75 #01-274 GEK POH Shopping CTR SINGAPORE 640762, JURONG, JURONG',
+                "BLK 762 JURONG WEST ST 75 #01-274 GEK POH Shopping CTR SINGAPORE  640762, JURONG, JURONG",
                 1,
                 selectedIndex, () {
               _gotoLocation(1.348928, 103.697599);
@@ -89,7 +91,7 @@ class _MainMapState extends State<MainMap> {
             }),
             MapBoxes(
                 'KAI JOO OPTOMETRY (EAST POINT MALL)',
-                '3 simei street 6 #01-30 eastpoint mall singapore 528833 Changi /simei',
+                "3 SIMEI STREET 6#01-30 EASTPOINT MALL SINGAPORE 528833, CHANGI/SIMEI, CHANGI/SIMEI",
                 2,
                 selectedIndex, () {
               _gotoLocation(1.342757, 103.953052);
@@ -99,7 +101,7 @@ class _MainMapState extends State<MainMap> {
             }),
             MapBoxes(
                 'OBLIQUE OPTICS PTE LTD',
-                '2 handy road, #01-07 the cathay Dhoby ghaut/ central 63692066',
+                "2 HANDY ROAD #01-07 THE CATHAY, DHOBY GHAUT/ CENTRAL, DHOBY GHAUT/ CENTRAL",
                 3,
                 selectedIndex, () {
               _gotoLocation(1.299521, 103.847612);
@@ -109,17 +111,17 @@ class _MainMapState extends State<MainMap> {
             }),
             MapBoxes(
                 'PEARL\'S OPTICAL CO P/L (PEOPLE\'S PARK CENTRE)',
-                '101 up cross st #02-24 people\'s park ctr singapore 058357 Tanjong pagar/chinatown 65325110',
+                "Oscar Enterprise Mobile Phone Repair & Camera Service Centre, 101 Upper Cross St, #B1-18A, People's Park Centre, Singapore 058357",
                 4,
                 selectedIndex, () {
-              _gotoLocation(1.285904, 103.843991);
+              _gotoLocation(1.348928, 103.697599);
               setState(() {
                 selectedIndex = 4;
               });
             }),
             MapBoxes(
                 'Spectacle Hut ( Great World City 2)',
-                '#01-130 great world city, 1 kim seng promenade, singapore 237994 River valley',
+                "#01-130 Great World City, 1 Kim Seng Promenade Singapore 237994, River Valley, River Valley",
                 5,
                 selectedIndex, () {
               _gotoLocation(1.293609, 103.832006);
@@ -131,16 +133,6 @@ class _MainMapState extends State<MainMap> {
         ),
       ),
     );
-  }
-
-  Future<void> _gotoLocation(double lat, double long) async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-      target: LatLng(lat, long),
-      zoom: 15,
-      tilt: 50.0,
-      bearing: 45.0,
-    )));
   }
 
   Widget _buildGoogleMap(BuildContext context) {
