@@ -48,6 +48,13 @@ const kReferSubPara = TextStyle(
 const kReferBtn =
     TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w800);
 
+const kStoreName = TextStyle(fontSize: 16.0, color: Colors.grey);
+
+const kStoreAddress = TextStyle(
+  fontSize: 16.0,
+  color: Color(0xFF013F7C),
+);
+
 const kFormHeadingStyle = TextStyle(color: Color(0xFF013F7C));
 const List<String> genderList = ['Male', 'Female', 'Others'];
 const List<String> spectacleList = ['Yes', 'No'];

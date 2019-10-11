@@ -1,0 +1,35 @@
+{
+    "Location": [
+        {
+                "Name": "AZPEC OPTICS",
+				"Address": "BLK 762 JURONG WEST ST 75 #01-274 GEK POH Shopping CTR SINGAPORE  640762, JURONG, JURONG",
+                "Lat": 1.348928,
+                "Long": 103.697599
+        },
+        {
+                "Name": "KAI JOO OPTOMETRY (EAST POINT MALL)",
+				"Address": "3 SIMEI STREET 6#01-30 EASTPOINT MALL SINGAPORE 528833, CHANGI/SIMEI, CHANGI/SIMEI",
+                "Lat": 1.342757,
+                "Long": 103.953052
+        },
+		{
+                "Name": "OBLIQUE OPTICS PTE LTD",
+				"Address": "2 HANDY ROAD #01-07 THE CATHAY, DHOBY GHAUT/ CENTRAL, DHOBY GHAUT/ CENTRAL",
+                "Lat": 1.299521,
+                "Long": 103.847612
+        },
+		{
+                "Name": "PEARL'S OPTICAL CO P/L (PEOPLE'S PARK CENTRE)",
+				"Address": "Oscar Enterprise Mobile Phone Repair & Camera Service Centre, 101 Upper Cross St, #B1-18A, People's Park Centre, Singapore 058357",
+                "Lat": 1.285904,
+                "Long": 103.843991
+        },
+		{
+                "Name": "Spectacle Hut ( Great World City 2)",
+				"Address": "#01-130 Great World City, 1 Kim Seng Promenade Singapore 237994, River Valley, River Valley",
+                "Lat": 1.293609,
+                "Long": 103.832006
+        }
+        
+  ]
+}
