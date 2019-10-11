@@ -13,6 +13,7 @@ class _MainMapState extends State<MainMap> {
       appBar: AppBar(
         title: Text('Register My Optical Store'),
       ),
+      body: Container(),
     );
   }
 }
