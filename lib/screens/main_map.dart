@@ -17,6 +17,7 @@ class _MainMapState extends State<MainMap> {
   int selectedIndex = 0;
   Completer<GoogleMapController> _controller = Completer();
   Markers markers = Markers();
+  List<MapBoxes> mapBox = [];
 
   Future<String> _loadData() async {
     return await rootBundle.loadString('assets/map_json.json');
@@ -32,10 +33,12 @@ class _MainMapState extends State<MainMap> {
     Map decoded = jsonDecode(jsonString);
     for (var map in decoded['Location']) {
       count++;
-      print(map['Name']);
-      print(map['Address']);
-      print(count);
-      print(selectedIndex);
+      /*mapBox.add(MapBoxes(map['Name'],map['Address'],count,selectedIndex,(){
+        _gotoLocation(map['Lat'], map['Long']);
+        setState(() {
+          selectedIndex=count;
+        });
+      }));*/
     }
   }
 
