@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/markers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_acuvue_flutter/widget_methods/create_map_cards.dart';
+import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
 
 class MainMap extends StatefulWidget {
   static const String routeName = '/mainmap';
@@ -14,6 +17,34 @@ class _MainMapState extends State<MainMap> {
   int selectedIndex = 0;
   Completer<GoogleMapController> _controller = Completer();
   Markers markers = Markers();
+
+  Future<String> _loadData() async {
+    return await rootBundle.loadString('assets/map_json.json');
+  }
+
+  Future loadCrossword() async {
+    String mapJson = await _loadData();
+    _parseJsonForMap(mapJson);
+  }
+
+  void _parseJsonForMap(String jsonString) {
+    int count = 0;
+    Map decoded = jsonDecode(jsonString);
+    for (var map in decoded['Location']) {
+      count++;
+      print(map['Name']);
+      print(map['Address']);
+      print(count);
+      print(selectedIndex);
+    }
+  }
+
+  @override
+  void initState() {
+    loadCrossword();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
