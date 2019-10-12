@@ -46,6 +46,8 @@ const kReferSubPara = TextStyle(
   fontSize: 14.0,
 );
 
+const kRewardTerms = TextStyle(fontSize: 18.0, color: Color(0xFF013F7C));
+
 const kRewardsHeading = TextStyle(fontSize: 24.0, color: Color(0xFf013F7C));
 const kRewardsSubHeading = TextStyle(fontSize: 20.0, color: Color(0xFf013F7C));
 const kReferBtn =

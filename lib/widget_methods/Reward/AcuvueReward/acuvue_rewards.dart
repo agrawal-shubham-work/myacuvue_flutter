@@ -12,19 +12,28 @@ class _AcuvueRewardsState extends State<AcuvueRewards> {
     return Column(
       children: <Widget>[
         acuvue_rewads_photo_Widget("images/acuuvue_rewards1.jpg", () {
-          RewardsSlider slider =
-              RewardsSlider("images/acuuvue_rewards1.jpg", "\$10", "2000");
-          Navigator.of(context).pushNamed(RewardsSlider.routeName);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RewardsSlider(
+                    "images/acuuvue_rewards1.jpg", "\$10", "2000")),
+          );
         }),
         acuvue_rewads_photo_Widget("images/acuvue_rewards3.jpg", () {
-          RewardsSlider slider =
-              RewardsSlider("images/acuvue_rewards3.jpg", "\$20", "4000");
-          Navigator.of(context).pushNamed(RewardsSlider.routeName);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RewardsSlider(
+                    "images/acuvue_rewards3.jpg", "\$20", "4000")),
+          );
         }),
         acuvue_rewads_photo_Widget("images/acuvue_reawrds2.jpg", () {
-          RewardsSlider slider =
-              RewardsSlider("images/acuvue_reawrds2.jpg", "\$30", "6000");
-          Navigator.of(context).pushNamed(RewardsSlider.routeName);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RewardsSlider(
+                    "images/acuvue_reawrds2.jpg", "\$30", "6000")),
+          );
         }),
       ],
     );
