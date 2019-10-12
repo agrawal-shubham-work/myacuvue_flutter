@@ -1,4 +1,4 @@
-import 'package:my_acuvue_flutter/widget_methods/WebViewContainer.dart';
+import 'package:my_acuvue_flutter/widget_methods/WebViews/WebViewContainer.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

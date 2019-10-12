@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/screens/refer_and_earn.dart';
-import 'package:my_acuvue_flutter/widget_methods/main_home_card_barcode_widget.dart';
-import 'package:my_acuvue_flutter/widget_methods/main_home_refer_widget.dart';
+import 'package:my_acuvue_flutter/widget_methods/Home/main_home_card_barcode_widget.dart';
+import 'package:my_acuvue_flutter/widget_methods/Home/main_home_refer_widget.dart';
 
 class MainHomeListView extends StatelessWidget {
   const MainHomeListView({

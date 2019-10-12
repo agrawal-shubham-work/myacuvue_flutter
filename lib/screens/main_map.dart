@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/markers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:my_acuvue_flutter/widget_methods/map_detail_card_register.dart';
-import 'package:my_acuvue_flutter/widget_methods/map_details_card.dart';
+import 'package:my_acuvue_flutter/widget_methods/Maps/map_detail_card_register.dart';
+import 'package:my_acuvue_flutter/widget_methods/Maps/map_details_card.dart';
 
 class MainMap extends StatefulWidget {
   static const String routeName = '/mainmap';
@@ -100,8 +100,14 @@ class _MainMapState extends State<MainMap> {
                     mapDetails[index].Address,
                     index + 1,
                   )
-                : mapDetails[index].Name.toLowerCase().contains(filter) ||
-                        mapDetails[index].Address.toLowerCase().contains(filter)
+                : mapDetails[index]
+                            .Name
+                            .toLowerCase()
+                            .contains(filter.toLowerCase()) ||
+                        mapDetails[index]
+                            .Address
+                            .toLowerCase()
+                            .contains(filter.toLowerCase())
                     ? _boxes(
                         mapDetails[index].Lat,
                         mapDetails[index].Long,
@@ -185,9 +191,14 @@ class _MainMapState extends State<MainMap> {
       alignment: Alignment.topCenter,
       child: Container(
         margin: EdgeInsets.all(10.0),
+        decoration:
+            new BoxDecoration(shape: BoxShape.rectangle, color: Colors.white),
         child: TextField(
-          decoration:
-              new InputDecoration(labelText: "Search By Name or Address"),
+          decoration: InputDecoration(
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+              labelText: "Name/Address",
+              hintText: "Search by name or Address(Jurong)"),
           controller: controller,
         ),
       ),
