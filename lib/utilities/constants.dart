@@ -47,7 +47,8 @@ const kReferSubPara = TextStyle(
 );
 const kReferBtn =
     TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w800);
-
+const kRewardBtn =
+    TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w600);
 const kStoreName = TextStyle(fontSize: 16.0, color: Colors.grey);
 
 const kStoreAddress = TextStyle(
