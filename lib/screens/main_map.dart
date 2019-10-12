@@ -20,6 +20,8 @@ class _MainMapState extends State<MainMap> {
   Completer<GoogleMapController> _controller = Completer();
   Markers markers = Markers();
   List<MapData> mapDetails = [];
+  TextEditingController controller = TextEditingController();
+  String filter;
   Future<String> _loadMapData() async {
     return await rootBundle.loadString('assets/map.json');
   }
@@ -56,6 +58,11 @@ class _MainMapState extends State<MainMap> {
         mapDetails.addAll(values);
       });
     });
+    controller.addListener(() {
+      setState(() {
+        filter = controller.text;
+      });
+    });
     super.initState();
   }
 
@@ -68,6 +75,7 @@ class _MainMapState extends State<MainMap> {
       body: Stack(
         children: <Widget>[
           _buildGoogleMap(context),
+          _buildSearchBox(),
           _buildContainer(),
         ],
       ),
@@ -84,13 +92,24 @@ class _MainMapState extends State<MainMap> {
           scrollDirection: Axis.horizontal,
           itemCount: mapDetails.length,
           itemBuilder: (BuildContext context, int index) {
-            return _boxes(
-              mapDetails[index].Lat,
-              mapDetails[index].Long,
-              mapDetails[index].Name,
-              mapDetails[index].Address,
-              index + 1,
-            );
+            return filter == null || filter == ''
+                ? _boxes(
+                    mapDetails[index].Lat,
+                    mapDetails[index].Long,
+                    mapDetails[index].Name,
+                    mapDetails[index].Address,
+                    index + 1,
+                  )
+                : mapDetails[index].Name.toLowerCase().contains(filter) ||
+                        mapDetails[index].Address.toLowerCase().contains(filter)
+                    ? _boxes(
+                        mapDetails[index].Lat,
+                        mapDetails[index].Long,
+                        mapDetails[index].Name,
+                        mapDetails[index].Address,
+                        index + 1,
+                      )
+                    : Container();
           },
         ),
       ),
@@ -157,6 +176,20 @@ class _MainMapState extends State<MainMap> {
           markers.getMarker('singapore5', 1.293609, 103.832006,
               'Spectacle Hut ( Great World City 2)'),
         },
+      ),
+    );
+  }
+
+  Widget _buildSearchBox() {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        margin: EdgeInsets.all(10.0),
+        child: TextField(
+          decoration:
+              new InputDecoration(labelText: "Search By Name or Address"),
+          controller: controller,
+        ),
       ),
     );
   }
