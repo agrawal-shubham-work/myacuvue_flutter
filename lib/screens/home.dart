@@ -12,6 +12,7 @@ import 'package:my_acuvue_flutter/screens/promotions_and_events_web.dart';
 import 'package:my_acuvue_flutter/screens/refer_and_earn.dart';
 import 'package:my_acuvue_flutter/screens/settings.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/assets/my_flutter_app_icons.dart';
 import 'trial.dart';
 
 class Home extends StatefulWidget {
@@ -60,8 +61,8 @@ class _HomeState extends State<Home> {
       getNavItem(Icons.face, "My Profile", AboutMe.routeName),
       getNavItem(
           Icons.remove_red_eye, "Eye Care Center", SplashScreen.routeName),
-      getNavItem(
-          Icons.home, "Promotion and Events", PromotionsAndEvents.routeName),
+      getNavItem(MyFlutterApp.promotion, "Promotion and Events",
+          PromotionsAndEvents.routeName),
       getNavItem(Icons.attach_money, "Refer and Earn", ReferAndEarn.routeName),
       getNavItem(Icons.card_giftcard, "Membership", Membership.routeName),
       getNavItem(Icons.home, "About MyAcuvue", AboutMyAcuvue.routeName),

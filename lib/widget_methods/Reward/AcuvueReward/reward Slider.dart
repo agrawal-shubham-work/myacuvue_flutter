@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/AcuvueReward/slider_second.dart';
 import 'slider_first.dart';
+import 'package:my_acuvue_flutter/dialog/custom_dialog.dart';
 
 class RewardsSlider extends StatefulWidget {
   static const String routeName = '/rewardslider';
@@ -54,6 +55,16 @@ class _RewardsSliderState extends State<RewardsSlider> {
         color: Color(0xFF013F7C),
         width: double.infinity,
         child: FlatButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => CustomDialog(
+                title: "",
+                description: "Cannot applied cupon. Device is not registered.",
+                buttonText: "Okay",
+              ),
+            );
+          },
           child: Text(
             'Get this Coupon',
             style: kReferBtn,
