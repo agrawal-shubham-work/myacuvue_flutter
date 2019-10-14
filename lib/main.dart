@@ -9,6 +9,7 @@ import 'package:my_acuvue_flutter/screens/promotion_bannner.dart';
 import 'package:my_acuvue_flutter/screens/promotions_and_events_web.dart';
 import 'package:my_acuvue_flutter/screens/refer_and_earn.dart';
 import 'package:my_acuvue_flutter/screens/settings.dart';
+import 'package:my_acuvue_flutter/widget_methods/Reward/AcuvueReward/reward%20Slider.dart';
 import 'screens/home.dart';
 import 'screens/eye_care_center_web.dart';
 import 'screens/trial.dart';
@@ -41,6 +42,8 @@ class MyApp extends StatelessWidget {
         SplashScreen.routeName: (BuildContext context) => SplashScreen(),
         PromotionBanner.routeName: (BuildContext context) => PromotionBanner(),
         MainMap.routeName: (BuildContext context) => MainMap(),
+        RewardsSlider.routeName: (BuildContext context) =>
+            RewardsSlider("images/promotions1.jpg", "\$20", "2000"),
       },
     );
   }

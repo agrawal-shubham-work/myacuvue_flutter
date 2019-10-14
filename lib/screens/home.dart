@@ -4,6 +4,7 @@ import 'package:my_acuvue_flutter/screens/about_myacuvue.dart';
 import 'package:my_acuvue_flutter/screens/contact_us.dart';
 import 'package:my_acuvue_flutter/screens/eye_care_center_web.dart';
 import 'package:my_acuvue_flutter/screens/main_home.dart';
+import 'package:my_acuvue_flutter/screens/main_reward.dart';
 import 'package:my_acuvue_flutter/screens/main_store.dart';
 import 'package:my_acuvue_flutter/screens/membership.dart';
 import 'package:my_acuvue_flutter/screens/notification.dart';
@@ -130,7 +131,7 @@ class _HomeState extends State<Home> {
   List<Widget> tabs = [
     MainHome(),
     PlaceholderWidget(Colors.orange),
-    PlaceholderWidget(Colors.blue),
+    MainReward(),
     MainStore()
   ];
   onTapped(int index) {

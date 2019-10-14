@@ -45,8 +45,21 @@ const kReferSubPara = TextStyle(
   color: Colors.grey,
   fontSize: 14.0,
 );
+
+const kRewardTerms = TextStyle(fontSize: 18.0, color: Color(0xFF013F7C));
+
+const kRewardsHeading = TextStyle(fontSize: 24.0, color: Color(0xFf013F7C));
+const kRewardsSubHeading = TextStyle(fontSize: 20.0, color: Color(0xFf013F7C));
 const kReferBtn =
     TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w800);
+const kRewardBtn =
+    TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w600);
+const kStoreName = TextStyle(fontSize: 16.0, color: Colors.grey);
+
+const kStoreAddress = TextStyle(
+  fontSize: 16.0,
+  color: Color(0xFF013F7C),
+);
 
 const kRegisterStoreHeading = TextStyle(fontSize: 18.0, color: Colors.grey);
 const kRegisterStoreSubHeading = TextStyle(

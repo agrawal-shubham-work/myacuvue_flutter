@@ -9,11 +9,12 @@ class TextFieldMainWidget extends StatelessWidget {
   final int maxCount;
 
   TextFieldMainWidget(
-      @required this.hintText,
-      @required this.type,
-      @required this.tapFunc,
-      @required this.controller,
-      @required this.maxCount);
+    this.hintText,
+    this.type,
+    this.tapFunc,
+    this.controller,
+    this.maxCount,
+  );
 
   @override
   Widget build(BuildContext context) {

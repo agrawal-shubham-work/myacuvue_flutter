@@ -1,11 +1,11 @@
-import 'package:my_acuvue_flutter/widget_methods/text_form_field_widget.dart';
+import 'package:my_acuvue_flutter/widget_methods/Forms/text_form_field_main_widget.dart';
+import 'package:my_acuvue_flutter/widget_methods/Forms/text_form_field_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
-import 'package:my_acuvue_flutter/widget_methods/text_form_field_main_widget.dart';
-import 'package:my_acuvue_flutter/widget_methods/dropdown.dart';
-import 'package:my_acuvue_flutter/widget_methods/datetimepicker.dart';
-import 'package:my_acuvue_flutter/widget_methods/checkbox.dart';
+import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
+import 'package:my_acuvue_flutter/widget_methods/Forms/datetimepicker.dart';
+import 'package:my_acuvue_flutter/widget_methods/Forms/checkbox.dart';
 import 'package:my_acuvue_flutter/widget_methods/para_style_widget.dart';
 
 class AboutMe extends StatefulWidget {
@@ -67,8 +67,6 @@ class _AboutMeState extends State<AboutMe> {
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('About me'),

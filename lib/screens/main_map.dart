@@ -1,11 +1,13 @@
-import 'dart:async';
+import 'dart:async' show Completer, Future;
+import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
+import 'package:my_acuvue_flutter/map_data_model.dart';
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/markers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:my_acuvue_flutter/widget_methods/create_map_cards.dart';
-import 'dart:async' show Future;
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:my_acuvue_flutter/widget_methods/Maps/map_detail_card_register.dart';
+import 'package:my_acuvue_flutter/widget_methods/Maps/map_details_card.dart';
 
 class MainMap extends StatefulWidget {
   static const String routeName = '/mainmap';
@@ -14,10 +16,30 @@ class MainMap extends StatefulWidget {
 }
 
 class _MainMapState extends State<MainMap> {
-  static int selectedIndex = 0;
+  int _selectedIndex = 0;
   Completer<GoogleMapController> _controller = Completer();
   Markers markers = Markers();
-  List<Widget> mapBox = [];
+  List<MapData> mapDetails = [];
+  TextEditingController controller = TextEditingController();
+  String filter;
+  Future<String> _loadMapData() async {
+    return await rootBundle.loadString('assets/map.json');
+  }
+
+  Future<List<MapData>> _mapDetails() async {
+    String jsonString = await _loadMapData();
+    final jsonResponse = json.decode(jsonString);
+
+    var item = List<MapData>();
+
+    for (var mapData in jsonResponse['Location']) {
+      MapData data = MapData(
+          mapData['Lat'], mapData['Long'], mapData['Name'], mapData['Address']);
+      item.add(data);
+    }
+
+    return item;
+  }
 
   Future<void> _gotoLocation(double lat, double long) async {
     final GoogleMapController controller = await _controller.future;
@@ -29,27 +51,18 @@ class _MainMapState extends State<MainMap> {
     )));
   }
 
-  Future<String> _loadData() async {
-    return await rootBundle.loadString('assets/map_json.json');
-  }
-
-  Future loadCrossword() async {
-    String mapJson = await _loadData();
-    _parseJsonForMap(mapJson);
-  }
-
-  void _parseJsonForMap(String jsonString) {
-    int count = 0;
-    Map decoded = jsonDecode(jsonString);
-    for (var map in decoded['Location']) {
-      setState(() {
-        count++;
-      });
-    }
-  }
-
   @override
   void initState() {
+    _mapDetails().then((values) {
+      setState(() {
+        mapDetails.addAll(values);
+      });
+    });
+    controller.addListener(() {
+      setState(() {
+        filter = controller.text;
+      });
+    });
     super.initState();
   }
 
@@ -62,8 +75,7 @@ class _MainMapState extends State<MainMap> {
       body: Stack(
         children: <Widget>[
           _buildGoogleMap(context),
-          /*_zoomMinusFunct(context),
-        _zoomPlusFunc(context),*/
+          _buildSearchBox(),
           _buildContainer(),
         ],
       ),
@@ -76,60 +88,73 @@ class _MainMapState extends State<MainMap> {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 20.0),
         height: 150.0,
-        child: ListView(
+        child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            MapBoxes(
-                'AZPEC OPTICS',
-                "BLK 762 JURONG WEST ST 75 #01-274 GEK POH Shopping CTR SINGAPORE  640762, JURONG, JURONG",
-                1,
-                selectedIndex, () {
-              _gotoLocation(1.348928, 103.697599);
-              setState(() {
-                selectedIndex = 1;
-              });
-            }),
-            MapBoxes(
-                'KAI JOO OPTOMETRY (EAST POINT MALL)',
-                "3 SIMEI STREET 6#01-30 EASTPOINT MALL SINGAPORE 528833, CHANGI/SIMEI, CHANGI/SIMEI",
-                2,
-                selectedIndex, () {
-              _gotoLocation(1.342757, 103.953052);
-              setState(() {
-                selectedIndex = 2;
-              });
-            }),
-            MapBoxes(
-                'OBLIQUE OPTICS PTE LTD',
-                "2 HANDY ROAD #01-07 THE CATHAY, DHOBY GHAUT/ CENTRAL, DHOBY GHAUT/ CENTRAL",
-                3,
-                selectedIndex, () {
-              _gotoLocation(1.299521, 103.847612);
-              setState(() {
-                selectedIndex = 3;
-              });
-            }),
-            MapBoxes(
-                'PEARL\'S OPTICAL CO P/L (PEOPLE\'S PARK CENTRE)',
-                "Oscar Enterprise Mobile Phone Repair & Camera Service Centre, 101 Upper Cross St, #B1-18A, People's Park Centre, Singapore 058357",
-                4,
-                selectedIndex, () {
-              _gotoLocation(1.348928, 103.697599);
-              setState(() {
-                selectedIndex = 4;
-              });
-            }),
-            MapBoxes(
-                'Spectacle Hut ( Great World City 2)',
-                "#01-130 Great World City, 1 Kim Seng Promenade Singapore 237994, River Valley, River Valley",
-                5,
-                selectedIndex, () {
-              _gotoLocation(1.293609, 103.832006);
-              setState(() {
-                selectedIndex = 5;
-              });
-            }),
-          ],
+          itemCount: mapDetails.length,
+          itemBuilder: (BuildContext context, int index) {
+            return filter == null || filter == ''
+                ? _boxes(
+                    mapDetails[index].Lat,
+                    mapDetails[index].Long,
+                    mapDetails[index].Name,
+                    mapDetails[index].Address,
+                    index + 1,
+                  )
+                : mapDetails[index]
+                            .Name
+                            .toLowerCase()
+                            .contains(filter.toLowerCase()) ||
+                        mapDetails[index]
+                            .Address
+                            .toLowerCase()
+                            .contains(filter.toLowerCase())
+                    ? _boxes(
+                        mapDetails[index].Lat,
+                        mapDetails[index].Long,
+                        mapDetails[index].Name,
+                        mapDetails[index].Address,
+                        index + 1,
+                      )
+                    : Container();
+          },
+        ),
+      ),
+    );
+  }
+
+  _onSelected(int index) {
+    setState(() => _selectedIndex = index);
+  }
+
+  Widget _boxes(double lat, double long, String storeName, String storeAddress,
+      int index) {
+    return GestureDetector(
+      onTap: () {
+        _gotoLocation(lat, long);
+        _onSelected(index);
+      },
+      child: Container(
+        child: new FittedBox(
+          child: Container(
+            margin: EdgeInsets.all(10.0),
+            child: Material(
+                color: _selectedIndex != null && _selectedIndex == index
+                    ? Colors.greenAccent.shade100
+                    : Colors.white,
+                elevation: 5.0,
+                borderRadius: BorderRadius.circular(24.0),
+                shadowColor: Color(0x802196F3),
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _selectedIndex == index
+                          ? myDetailsContainerRegister(storeName, storeAddress)
+                          : myDetailsContainer1(storeName, storeAddress),
+                    ),
+                  ],
+                )),
+          ),
         ),
       ),
     );
@@ -157,6 +182,25 @@ class _MainMapState extends State<MainMap> {
           markers.getMarker('singapore5', 1.293609, 103.832006,
               'Spectacle Hut ( Great World City 2)'),
         },
+      ),
+    );
+  }
+
+  Widget _buildSearchBox() {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        margin: EdgeInsets.all(10.0),
+        decoration:
+            new BoxDecoration(shape: BoxShape.rectangle, color: Colors.white),
+        child: TextField(
+          decoration: InputDecoration(
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+              labelText: "Name/Address",
+              hintText: "Search by name or Address(Jurong)"),
+          controller: controller,
+        ),
       ),
     );
   }
