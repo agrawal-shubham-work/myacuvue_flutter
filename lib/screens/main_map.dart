@@ -3,7 +3,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 import 'package:my_acuvue_flutter/map_data_model.dart';
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
 import 'package:my_acuvue_flutter/utilities/markers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_acuvue_flutter/widget_methods/Maps/map_detail_card_register.dart';
@@ -20,6 +20,7 @@ class _MainMapState extends State<MainMap> {
   Completer<GoogleMapController> _controller = Completer();
   Markers markers = Markers();
   List<MapData> mapDetails = [];
+  List<String> zones = [];
   TextEditingController controller = TextEditingController();
   String filter;
   Future<String> _loadMapData() async {
@@ -35,6 +36,9 @@ class _MainMapState extends State<MainMap> {
     for (var mapData in jsonResponse['Location']) {
       MapData data = MapData(
           mapData['Lat'], mapData['Long'], mapData['Name'], mapData['Address']);
+      if (zones.isEmpty || !zones.contains(mapData['Zone'])) {
+        zones.add(mapData['Zone']);
+      }
       item.add(data);
     }
 
@@ -76,6 +80,11 @@ class _MainMapState extends State<MainMap> {
         children: <Widget>[
           _buildGoogleMap(context),
           _buildSearchBox(),
+          /*DropDownMainWidget(zones, (String value) {
+            setState(() {
+              filter = value;
+            });
+          }, filter),*/
           _buildContainer(),
         ],
       ),
