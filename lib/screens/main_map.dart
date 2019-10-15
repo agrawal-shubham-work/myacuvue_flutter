@@ -93,7 +93,7 @@ class _MainMapState extends State<MainMap> {
       child: Row(
         children: <Widget>[
           Expanded(
-            flex: 10,
+            flex: 1,
             child: Container(
               margin: EdgeInsets.only(left: 5.0),
               child: isDropDownSelected
@@ -105,12 +105,9 @@ class _MainMapState extends State<MainMap> {
                   : _buildSearchBox(),
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: isDropDownSelected
-                ? CreateSearchBtn(Icon(Icons.search))
-                : CreateSearchBtn(Icon(Icons.close)),
-          )
+          isDropDownSelected
+              ? CreateSearchBtn(Icon(Icons.search))
+              : CreateSearchBtn(Icon(Icons.close))
         ],
       ),
     );
@@ -129,7 +126,7 @@ class _MainMapState extends State<MainMap> {
         });
       },
       child: Container(
-        padding: EdgeInsets.only(top: 5.0),
+        padding: EdgeInsets.all(10.0),
         child: icon,
       ),
     );
