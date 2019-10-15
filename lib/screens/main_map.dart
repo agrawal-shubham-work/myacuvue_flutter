@@ -93,7 +93,7 @@ class _MainMapState extends State<MainMap> {
       child: Row(
         children: <Widget>[
           Expanded(
-            flex: 5,
+            flex: 10,
             child: Container(
               margin: EdgeInsets.only(left: 5.0),
               child: isDropDownSelected
