@@ -28,7 +28,7 @@ class _MainRewardState extends State<MainReward> {
               ? createWalletContainer()
               : screenType == ScreenSelected.AcuvuewReward
                   ? AcuvueRewards()
-                  : createLifestyleRewardContainer(),
+                  : createLifestyleRewardContainer()
         ],
       ),
     );

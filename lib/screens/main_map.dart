@@ -3,7 +3,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 import 'package:my_acuvue_flutter/map_data_model.dart';
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
 import 'package:my_acuvue_flutter/utilities/markers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_acuvue_flutter/widget_methods/Maps/map_detail_card_register.dart';
@@ -20,8 +20,10 @@ class _MainMapState extends State<MainMap> {
   Completer<GoogleMapController> _controller = Completer();
   Markers markers = Markers();
   List<MapData> mapDetails = [];
+  List<String> zoneList = [];
   TextEditingController controller = TextEditingController();
   String filter;
+  bool isDropDownSelected = true;
   Future<String> _loadMapData() async {
     return await rootBundle.loadString('assets/map.json');
   }
@@ -33,8 +35,10 @@ class _MainMapState extends State<MainMap> {
     var item = List<MapData>();
 
     for (var mapData in jsonResponse['Location']) {
-      MapData data = MapData(
-          mapData['Lat'], mapData['Long'], mapData['Name'], mapData['Address']);
+      MapData data = MapData(mapData['Lat'], mapData['Long'], mapData['Name'],
+          mapData['Address'], mapData['Zone']);
+      if (zoneList.isEmpty || !zoneList.contains(mapData['Zone']))
+        zoneList.add(mapData['Zone']);
       item.add(data);
     }
 
@@ -75,9 +79,58 @@ class _MainMapState extends State<MainMap> {
       body: Stack(
         children: <Widget>[
           _buildGoogleMap(context),
-          _buildSearchBox(),
+          /*_buildSearchBox(),*/
+          _buildUpperContainer(),
           _buildContainer(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildUpperContainer() {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: Container(
+              margin: EdgeInsets.only(left: 5.0),
+              child: isDropDownSelected
+                  ? DropDownMainWidget(zoneList, (String value) {
+                      setState(() {
+                        filter = value;
+                      });
+                    }, filter)
+                  : _buildSearchBox(),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: isDropDownSelected
+                ? CreateSearchBtn(Icon(Icons.search))
+                : CreateSearchBtn(Icon(Icons.close)),
+          )
+        ],
+      ),
+    );
+  }
+
+  GestureDetector CreateSearchBtn(Icon icon) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if (isDropDownSelected)
+            isDropDownSelected = false;
+          else {
+            isDropDownSelected = true;
+            filter = null;
+          }
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.only(top: 5.0),
+        child: icon,
       ),
     );
   }
@@ -106,6 +159,10 @@ class _MainMapState extends State<MainMap> {
                             .contains(filter.toLowerCase()) ||
                         mapDetails[index]
                             .Address
+                            .toLowerCase()
+                            .contains(filter.toLowerCase()) ||
+                        mapDetails[index]
+                            .Zone
                             .toLowerCase()
                             .contains(filter.toLowerCase())
                     ? _boxes(
@@ -187,20 +244,17 @@ class _MainMapState extends State<MainMap> {
   }
 
   Widget _buildSearchBox() {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: Container(
-        margin: EdgeInsets.all(10.0),
-        decoration:
-            new BoxDecoration(shape: BoxShape.rectangle, color: Colors.white),
-        child: TextField(
-          decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-              labelText: "Name/Address",
-              hintText: "Search by name or Address(Jurong)"),
-          controller: controller,
-        ),
+    return Container(
+      margin: EdgeInsets.all(10.0),
+      decoration:
+          new BoxDecoration(shape: BoxShape.rectangle, color: Colors.white),
+      child: TextField(
+        decoration: InputDecoration(
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+            labelText: "Name/Address",
+            hintText: "Search by name or Address(Jurong)"),
+        controller: controller,
       ),
     );
   }

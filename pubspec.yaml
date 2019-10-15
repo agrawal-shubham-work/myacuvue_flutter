@@ -52,7 +52,7 @@ flutter:
   fonts:
     - family:  MyFlutterApp
       fonts:
-        - asset: assets/
+        - asset: assets\fonts\MyFlutterApp.ttf
 
   assets:
     - images/
