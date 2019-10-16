@@ -8,25 +8,27 @@ import 'package:my_acuvue_flutter/screens/refer_and_earn.dart';
 class CreateImageSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 200,
-      child: Carousel(
-        images: [
-          AssetImage("images/solace_banner.png"),
-          AssetImage("images/promotions1.jpg"),
-          AssetImage("images/promotions2.jpg"),
-          AssetImage("images/promotions3.jpg"),
-          AssetImage("images/promotions5.jpg"),
-        ],
-        onImageTap: (index) {
-          openNewPageForSelectedImage(index, context);
-        },
-        boxFit: BoxFit.fill,
-        autoplay: true,
-        autoplayDuration: Duration(seconds: 6),
-        animationCurve: Curves.fastOutSlowIn,
-        animationDuration: Duration(seconds: 4),
+    return Expanded(
+      flex: 2,
+      child: Container(
+        width: double.infinity,
+        child: Carousel(
+          images: [
+            AssetImage("images/solace_banner.png"),
+            AssetImage("images/promotions1.jpg"),
+            AssetImage("images/promotions2.jpg"),
+            AssetImage("images/promotions3.jpg"),
+            AssetImage("images/promotions5.jpg"),
+          ],
+          onImageTap: (index) {
+            openNewPageForSelectedImage(index, context);
+          },
+          boxFit: BoxFit.fill,
+          autoplay: true,
+          autoplayDuration: Duration(seconds: 6),
+          animationCurve: Curves.fastOutSlowIn,
+          animationDuration: Duration(seconds: 4),
+        ),
       ),
     );
   }

@@ -19,21 +19,21 @@
 				"Address": "2 HANDY ROAD #01-07 THE CATHAY, DHOBY GHAUT/ CENTRAL, DHOBY GHAUT/ CENTRAL",
                 "Lat": 1.299521,
                 "Long": 103.847612,
-                "Zone": "RIVER VALLEY"
+                "Zone": "DHOBY GHAUT"
         },
 		{
                 "Name": "PEARL'S OPTICAL CO P/L (PEOPLE'S PARK CENTRE)",
 				"Address": "Oscar Enterprise Mobile Phone Repair & Camera Service Centre, 101 Upper Cross St, #B1-18A, People's Park Centre, Singapore 058357",
                 "Lat": 1.285904,
                 "Long": 103.843991,
-                "Zone": "RIVER VALLEY"
+                "Zone": "PEOPLE'S PARK CENTER"
         },
 		{
                 "Name": "Spectacle Hut ( Great World City 2)",
 				"Address": "#01-130 Great World City, 1 Kim Seng Promenade Singapore 237994, River Valley, River Valley",
                 "Lat": 1.293609,
                 "Long": 103.832006,
-          "Zone": "RIVER VALLEY"
+                "Zone": "RIVER VALLEY"
         }
         
   ]

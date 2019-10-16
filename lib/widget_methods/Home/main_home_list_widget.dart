@@ -11,6 +11,7 @@ class MainHomeListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      flex: 3,
       child: ListView(
         scrollDirection: Axis.vertical,
         children: <Widget>[

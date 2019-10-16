@@ -28,7 +28,7 @@ class _MainRewardState extends State<MainReward> {
               ? createWalletContainer()
               : screenType == ScreenSelected.AcuvuewReward
                   ? AcuvueRewards()
-                  : createLifestyleRewardContainer(),
+                  : createLifestyleRewardContainer()
         ],
       ),
     );
@@ -46,14 +46,21 @@ class _MainRewardState extends State<MainReward> {
 
   Widget createWalletContainer() {
     return Expanded(
+      flex: 1,
       child: Container(
-        color: Colors.red,
+        padding: EdgeInsets.only(top: 20.0),
+        child: Text(
+          'No wallet coupon available',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 18.0, color: Color(0xFF013F7C)),
+        ),
       ),
     );
   }
 
   Widget createAcuvueRewardContainer() {
     return Expanded(
+      flex: 1,
       child: Container(
         color: Colors.greenAccent,
       ),

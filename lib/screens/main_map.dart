@@ -20,10 +20,10 @@ class _MainMapState extends State<MainMap> {
   Completer<GoogleMapController> _controller = Completer();
   Markers markers = Markers();
   List<MapData> mapDetails = [];
-  List<String> zones = [];
-  bool isDropDownSelected = true;
+  List<String> zoneList = [];
   TextEditingController controller = TextEditingController();
   String filter;
+  bool isDropDownSelected = true;
   Future<String> _loadMapData() async {
     return await rootBundle.loadString('assets/map.json');
   }
@@ -37,9 +37,8 @@ class _MainMapState extends State<MainMap> {
     for (var mapData in jsonResponse['Location']) {
       MapData data = MapData(mapData['Lat'], mapData['Long'], mapData['Name'],
           mapData['Address'], mapData['Zone']);
-      if (zones.isEmpty || !zones.contains(mapData['Zone'])) {
-        zones.add(mapData['Zone']);
-      }
+      if (zoneList.isEmpty || !zoneList.contains(mapData['Zone']))
+        zoneList.add(mapData['Zone']);
       item.add(data);
     }
 
@@ -80,13 +79,8 @@ class _MainMapState extends State<MainMap> {
       body: Stack(
         children: <Widget>[
           _buildGoogleMap(context),
+          /*_buildSearchBox(),*/
           _buildUpperContainer(),
-          /*_buildSearchBox(),
-          DropDownMainWidget(zones, (String value) {
-            setState(() {
-              filter = value;
-            });
-          }, filter),*/
           _buildContainer(),
         ],
       ),
@@ -95,54 +89,52 @@ class _MainMapState extends State<MainMap> {
 
   Widget _buildUpperContainer() {
     return Align(
-        alignment: Alignment.topCenter,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 9,
-              child: Container(
-                margin: EdgeInsets.all(5.0),
-                child: isDropDownSelected
-                    ? DropDownMainWidget(zones, (String value) {
-                        setState(() {
-                          filter = value;
-                        });
-                      }, filter)
-                    : _buildSearchBox(),
-              ),
+      alignment: Alignment.topCenter,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Container(
+              margin: EdgeInsets.only(left: 5.0),
+              child: isDropDownSelected
+                  ? DropDownMainWidget(zoneList, (String value) {
+                      setState(() {
+                        filter = value;
+                      });
+                    }, filter)
+                  : _buildSearchBox(),
             ),
-            Expanded(
-              flex: 1,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (isDropDownSelected)
-                      isDropDownSelected = false;
-                    else {
-                      isDropDownSelected = true;
-                      filter = null;
-                    }
-                  });
-                },
-                child: isDropDownSelected
-                    ? CreateSearchIcon(Icon(Icons.search))
-                    : CreateSearchIcon(Icon(Icons.cancel)),
-              ),
-            )
-          ],
-        ));
+          ),
+          isDropDownSelected
+              ? CreateSearchBtn(Icon(Icons.search))
+              : CreateSearchBtn(Icon(Icons.close))
+        ],
+      ),
+    );
   }
 
-  Container CreateSearchIcon(Icon icon) {
-    return Container(
-      margin: EdgeInsets.only(top: 5.0),
-      child: icon,
+  GestureDetector CreateSearchBtn(Icon icon) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if (isDropDownSelected)
+            isDropDownSelected = false;
+          else {
+            isDropDownSelected = true;
+            filter = null;
+          }
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.all(10.0),
+        child: icon,
+      ),
     );
   }
 
   Widget _buildContainer() {
     return Align(
-      alignment: Alignment.bottomCenter,
+      alignment: Alignment.bottomLeft,
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 20.0),
         height: 150.0,
