@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/widget_methods/WebViews/local_file_web_view.dart';
 
-class TermsOfUse extends StatelessWidget {
-  static const String routeName = '/termsofuse';
+class AboutMyACUVUE extends StatelessWidget {
+  static const String routeName = '/about2myacuvue';
   @override
   Widget build(BuildContext context) {
-    return LocalAssetWebView("Terms of Use", "assets/TermsOfUse.html");
+    return LocalAssetWebView("About MyACUVUE", "assets/AboutMyACUVUE.html");
   }
 }

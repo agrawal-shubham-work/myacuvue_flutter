@@ -9,6 +9,8 @@ import 'package:my_acuvue_flutter/screens/promotion_bannner.dart';
 import 'package:my_acuvue_flutter/screens/promotions_and_events_web.dart';
 import 'package:my_acuvue_flutter/screens/refer_and_earn.dart';
 import 'package:my_acuvue_flutter/screens/settings.dart';
+import 'package:my_acuvue_flutter/widget_methods/About/about_my_acuvue.dart';
+import 'package:my_acuvue_flutter/widget_methods/About/privacy_policy.dart';
 import 'package:my_acuvue_flutter/widget_methods/About/terms_of_use.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/AcuvueReward/reward%20Slider.dart';
 import 'screens/home.dart';
@@ -46,6 +48,8 @@ class MyApp extends StatelessWidget {
         RewardsSlider.routeName: (BuildContext context) =>
             RewardsSlider("images/promotions1.jpg", "\$20", "2000"),
         TermsOfUse.routeName: (BuildContext context) => TermsOfUse(),
+        AboutMyACUVUE.routeName: (BuildContext context) => AboutMyACUVUE(),
+        PrivacyPolicy.routeName: (BuildContext context) => PrivacyPolicy(),
       },
     );
   }
