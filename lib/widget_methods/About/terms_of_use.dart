@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/widget_methods/WebViews/WebViewContainer.dart';
+import 'package:my_acuvue_flutter/widget_methods/WebViews/local_file_web_view.dart';
 
 class TermsOfUse extends StatelessWidget {
   static const String routeName = '/termsofuse';
@@ -9,7 +9,7 @@ class TermsOfUse extends StatelessWidget {
       appBar: AppBar(
         title: Text('Terms of Use'),
       ),
-      body: webViewCreate("assets/TermsOfUse.html"),
+      body: LocalAssetWebView(),
     );
   }
 }
