@@ -15,7 +15,8 @@ class DropDownMainWidget extends StatelessWidget {
         height: 50.0,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(7.0),
-            border: Border.all(color: Colors.grey)),
+            border: Border.all(color: Colors.grey),
+            color: Colors.white),
         child: Padding(
           padding: EdgeInsets.all(10.0),
           child: selectedAndroidPicker(
