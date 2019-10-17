@@ -78,6 +78,7 @@ const kFormHeadingStyle = TextStyle(color: Color(0xFF013F7C));
 const kAboutText = TextStyle(fontSize: 16.0, color: Color(0xFf013F7C));
 const List<String> genderList = ['Male', 'Female', 'Others'];
 const List<String> spectacleList = ['Yes', 'No'];
+const List<String> quantityList = ['1', '2', '3'];
 const List<String> contactLenseList = [
   'Yes, Acuvue Brand',
   'Yes, Other Brand',

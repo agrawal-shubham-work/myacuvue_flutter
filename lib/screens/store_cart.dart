@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
+import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/main_upper_container_for_reward_and_cart.dart';
 
 class Cart extends StatefulWidget {
@@ -9,6 +10,7 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  String selectedValue = "1";
   final Color darkBlueColor = Color(0xFF013F7C);
   final Color lightRegularColor = Color(0xFF5F86B4);
   @override
@@ -54,53 +56,83 @@ class _CartState extends State<Cart> {
   }
 
   Widget createCartList(int index) {
-    return Column(
-      children: <Widget>[
-        Container(
-          height: 150.0,
-          margin: EdgeInsets.all(5.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
+    return Container(
+      margin: EdgeInsets.all(5.0),
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 150.0,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                    flex: 2,
+                    child: Container(
+                        padding: EdgeInsets.all(5.0),
+                        child: Image.asset(
+                          GlobalVariable
+                              .lifeStyleRewardList[index].productImage,
+                          fit: BoxFit.cover,
+                        ))),
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    padding: EdgeInsets.all(5.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Text(GlobalVariable
+                            .lifeStyleRewardList[index].productName),
+                        Text(GlobalVariable
+                            .lifeStyleRewardList[index].productPoints),
+                        Text(
+                          GlobalVariable.lifeStyleRewardList[index].productDesc,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Row(
             children: <Widget>[
               Expanded(
-                  flex: 2,
-                  child: Container(
-                      padding: EdgeInsets.all(5.0),
-                      child: Image.asset(
-                        GlobalVariable.lifeStyleRewardList[index].productImage,
-                        fit: BoxFit.cover,
-                      ))),
-              Expanded(
                 flex: 3,
-                child: Container(
-                  padding: EdgeInsets.all(5.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text(GlobalVariable
-                          .lifeStyleRewardList[index].productName),
-                      Text(GlobalVariable
-                          .lifeStyleRewardList[index].productPoints),
-                      Text(
-                        GlobalVariable.lifeStyleRewardList[index].productDesc,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                child: DropdownButton<String>(
+                  style: TextStyle(
+                    color: Color(0xFf013F7C),
+                  ),
+                  value: selectedValue,
+                  items: quantityList.map((String value) {
+                    return new DropdownMenuItem<String>(
+                      value: value,
+                      child: new Text(value),
+                    );
+                  }).toList(),
+                  isExpanded: true,
+                  onChanged: (String value) {
+                    setState(() {
+                      selectedValue = value;
+                    });
+                  },
+                ),
+              ),
+              Expanded(
+                child: FlatButton(
+                  child: Icon(
+                    Icons.delete_forever,
+                    color: Color(0xFf013F7C),
                   ),
                 ),
               )
             ],
-          ),
-        ),
-        Row(
-          children: <Widget>[
-            _createCartBtn('Remove', lightRegularColor),
-            _createCartBtn('Update', darkBlueColor),
-          ],
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 
