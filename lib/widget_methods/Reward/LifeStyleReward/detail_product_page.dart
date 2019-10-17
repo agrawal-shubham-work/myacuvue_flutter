@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/lifestyle_reward_model.dart';
+import 'package:my_acuvue_flutter/screens/store_cart.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 
@@ -13,9 +14,11 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       appBar: AppBar(
         title: Text(widget.modelList.productName),
       ),
@@ -55,11 +58,37 @@ class _ProductDetailsState extends State<ProductDetails> {
                       } else {
                         if (GlobalVariable.lifeStyleRewardList
                             .contains(widget.modelList)) {
+                          final snackbar = SnackBar(
+                            content: Text('Product already in Cart'),
+                            action: SnackBarAction(
+                              label: 'Go to Cart',
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Cart()));
+                              },
+                            ),
+                          );
+                          _scaffoldkey.currentState.showSnackBar(snackbar);
                         } else {
                           GlobalVariable.lifeStyleRewardList
                               .add(widget.modelList);
                         }
                       }
+                      final snackbar = SnackBar(
+                        content: Text('Product Added to Cart'),
+                        action: SnackBarAction(
+                          label: 'Go to Cart',
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Cart()));
+                          },
+                        ),
+                      );
+                      _scaffoldkey.currentState.showSnackBar(snackbar);
                     },
                     child: Text(
                       'Add to cart',
