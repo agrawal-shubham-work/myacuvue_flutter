@@ -13,6 +13,7 @@ import 'package:my_acuvue_flutter/widget_methods/About/about_my_acuvue.dart';
 import 'package:my_acuvue_flutter/widget_methods/About/privacy_policy.dart';
 import 'package:my_acuvue_flutter/widget_methods/About/terms_of_use.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/AcuvueReward/reward%20Slider.dart';
+import 'package:my_acuvue_flutter/widget_methods/Reward/LifeStyleReward/life_style_reward.dart';
 import 'screens/home.dart';
 import 'screens/eye_care_center_web.dart';
 import 'screens/trial.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         TermsOfUse.routeName: (BuildContext context) => TermsOfUse(),
         AboutMyACUVUE.routeName: (BuildContext context) => AboutMyACUVUE(),
         PrivacyPolicy.routeName: (BuildContext context) => PrivacyPolicy(),
+        LifeStyleReward.routeName: (BuildContext context) => LifeStyleReward(),
       },
     );
   }

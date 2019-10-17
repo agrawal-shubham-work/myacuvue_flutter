@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/AcuvueReward/acuvue_rewards.dart';
+import 'package:my_acuvue_flutter/widget_methods/Reward/LifeStyleReward/life_style_reward.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/reward_btn_widget.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/uper_container_reward.dart';
 
@@ -28,7 +29,7 @@ class _MainRewardState extends State<MainReward> {
               ? createWalletContainer()
               : screenType == ScreenSelected.AcuvuewReward
                   ? AcuvueRewards()
-                  : createLifestyleRewardContainer()
+                  : LifeStyleReward(),
         ],
       ),
     );

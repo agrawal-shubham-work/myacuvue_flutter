@@ -1,0 +1,40 @@
+{
+  "Product": [
+    {
+      "image": "images/3dollar.png",
+      "name": "Gone Cha $3 Voucher",
+      "points": "1000",
+      "desc": "Enjoy $3 Gong Cha nubble tea"
+    },
+    {
+      "image": "images/guardian.png",
+      "name": "Guardian $3 E-code",
+      "points": "1000",
+      "desc": "Enjoy $3 off Guardian online Purchase"
+    },
+    {
+      "image": "images/liho.png",
+      "name": "LIHO $4.50 Voucher",
+      "points": "1500",
+      "desc": "Enjoy $4.50 off LIHO bubble tea "
+    },
+    {
+      "image": "images/grabfood.png",
+      "name": "GrabFood $5 E-code",
+      "points": "1700",
+      "desc": "Enjoy $5 off your Grab food delivery"
+    },
+    {
+      "image": "images/gv.png",
+      "name": "GV Gift Voucher",
+      "points": "3500",
+      "desc": "Redeem a movie session today"
+    },
+    {
+      "image": "images/ezlink.png",
+      "name": "$20 EZ-Link Card",
+      "points": "6700",
+      "desc": "Enjoy $20 EZ-Link card stored value "
+    }
+  ]
+}
