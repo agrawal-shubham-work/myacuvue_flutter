@@ -13,6 +13,7 @@ import 'package:my_acuvue_flutter/screens/refer_and_earn.dart';
 import 'package:my_acuvue_flutter/screens/settings.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/assets/my_flutter_app_icons.dart';
+import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'trial.dart';
 
 class Home extends StatefulWidget {
@@ -146,6 +147,14 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text("MyAcuvue™"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              print(GlobalVariable.lifeStyleRewardList.length);
+            },
+          )
+        ],
       ),
       body: tabs[currentTabIndex],
       drawer: SafeArea(child: getNavDrawer(context)),

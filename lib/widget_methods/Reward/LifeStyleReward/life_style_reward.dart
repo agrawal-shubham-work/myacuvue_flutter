@@ -39,7 +39,6 @@ class _LifeStyleRewardState extends State<LifeStyleReward> {
         lisfestyleRewardList.addAll(values);
       });
     });
-    print(lisfestyleRewardList.length);
     super.initState();
   }
 

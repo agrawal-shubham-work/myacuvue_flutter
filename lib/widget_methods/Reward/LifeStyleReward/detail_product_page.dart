@@ -60,6 +60,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               .toLowerCase()
                               .contains(
                                   widget.modelList.productName.toLowerCase())) {
+                            break;
                           } else {
                             GlobalVariable.lifeStyleRewardList
                                 .add(widget.modelList);
