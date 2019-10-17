@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/AcuvueReward/acuvue_rewards.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/LifeStyleReward/life_style_reward.dart';
+import 'package:my_acuvue_flutter/widget_methods/Reward/main_upper_container_for_reward_and_cart.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/reward_btn_widget.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/uper_container_reward.dart';
 
@@ -23,7 +24,7 @@ class _MainRewardState extends State<MainReward> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          upperContainer(),
+          UpperContainer(),
           btnContainer(),
           screenType == ScreenSelected.Wallet
               ? createWalletContainer()
@@ -32,16 +33,6 @@ class _MainRewardState extends State<MainReward> {
                   : LifeStyleReward(),
         ],
       ),
-    );
-  }
-
-  Widget upperContainer() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        upperContainerWidget('Available points :', '0'),
-        upperContainerWidget('0 points expiring on ', 'Sep 29, 2019'),
-      ],
     );
   }
 

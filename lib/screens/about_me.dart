@@ -1,11 +1,16 @@
+import 'package:my_acuvue_flutter/screens/home.dart';
+import 'package:my_acuvue_flutter/widget_methods/About/terms_of_use.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/text_form_field_main_widget.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/text_form_field_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/datetimepicker.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/checkbox.dart';
+import 'package:my_acuvue_flutter/widget_methods/Notifications/local_notifications_helper.dart';
 import 'package:my_acuvue_flutter/widget_methods/para_style_widget.dart';
 
 class AboutMe extends StatefulWidget {
@@ -15,6 +20,7 @@ class AboutMe extends StatefulWidget {
 }
 
 class _AboutMeState extends State<AboutMe> {
+  var notifications = new FlutterLocalNotificationsPlugin();
   TextEditingController _firstNameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _nricController = TextEditingController();
@@ -63,7 +69,16 @@ class _AboutMeState extends State<AboutMe> {
   void initState() {
     validateFields();
     super.initState();
+    var settingAndroid = new AndroidInitializationSettings('app_icon');
+    var settingIOS = new IOSInitializationSettings(
+        onDidReceiveLocalNotification: (id, title, body, payload) =>
+            onSelectNotification(payload));
+    notifications.initialize(InitializationSettings(settingAndroid, settingIOS),
+        onSelectNotification: onSelectNotification);
   }
+
+  Future onSelectNotification(String payload) async =>
+      await Navigator.of(context).pushNamed(Home.route);
 
   @override
   Widget build(BuildContext context) {
@@ -195,9 +210,15 @@ class _AboutMeState extends State<AboutMe> {
                     child: Container(
                       margin: EdgeInsets.all(5.0),
                       color: Colors.grey,
-                      child: FlatButton(
+                      child: RaisedButton(
+                        onPressed: () {
+                          showOngoingNotification(notifications,
+                              title: "Registration",
+                              body:
+                                  "Complete Registration now to enjoy all the benefits.");
+                        },
                         child: Text(
-                          'Cancel',
+                          'Skip',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

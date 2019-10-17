@@ -11,8 +11,8 @@ import 'package:my_acuvue_flutter/screens/notification.dart';
 import 'package:my_acuvue_flutter/screens/promotions_and_events_web.dart';
 import 'package:my_acuvue_flutter/screens/refer_and_earn.dart';
 import 'package:my_acuvue_flutter/screens/settings.dart';
+import 'package:my_acuvue_flutter/screens/store_cart.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
-import 'package:my_acuvue_flutter/assets/my_flutter_app_icons.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'trial.dart';
 
@@ -62,8 +62,8 @@ class _HomeState extends State<Home> {
       getNavItem(Icons.face, "My Profile", AboutMe.routeName),
       getNavItem(
           Icons.remove_red_eye, "Eye Care Center", SplashScreen.routeName),
-      getNavItem(MyFlutterApp.promotion, "Promotion and Events",
-          PromotionsAndEvents.routeName),
+      getNavItem(
+          Icons.home, "Promotion and Events", PromotionsAndEvents.routeName),
       getNavItem(Icons.attach_money, "Refer and Earn", ReferAndEarn.routeName),
       getNavItem(Icons.card_giftcard, "Membership", Membership.routeName),
       getNavItem(Icons.home, "About MyAcuvue", AboutMyAcuvue.routeName),
@@ -151,7 +151,8 @@ class _HomeState extends State<Home> {
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
-              print(GlobalVariable.lifeStyleRewardList.length);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Cart()));
             },
           )
         ],
