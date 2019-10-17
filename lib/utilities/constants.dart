@@ -64,6 +64,7 @@ const kStoreAddress = TextStyle(
   fontSize: 16.0,
   color: Color(0xFF013F7C),
 );
+const kCartPointsText = TextStyle(fontSize: 14.0, color: Colors.blueGrey);
 
 const kRegisterStoreHeading = TextStyle(fontSize: 18.0, color: Colors.blueGrey);
 const kTermsHeading = TextStyle(fontSize: 14.0, color: Colors.grey);
