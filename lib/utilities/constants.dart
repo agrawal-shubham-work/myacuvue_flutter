@@ -22,6 +22,10 @@ final mCheckPrivacyPara1 =
     'I agree to the Terms and Conditions and the Privacy Notice above.';
 final mCheckPrivacyPara2 =
     'I agree to receive exclusive offers, news and promotional material about ACUVUE products.';
+final mTermsSubHeading1 = '-Not applicable with other promotion or discont';
+final mTermsSubHeading2 =
+    '-Valid for one time usage on all Grab rides(except Grabitch and GrabShuttle)';
+final mTermsSubHeading3 = '-Valid for use in Singapore only';
 
 const kDrawerTextStyle = TextStyle(
   fontSize: 14.0,
@@ -61,7 +65,9 @@ const kStoreAddress = TextStyle(
   color: Color(0xFF013F7C),
 );
 
-const kRegisterStoreHeading = TextStyle(fontSize: 18.0, color: Colors.grey);
+const kRegisterStoreHeading = TextStyle(fontSize: 18.0, color: Colors.blueGrey);
+const kTermsHeading = TextStyle(fontSize: 14.0, color: Colors.grey);
+const kTermsSubHeading = TextStyle(fontSize: 11.0, color: Colors.grey);
 const kRegisterStoreSubHeading = TextStyle(
   fontSize: 18.0,
   color: Color(0xFF013F7C),

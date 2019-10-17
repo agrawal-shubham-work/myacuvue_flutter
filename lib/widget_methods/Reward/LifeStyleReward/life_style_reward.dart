@@ -89,18 +89,24 @@ class _LifeStyleRewardState extends State<LifeStyleReward> {
                       padding: EdgeInsets.all(5.0),
                       child: Image.asset(
                         lisfestyleRewardList[index].productImage,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ))),
-              Container(
-                padding: EdgeInsets.all(5.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text(lisfestyleRewardList[index].productName),
-                    Text(lisfestyleRewardList[index].productPoints),
-                    Text(lisfestyleRewardList[index].productDesc),
-                  ],
+              Expanded(
+                flex: 3,
+                child: Container(
+                  padding: EdgeInsets.all(5.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text(lisfestyleRewardList[index].productName),
+                      Text(lisfestyleRewardList[index].productPoints),
+                      Text(
+                        lisfestyleRewardList[index].productDesc,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               )
             ],
