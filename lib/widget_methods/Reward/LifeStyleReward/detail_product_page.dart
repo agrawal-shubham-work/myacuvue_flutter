@@ -48,23 +48,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                   color: Color(0xFf013F7C),
                   child: FlatButton(
                     onPressed: () {
+                      print(GlobalVariable.lifeStyleRewardList);
                       if (GlobalVariable.lifeStyleRewardList.length == 0) {
                         GlobalVariable.lifeStyleRewardList
                             .add(widget.modelList);
                       } else {
-                        for (int index = 0;
-                            index < GlobalVariable.lifeStyleRewardList.length;
-                            index++) {
-                          if (GlobalVariable
-                              .lifeStyleRewardList[index].productName
-                              .toLowerCase()
-                              .contains(
-                                  widget.modelList.productName.toLowerCase())) {
-                            break;
-                          } else {
-                            GlobalVariable.lifeStyleRewardList
-                                .add(widget.modelList);
-                          }
+                        if (GlobalVariable.lifeStyleRewardList
+                            .contains(widget.modelList)) {
+                        } else {
+                          GlobalVariable.lifeStyleRewardList
+                              .add(widget.modelList);
                         }
                       }
                     },
