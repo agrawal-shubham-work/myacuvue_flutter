@@ -26,11 +26,21 @@ final mTermsSubHeading1 = '-Not applicable with other promotion or discont';
 final mTermsSubHeading2 =
     '-Valid for one time usage on all Grab rides(except Grabitch and GrabShuttle)';
 final mTermsSubHeading3 = '-Valid for use in Singapore only';
+final mVipText =
+    'Upgrade to VIP member when you accumulated 6,000 points in one year via MyACUVUE';
+final mVipFinalText =
+    'Earn points with every ACUVUE purchase to redeem an array of ACUVUE and lifestyle rewards';
 
+final Color darkBlueColor = Color(0xFF013F7C);
+final Color lightRegularColor = Color(0xFF5F86B4);
+const kVipText = TextStyle(fontSize: 14.0, color: Color(0xFF013F7C));
+const kMembershipHeading = TextStyle(
+    fontSize: 14.0, color: Color(0xFF013F7C), fontWeight: FontWeight.w900);
+const kVipFinalText = TextStyle(fontSize: 14.0, color: Colors.grey);
 const kDrawerTextStyle = TextStyle(
-  fontSize: 14.0,
-  color: Color(0xFF013F7C),
-);
+    fontSize: 14.0, color: Color(0xFF013F7C), fontWeight: FontWeight.w100);
+const kVipHeading = TextStyle(
+    color: Color(0xFF013F7C), fontSize: 14.0, fontWeight: FontWeight.w900);
 const kMandatorySign = TextStyle(color: Colors.red);
 const kPrivacyHeading = TextStyle(
     color: Color(0xFF013F7C), fontSize: 16.0, fontWeight: FontWeight.w900);

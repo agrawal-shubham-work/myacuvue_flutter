@@ -10,8 +10,7 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   String selectedValue = "1";
-  final Color darkBlueColor = Color(0xFF013F7C);
-  final Color lightRegularColor = Color(0xFF5F86B4);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

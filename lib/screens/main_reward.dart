@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/AcuvueReward/acuvue_rewards.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/LifeStyleReward/life_style_reward.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/main_upper_container_for_reward_and_cart.dart';
@@ -39,12 +40,11 @@ class _MainRewardState extends State<MainReward> {
   Widget createWalletContainer() {
     return Expanded(
       flex: 1,
-      child: Container(
-        padding: EdgeInsets.only(top: 20.0),
+      child: Center(
         child: Text(
           'No wallet coupon available',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18.0, color: Color(0xFF013F7C)),
+          style: TextStyle(fontSize: 18.0, color: Colors.grey),
         ),
       ),
     );
@@ -73,15 +73,27 @@ class _MainRewardState extends State<MainReward> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          RewardBtnWidget('Wallet', () {
-            _selectedState(ScreenSelected.Wallet);
-          }),
-          RewardBtnWidget('ACUVUE Rewards', () {
-            _selectedState(ScreenSelected.AcuvuewReward);
-          }),
-          RewardBtnWidget('Lifestyle Rewards', () {
-            _selectedState(ScreenSelected.LifestyleReward);
-          }),
+          screenType == ScreenSelected.Wallet
+              ? RewardBtnWidget('Wallet', darkBlueColor, () {
+                  _selectedState(ScreenSelected.Wallet);
+                })
+              : RewardBtnWidget('Wallet', lightRegularColor, () {
+                  _selectedState(ScreenSelected.Wallet);
+                }),
+          screenType == ScreenSelected.AcuvuewReward
+              ? RewardBtnWidget('ACUVUE Rewards', darkBlueColor, () {
+                  _selectedState(ScreenSelected.AcuvuewReward);
+                })
+              : RewardBtnWidget('ACUVUE Rewards', lightRegularColor, () {
+                  _selectedState(ScreenSelected.AcuvuewReward);
+                }),
+          screenType == ScreenSelected.LifestyleReward
+              ? RewardBtnWidget('Lifestyle Rewards', darkBlueColor, () {
+                  _selectedState(ScreenSelected.LifestyleReward);
+                })
+              : RewardBtnWidget('Lifestyle Rewards', lightRegularColor, () {
+                  _selectedState(ScreenSelected.LifestyleReward);
+                }),
         ],
       ),
     );
