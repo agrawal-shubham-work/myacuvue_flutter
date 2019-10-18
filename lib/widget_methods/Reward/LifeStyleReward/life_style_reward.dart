@@ -24,7 +24,7 @@ class _LifeStyleRewardState extends State<LifeStyleReward> {
 
     for (var productData in jsonResponse['Product']) {
       LifestyleRewardModel data = LifestyleRewardModel(productData['image'],
-          productData['name'], productData['points'], productData['desc']);
+          productData['name'], productData['points'], productData['desc'], "1");
 
       item.add(data);
     }

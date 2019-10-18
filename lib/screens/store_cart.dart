@@ -56,81 +56,119 @@ class _CartState extends State<Cart> {
 
   Widget createCartList(int index) {
     return Container(
-      margin: EdgeInsets.all(5.0),
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: 150.0,
-            child: Row(
+      margin: EdgeInsets.all(10.0),
+      child: Card(
+        elevation: 8,
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 150.0,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                      flex: 2,
+                      child: Container(
+                          padding: EdgeInsets.all(5.0),
+                          child: Image.asset(
+                            GlobalVariable
+                                .lifeStyleRewardList[index].productImage,
+                            fit: BoxFit.cover,
+                          ))),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      padding: EdgeInsets.all(5.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Text(GlobalVariable
+                              .lifeStyleRewardList[index].productName),
+                          Text(GlobalVariable
+                              .lifeStyleRewardList[index].productPoints),
+                          Text(
+                            GlobalVariable
+                                .lifeStyleRewardList[index].productDesc,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                    flex: 2,
-                    child: Container(
-                        padding: EdgeInsets.all(5.0),
-                        child: Image.asset(
-                          GlobalVariable
-                              .lifeStyleRewardList[index].productImage,
-                          fit: BoxFit.cover,
-                        ))),
-                Expanded(
-                  flex: 3,
                   child: Container(
-                    padding: EdgeInsets.all(5.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(GlobalVariable
-                            .lifeStyleRewardList[index].productName),
-                        Text(GlobalVariable
-                            .lifeStyleRewardList[index].productPoints),
-                        Text(
-                          GlobalVariable.lifeStyleRewardList[index].productDesc,
-                          textAlign: TextAlign.center,
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 5.0, horizontal: 10.0),
+                          padding: EdgeInsets.all(2.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(5.0)),
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('Qnty'),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                                child: DropdownButton<String>(
+                                  style: TextStyle(
+                                    color: Color(0xFf013F7C),
+                                  ),
+                                  value:
+                                      "${GlobalVariable.lifeStyleRewardList[index].productQuantity}",
+                                  items: quantityList.map((String value) {
+                                    return new DropdownMenuItem<String>(
+                                      value: value,
+                                      child: new Text(value),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String value) {
+                                    setState(() {
+                                      GlobalVariable.lifeStyleRewardList[index]
+                                          .productQuantity = value;
+                                      print(GlobalVariable
+                                          .lifeStyleRewardList[index]
+                                          .productQuantity);
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                        FlatButton(
+                          onPressed: () {
+                            setState(() {
+                              GlobalVariable.lifeStyleRewardList
+                                  .removeAt(index);
+                            });
+                          },
+                          child: Icon(
+                            Icons.delete_forever,
+                            color: Color(0xFF013F7C),
+                          ),
+                        )
                       ],
                     ),
                   ),
-                )
+                ),
               ],
-            ),
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                flex: 3,
-                child: DropdownButton<String>(
-                  style: TextStyle(
-                    color: Color(0xFf013F7C),
-                  ),
-                  value: selectedValue,
-                  items: quantityList.map((String value) {
-                    return new DropdownMenuItem<String>(
-                      value: value,
-                      child: new Text(value),
-                    );
-                  }).toList(),
-                  isExpanded: true,
-                  onChanged: (String value) {
-                    setState(() {
-                      selectedValue = value;
-                    });
-                  },
-                ),
-              ),
-              Expanded(
-                child: FlatButton(
-                  child: Icon(
-                    Icons.delete_forever,
-                    color: Color(0xFf013F7C),
-                  ),
-                ),
-              )
-            ],
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
