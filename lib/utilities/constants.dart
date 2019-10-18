@@ -37,6 +37,7 @@ const kVipText = TextStyle(fontSize: 14.0, color: Color(0xFF013F7C));
 const kMembershipHeading = TextStyle(
     fontSize: 14.0, color: Color(0xFF013F7C), fontWeight: FontWeight.w900);
 const kVipFinalText = TextStyle(fontSize: 14.0, color: Colors.grey);
+const kSettingText = TextStyle(fontSize: 18.0, color: Colors.grey);
 const kDrawerTextStyle = TextStyle(
     fontSize: 14.0, color: Color(0xFF013F7C), fontWeight: FontWeight.w100);
 const kVipHeading = TextStyle(
@@ -61,7 +62,8 @@ const kReferSubPara = TextStyle(
 );
 
 const kRewardTerms = TextStyle(fontSize: 18.0, color: Color(0xFF013F7C));
-
+const kSettingsHeading = TextStyle(
+    fontSize: 18.0, color: Color(0xFF013F7C), fontWeight: FontWeight.w900);
 const kRewardsHeading = TextStyle(fontSize: 24.0, color: Color(0xFf013F7C));
 const kRewardsSubHeading = TextStyle(fontSize: 20.0, color: Color(0xFf013F7C));
 const kReferBtn =
