@@ -16,17 +16,13 @@ class _NotificationsState extends State<Notifications> {
       appBar: AppBar(
         title: Text('Notifications'),
       ),
-      body: GlobalVariable.notificationList.length == 0
-          ? Container(
-              child: Center(
-                child: Text(
-                  'No Notifications',
-                  style: kRewardTerms,
-                ),
-              ),
-            )
-          : createNotificationBox(),
+      body: createNotificationBox(),
       floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            GlobalVariable.notificationList.clear();
+          });
+        },
         child: Icon(Icons.delete),
       ),
     );

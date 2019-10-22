@@ -10,21 +10,25 @@ class createNotificationBox extends StatefulWidget {
 class _createNotificationBoxState extends State<createNotificationBox> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      itemCount: GlobalVariable.notificationList.length,
-      itemBuilder: (BuildContext context, int index) {
-        return createBox(index);
-      },
-    );
+    return GlobalVariable.notificationList.length == 0
+        ? Container(
+            child: Center(
+              child: Text(
+                'No Notification',
+                style: kRewardTerms,
+              ),
+            ),
+          )
+        : ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: GlobalVariable.notificationList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return createBox(index);
+            },
+          );
   }
-}
 
-class createBox extends StatelessWidget {
-  final int index;
-  createBox(this.index);
-  @override
-  Widget build(BuildContext context) {
+  Widget createBox(int index) {
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -67,10 +71,16 @@ class createBox extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 1,
-            child: Icon(
-              Icons.delete,
-              color: darkBlueColor,
+            child: FlatButton(
+              onPressed: () {
+                setState(() {
+                  GlobalVariable.notificationList.removeAt(index);
+                });
+              },
+              child: Icon(
+                Icons.delete_forever,
+                color: Color(0xFF013F7C),
+              ),
             ),
           ),
         ],
