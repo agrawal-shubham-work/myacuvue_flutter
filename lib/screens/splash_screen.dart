@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/screens/home.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
 
@@ -149,9 +150,11 @@ class _SplashScreenState extends State<SplashScreen> {
                                             );
                                           }).toList(),
                                           onChanged: (String value) {
-                                            setState(() {
-                                              sgpCodes = value;
-                                            });
+                                            setState(
+                                              () {
+                                                sgpCodes = value;
+                                              },
+                                            );
                                           },
                                         ),
                                       ),
@@ -183,6 +186,12 @@ class _SplashScreenState extends State<SplashScreen> {
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
               color: darkBlueColor,
               child: FlatButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Home("MyAcuvue")));
+                },
                 child: Text(
                   'Send Verification OTP',
                   style: kReferBtn,
@@ -213,7 +222,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Widget numberRowContainer(String text) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5.0),
+      margin: EdgeInsets.symmetric(horizontal: 10.0),
       child: Text(
         text,
         style: kRewardTerms,
