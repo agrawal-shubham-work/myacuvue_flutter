@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/utilities/global_variable.dart';
+import 'package:my_acuvue_flutter/widget_methods/Notifications/notificationbox.dart';
 
 class Notifications extends StatefulWidget {
   static const String routeName = '/notifications';
@@ -9,6 +12,23 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Notifications'),
+      ),
+      body: GlobalVariable.notificationList.length == 0
+          ? Container(
+              child: Center(
+                child: Text(
+                  'No Notifications',
+                  style: kRewardTerms,
+                ),
+              ),
+            )
+          : createNotificationBox(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.delete),
+      ),
+    );
   }
 }
