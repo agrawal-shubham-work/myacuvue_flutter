@@ -30,9 +30,9 @@ class MyApp extends StatelessWidget {
       theme: Theme.of(context).copyWith(
         primaryColor: Color(0xFF013F7C),
       ),
-      home: Home(),
+      home: Home("MyACUVUE"),
       routes: <String, WidgetBuilder>{
-        Home.route: (BuildContext context) => Home(),
+        Home.route: (BuildContext context) => Home("MyACUVUE"),
         AboutMe.routeName: (BuildContext context) => AboutMe(),
         AboutMyAcuvue.routeName: (BuildContext context) => AboutMyAcuvue(),
         Settings.routeName: (BuildContext context) => Settings(),

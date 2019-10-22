@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/datetimepicker.dart';
 import 'package:my_acuvue_flutter/notification_model.dart' as Inside;
 import 'package:my_acuvue_flutter/screens/home.dart';
@@ -79,7 +80,7 @@ class _AboutMeState extends State<AboutMe> {
   }
 
   Future onSelectNotification(String payload) async =>
-      await Navigator.of(context).pushNamed(Home.route);
+      await Navigator.of(context).pushNamed(AboutMe.routeName);
 
   @override
   Widget build(BuildContext context) {
@@ -209,13 +210,14 @@ class _AboutMeState extends State<AboutMe> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                      margin: EdgeInsets.all(5.0),
+                      margin: EdgeInsets.only(right: 5.0),
                       color: Colors.grey,
-                      child: RaisedButton(
+                      child: FlatButton(
                         onPressed: () {
                           var now = DateTime.now();
                           String moth = checkDate(now.month);
-                          String date = "$moth ${now.day}, ${now.year}";
+                          String date =
+                              "$moth ${now.day}, ${now.year} ${DateFormat("H:m:s").format(now)}";
 
                           Inside.Notification notificaions = Inside.Notification(
                               "Registration",

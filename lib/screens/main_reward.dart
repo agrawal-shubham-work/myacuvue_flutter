@@ -4,7 +4,6 @@ import 'package:my_acuvue_flutter/widget_methods/Reward/AcuvueReward/acuvue_rewa
 import 'package:my_acuvue_flutter/widget_methods/Reward/LifeStyleReward/life_style_reward.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/main_upper_container_for_reward_and_cart.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/reward_btn_widget.dart';
-import 'package:my_acuvue_flutter/widget_methods/Reward/uper_container_reward.dart';
 
 class MainReward extends StatefulWidget {
   @override
