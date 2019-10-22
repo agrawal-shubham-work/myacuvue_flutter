@@ -11,6 +11,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   TextEditingController _controller;
   String selectedCountry;
+  String sgpCodes;
   @override
   void initState() {
     super.initState();
@@ -107,6 +108,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: Material(
                       child: DropDownMainWidget(countryList, (String value) {
                         setState(() {
+                          if (value != 'SGP') sgpCodes = null;
                           selectedCountry = value;
                         });
                       }, selectedCountry),
@@ -130,7 +132,29 @@ class _SplashScreenState extends State<SplashScreen> {
                                 ? numberRowContainer('+852')
                                 : selectedCountry == 'TWN'
                                     ? numberRowContainer('+886')
-                                    : Container(),
+                                    : Container(
+                                        padding: EdgeInsets.only(
+                                            left: 10.0, right: 0.0),
+                                        child: DropdownButton<String>(
+                                          style: TextStyle(
+                                            color: Color(0xFf013F7C),
+                                          ),
+                                          hint: Text("Select"),
+                                          value: checkSelectedValue(sgpCodes),
+                                          items:
+                                              sgpCodeList.map((String value) {
+                                            return new DropdownMenuItem<String>(
+                                              value: value,
+                                              child: new Text(value),
+                                            );
+                                          }).toList(),
+                                          onChanged: (String value) {
+                                            setState(() {
+                                              sgpCodes = value;
+                                            });
+                                          },
+                                        ),
+                                      ),
                         Expanded(
                           child: Container(
                             child: Material(
@@ -178,6 +202,13 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
+  }
+
+  checkSelectedValue(String selectedValue) {
+    if (selectedValue == '')
+      return 'Select';
+    else
+      return selectedValue;
   }
 
   Widget numberRowContainer(String text) {

@@ -100,6 +100,19 @@ const List<String> contactLenseList = [
   'Yes, Other Brand',
   'No'
 ];
+const List<String> sgpCodeList = [
+  '+65',
+  '+60',
+  '+66',
+  '+62',
+  '+63',
+  '+84',
+  '+95',
+  '+673',
+  '+855',
+  '+856',
+  '+91',
+];
 const List<String> countryList = ['HKG', 'SGP', 'TWN'];
 const List<String> contactLenseListMonth = [
   'More than 6 Months',
