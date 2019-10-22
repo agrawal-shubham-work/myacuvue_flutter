@@ -1,13 +1,13 @@
 import 'package:my_acuvue_flutter/widget_methods/WebViews/WebViewContainer.dart';
 import 'package:flutter/material.dart';
 
-class SplashScreen extends StatefulWidget {
-  static const String routeName = '/splash';
+class EyeCareCenter extends StatefulWidget {
+  static const String routeName = '/eyecare';
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _EyeCareCenterState createState() => _EyeCareCenterState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _EyeCareCenterState extends State<EyeCareCenter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

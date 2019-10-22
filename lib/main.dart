@@ -9,6 +9,7 @@ import 'package:my_acuvue_flutter/screens/promotion_bannner.dart';
 import 'package:my_acuvue_flutter/screens/promotions_and_events_web.dart';
 import 'package:my_acuvue_flutter/screens/refer_and_earn.dart';
 import 'package:my_acuvue_flutter/screens/settings.dart';
+import 'package:my_acuvue_flutter/screens/splash_screen.dart';
 import 'package:my_acuvue_flutter/widget_methods/About/about_my_acuvue.dart';
 import 'package:my_acuvue_flutter/widget_methods/About/privacy_policy.dart';
 import 'package:my_acuvue_flutter/widget_methods/About/terms_of_use.dart';
@@ -30,8 +31,9 @@ class MyApp extends StatelessWidget {
       theme: Theme.of(context).copyWith(
         primaryColor: Color(0xFF013F7C),
       ),
-      home: Home("MyACUVUE"),
+      home: SplashScreen(),
       routes: <String, WidgetBuilder>{
+        SplashScreen.routeName: (BuildContext context) => SplashScreen(),
         Home.route: (BuildContext context) => Home("MyACUVUE"),
         AboutMe.routeName: (BuildContext context) => AboutMe(),
         AboutMyAcuvue.routeName: (BuildContext context) => AboutMyAcuvue(),
@@ -44,7 +46,7 @@ class MyApp extends StatelessWidget {
         ReferAndEarn.routeName: (BuildContext context) => ReferAndEarn(),
         PlaceholderWidget.routeName: (BuildContext contexst) =>
             PlaceholderWidget(Colors.red),
-        SplashScreen.routeName: (BuildContext context) => SplashScreen(),
+        EyeCareCenter.routeName: (BuildContext context) => EyeCareCenter(),
         PromotionBanner.routeName: (BuildContext context) => PromotionBanner(),
         MainMap.routeName: (BuildContext context) => MainMap(),
         RewardsSlider.routeName: (BuildContext context) =>

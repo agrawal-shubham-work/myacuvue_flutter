@@ -100,6 +100,7 @@ const List<String> contactLenseList = [
   'Yes, Other Brand',
   'No'
 ];
+const List<String> countryList = ['HKG', 'SGP', 'TWN'];
 const List<String> contactLenseListMonth = [
   'More than 6 Months',
   'Less than 6 Months'

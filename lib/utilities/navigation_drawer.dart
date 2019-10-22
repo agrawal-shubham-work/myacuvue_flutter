@@ -57,7 +57,7 @@ class _getDrawerState extends State<getDrawer> {
     var myNavChildren = [
       getNavItem(Icons.face, "My Profile", AboutMe.routeName),
       getNavItem(
-          Icons.remove_red_eye, "Eye Care Center", SplashScreen.routeName),
+          Icons.remove_red_eye, "Eye Care Center", EyeCareCenter.routeName),
       getNavItem(
           Icons.home, "Promotion and Events", PromotionsAndEvents.routeName),
       getNavItem(Icons.attach_money, "Refer and Earn", ReferAndEarn.routeName),

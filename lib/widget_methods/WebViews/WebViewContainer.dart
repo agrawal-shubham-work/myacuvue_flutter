@@ -7,6 +7,7 @@ class webViewCreate extends StatelessWidget {
   Completer<WebViewController> _controller = Completer<WebViewController>();
   webViewCreate(@required this.webUrl);
 
+
   @override
   Widget build(BuildContext context) {
     return WebView(
