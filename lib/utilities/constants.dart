@@ -34,6 +34,10 @@ final mVipFinalText =
 final Color darkBlueColor = Color(0xFF013F7C);
 final Color lightRegularColor = Color(0xFF5F86B4);
 const kVipText = TextStyle(fontSize: 14.0, color: Color(0xFF013F7C));
+const kNotificationHeading =
+    TextStyle(fontSize: 14.0, color: Color(0xFF013F7C));
+const kNotificationSubHeading = TextStyle(fontSize: 16.0, color: Colors.black);
+const kNotificationDate = TextStyle(fontSize: 14.0, color: Colors.grey);
 const kMembershipHeading = TextStyle(
     fontSize: 14.0, color: Color(0xFF013F7C), fontWeight: FontWeight.w900);
 const kVipFinalText = TextStyle(fontSize: 14.0, color: Colors.grey);

@@ -1,14 +1,15 @@
+import 'package:my_acuvue_flutter/widget_methods/Forms/datetimepicker.dart';
+import 'package:my_acuvue_flutter/notification_model.dart' as Inside;
 import 'package:my_acuvue_flutter/screens/home.dart';
-import 'package:my_acuvue_flutter/widget_methods/About/terms_of_use.dart';
+import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/text_form_field_main_widget.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/text_form_field_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
-import 'package:my_acuvue_flutter/widget_methods/Forms/datetimepicker.dart';
+import 'package:my_acuvue_flutter/utilities/check_date.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/checkbox.dart';
 import 'package:my_acuvue_flutter/widget_methods/Notifications/local_notifications_helper.dart';
 import 'package:my_acuvue_flutter/widget_methods/para_style_widget.dart';
@@ -212,6 +213,15 @@ class _AboutMeState extends State<AboutMe> {
                       color: Colors.grey,
                       child: RaisedButton(
                         onPressed: () {
+                          var now = DateTime.now();
+                          String moth = checkDate(now.month);
+                          String date = "$moth ${now.day}, ${now.year}";
+
+                          Inside.Notification notificaions = Inside.Notification(
+                              "Registration",
+                              "Complete your registration now to enjoy all the benefits of the MyACUVUE app.",
+                              "$date");
+                          GlobalVariable.notificationList.add(notificaions);
                           showOngoingNotification(notifications,
                               title: "Registration",
                               body:

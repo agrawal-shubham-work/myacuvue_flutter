@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 
 class createNotificationBox extends StatefulWidget {
   @override
@@ -9,6 +10,21 @@ class createNotificationBox extends StatefulWidget {
 class _createNotificationBoxState extends State<createNotificationBox> {
   @override
   Widget build(BuildContext context) {
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      itemCount: GlobalVariable.notificationList.length,
+      itemBuilder: (BuildContext context, int index) {
+        return createBox(index);
+      },
+    );
+  }
+}
+
+class createBox extends StatelessWidget {
+  final int index;
+  createBox(this.index);
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -16,7 +32,48 @@ class _createNotificationBoxState extends State<createNotificationBox> {
         ),
       ),
       child: Row(
-        children: <Widget>[Image.asset("")],
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Expanded(flex: 1, child: Image.asset("images/solace_app_icon.png")),
+          Expanded(
+            flex: 9,
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    GlobalVariable.notificationList[index].title,
+                    style: kNotificationHeading,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: Text(
+                      GlobalVariable.notificationList[index].message,
+                      style: kNotificationSubHeading,
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      GlobalVariable.notificationList[index].date,
+                      style: kNotificationDate,
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Icon(
+              Icons.delete,
+              color: darkBlueColor,
+            ),
+          ),
+        ],
       ),
     );
   }

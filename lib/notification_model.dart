@@ -1,5 +1,5 @@
 class Notification {
-  final String title, message;
+  final String title, message, date;
 
-  Notification(this.title, this.message);
+  Notification(this.title, this.message, this.date);
 }

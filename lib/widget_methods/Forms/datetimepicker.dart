@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/utilities/check_date.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'dart:io' show Platform;
 
@@ -55,59 +56,6 @@ class _DateTimePickerMainWidgetState extends State<DateTimePickerMainWidget> {
             ],
           )),
     );
-  }
-
-  String checkDate(int monthInNumber) {
-    switch (monthInNumber) {
-      case 1:
-        {
-          return 'Jan';
-        }
-      case 2:
-        {
-          return 'Feb';
-        }
-      case 3:
-        {
-          return 'March';
-        }
-      case 4:
-        {
-          return 'April';
-        }
-      case 5:
-        {
-          return 'May';
-        }
-      case 6:
-        {
-          return 'June';
-        }
-      case 7:
-        {
-          return 'July';
-        }
-      case 8:
-        {
-          return 'Aug';
-        }
-      case 9:
-        {
-          return 'Sept';
-        }
-      case 10:
-        {
-          return 'Oct';
-        }
-      case 11:
-        {
-          return 'Nov';
-        }
-      case 12:
-        {
-          return 'Dec';
-        }
-    }
   }
 
   _selectIOSDate(BuildContext context) {
