@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/screens/home.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
 
@@ -13,6 +15,9 @@ class _SplashScreenState extends State<SplashScreen> {
   String selectedCountry;
   String sgpCodes;
   String phoneNo;
+  String verificationId;
+  String smsCode;
+
   @override
   void initState() {
     super.initState();
@@ -25,6 +30,8 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
