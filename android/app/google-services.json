@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "106968834479",
+    "firebase_url": "https://myacuvue-252019.firebaseio.com",
+    "project_id": "myacuvue-252019",
+    "storage_bucket": "myacuvue-252019.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106968834479:android:b4bce895aa66a67eea4f5a",
+        "android_client_info": {
+          "package_name": "myacuvueflutter.my_acuvue_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106968834479-9nk8vmmua9ck6414ji49u939e6ovoofo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApPftbCCk2fRVJup0l5w-5d6Vwbp3izLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106968834479-9nk8vmmua9ck6414ji49u939e6ovoofo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

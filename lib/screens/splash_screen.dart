@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/screens/home.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
 
@@ -13,6 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   TextEditingController _controller;
   String selectedCountry;
   String sgpCodes;
+  String phoneNo;
   @override
   void initState() {
     super.initState();
@@ -171,6 +171,11 @@ class _SplashScreenState extends State<SplashScreen> {
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                 ),
+                                onChanged: (String value) {
+                                  setState(() {
+                                    phoneNo = value;
+                                  });
+                                },
                               ),
                             ),
                           ),
@@ -186,12 +191,7 @@ class _SplashScreenState extends State<SplashScreen> {
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
               color: darkBlueColor,
               child: FlatButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Home("MyAcuvue")));
-                },
+                onPressed: () {},
                 child: Text(
                   'Send Verification OTP',
                   style: kReferBtn,
