@@ -30,6 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,7 +197,7 @@ class _SplashScreenState extends State<SplashScreen> {
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
               color: darkBlueColor,
               child: FlatButton(
-                onPressed: () {},
+                onPressed: (){Navigator.of(context).pushNamed(Home.route);},
                 child: Text(
                   'Send Verification OTP',
                   style: kReferBtn,
