@@ -30,6 +30,78 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 
+  Future<void> verifyPhone() async {
+    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
+      this.verificationId = verId;
+    };
+
+    final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
+      this.verificationId = verId;
+      smsCodeDialog(context).then((value) {
+        print('Signed in');
+      });
+    };
+
+    final PhoneVerificationCompleted verifiedSuccess = (AuthCredential credential) {
+      print('verified');
+    };
+
+    final PhoneVerificationFailed veriFailed = (AuthException exception) {
+      print('${exception.message}');
+    };
+
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: "+91$phoneNo",
+        codeAutoRetrievalTimeout: autoRetrieve,
+        codeSent: smsCodeSent,
+        timeout: const Duration(seconds: 5),
+        verificationCompleted: verifiedSuccess,
+        verificationFailed: veriFailed);
+  }
+
+  Future<bool> smsCodeDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            title: Text('Enter sms Code'),
+            content: TextField(
+              onChanged: (value) {
+                this.smsCode = value;
+              },
+            ),
+            contentPadding: EdgeInsets.all(10.0),
+            actions: <Widget>[
+              new FlatButton(
+                child: Text('Done'),
+                onPressed: () {
+                  FirebaseAuth.instance.currentUser().then((user) {
+                    if (user != null) {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacementNamed(Home.route);
+                    } else {
+                      Navigator.of(context).pop();
+                      signIn();
+                    }
+                  });
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  signIn() {
+    final AuthCredential credential=PhoneAuthProvider.getCredential(verificationId: verificationId, smsCode: smsCode);
+    FirebaseAuth.instance
+        .signInWithCredential(credential)
+        .then((user) {
+      Navigator.of(context).pushReplacementNamed(Home.route);
+    }).catchError((e) {
+      print(e);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +269,7 @@ class _SplashScreenState extends State<SplashScreen> {
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
               color: darkBlueColor,
               child: FlatButton(
-                onPressed: (){Navigator.of(context).pushNamed(Home.route);},
+                onPressed: verifyPhone,
                 child: Text(
                   'Send Verification OTP',
                   style: kReferBtn,

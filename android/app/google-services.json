@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:106968834479:android:b4bce895aa66a67eea4f5a",
+        "mobilesdk_app_id": "1:106968834479:android:f6bd0c8931abf46bea4f5a",
         "android_client_info": {
           "package_name": "myacuvueflutter.my_acuvue_flutter"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "106968834479-to7okou65rdihg3pi1pmc935tjscfnl0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "myacuvueflutter.my_acuvue_flutter",
+            "certificate_hash": "04a46786187c6416a8ef49c40e39d8a76ca3f959"
+          }
+        },
         {
           "client_id": "106968834479-9nk8vmmua9ck6414ji49u939e6ovoofo.apps.googleusercontent.com",
           "client_type": 3
