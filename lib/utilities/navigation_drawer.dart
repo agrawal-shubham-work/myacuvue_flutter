@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_acuvue_flutter/screens/membership.dart';
 import 'package:my_acuvue_flutter/screens/notification.dart';
 import 'package:my_acuvue_flutter/screens/promotions_and_events_web.dart';
@@ -8,6 +9,7 @@ import 'package:my_acuvue_flutter/screens/about_myacuvue.dart';
 import 'package:my_acuvue_flutter/screens/contact_us.dart';
 import 'package:my_acuvue_flutter/screens/eye_care_center_web.dart';
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/screens/splash_screen.dart';
 
 class getDrawer extends StatefulWidget {
   final BuildContext context;
@@ -47,6 +49,9 @@ class _getDrawerState extends State<getDrawer> {
         ),
         onTap: () {
           setState(() {
+            if (s=='Logout') {
+              FirebaseAuth.instance.signOut();
+            }
             Navigator.of(context).pop();
             Navigator.of(context).pushNamed(routeName);
           });
@@ -66,6 +71,8 @@ class _getDrawerState extends State<getDrawer> {
       getNavItem(Icons.settings, "Settings", Settings.routeName),
       getNavItem(Icons.notifications, "Notifications", Notifications.routeName),
       getNavItem(Icons.contact_phone, "Contact us", ContactUs.routeName),
+      getNavItem(Icons.exit_to_app, "Logout", SplashScreen.routeName),
+
     ];
 
     ListView listView = ListView(children: myNavChildren);

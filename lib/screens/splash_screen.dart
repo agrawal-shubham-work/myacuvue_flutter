@@ -21,6 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     _controller = TextEditingController();
   }
 
@@ -28,6 +29,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+
+  goToNextPage(context){
+    Navigator.of(context).pushNamed(Home.route);
   }
 
   Future<void> verifyPhone() async {
@@ -105,6 +111,22 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<FirebaseUser>(
+        future: FirebaseAuth.instance.currentUser(),
+        builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot){
+          if (snapshot.hasData){
+            FirebaseUser user = snapshot.data; // this is your user instance
+            print(snapshot.data);
+            return Home("MyACUVUE");
+          }
+          /// other way there is no user logged.
+          return otpScreen();
+        }
+    );
+  }
+
+
+  Widget otpScreen(){
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -115,6 +137,7 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+
 
   Widget mainPhotoWidget() {
     return SafeArea(
