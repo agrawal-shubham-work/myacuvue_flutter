@@ -17,10 +17,23 @@ class _SplashScreenState extends State<SplashScreen> {
   String phoneNo;
   String verificationId;
   String smsCode;
+  FocusNode focusNode1,
+      focusNode2,
+      focusNode3,
+      focusNode4,
+      focusNode5,
+      focusNode6;
 
   @override
   void initState() {
     super.initState();
+
+    focusNode1 = FocusNode();
+    focusNode2 = FocusNode();
+    focusNode3 = FocusNode();
+    focusNode4 = FocusNode();
+    focusNode5 = FocusNode();
+    focusNode6 = FocusNode();
 
     _controller = TextEditingController();
   }
@@ -28,11 +41,16 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void dispose() {
     _controller.dispose();
+    focusNode1.dispose();
+    focusNode2.dispose();
+    focusNode3.dispose();
+    focusNode4.dispose();
+    focusNode5.dispose();
+    focusNode6.dispose();
     super.dispose();
   }
 
-
-  goToNextPage(context){
+  goToNextPage(context) {
     Navigator.of(context).pushNamed(Home.route);
   }
 
@@ -48,7 +66,8 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     };
 
-    final PhoneVerificationCompleted verifiedSuccess = (AuthCredential credential) {
+    final PhoneVerificationCompleted verifiedSuccess =
+        (AuthCredential credential) {
       print('verified');
     };
 
@@ -99,10 +118,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   signIn() {
-    final AuthCredential credential=PhoneAuthProvider.getCredential(verificationId: verificationId, smsCode: smsCode);
-    FirebaseAuth.instance
-        .signInWithCredential(credential)
-        .then((user) {
+    final AuthCredential credential = PhoneAuthProvider.getCredential(
+        verificationId: verificationId, smsCode: smsCode);
+    FirebaseAuth.instance.signInWithCredential(credential).then((user) {
       Navigator.of(context).pushReplacementNamed(Home.route);
     }).catchError((e) {
       print(e);
@@ -113,20 +131,17 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return FutureBuilder<FirebaseUser>(
         future: FirebaseAuth.instance.currentUser(),
-        builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot){
-          if (snapshot.hasData){
+        builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot) {
+          if (snapshot.hasData) {
             FirebaseUser user = snapshot.data; // this is your user instance
             print(snapshot.data);
             return Home("MyACUVUE");
           }
-          /// other way there is no user logged.
           return otpScreen();
-        }
-    );
+        });
   }
 
-
-  Widget otpScreen(){
+  Widget otpScreen() {
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -137,7 +152,6 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
-
 
   Widget mainPhotoWidget() {
     return SafeArea(
@@ -173,144 +187,195 @@ class _SplashScreenState extends State<SplashScreen> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(5.0)),
         margin: EdgeInsets.all(10.0),
-        child: Column(
+        child: enterPhoneNumberWidget(),
+      ),
+    );
+  }
+
+  Widget enterOtpWidget() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        NumberandOtpTitleWidget(
+            context, "Otp has been sent to $selectedCountry $phoneNo"),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            otpWidget(focusNode1,(String value){
+              if(value.length!=0)
+                {
+                  FocusScope.of(context).requestFocus(focusNode2);
+                  smsCode=value;
+                }
+            }),
+            otpWidget(focusNode2,(String value){
+              if(value.length==0)
+                FocusScope.of(context).requestFocus(focusNode1);
+              else{
+                FocusScope.of(context).requestFocus(focusNode3);
+                smsCode=smsCode+value;
+              }
+            }),
+            otpWidget(focusNode3,(String value){
+              if(value.length==0)
+                FocusScope.of(context).requestFocus(focusNode2);
+              else{
+                FocusScope.of(context).requestFocus(focusNode4);
+                smsCode=smsCode+value;
+              }
+            }),
+            otpWidget(focusNode4,(String value){
+              if(value.length==0)
+                FocusScope.of(context).requestFocus(focusNode3);
+              else{
+                FocusScope.of(context).requestFocus(focusNode5);
+                smsCode=smsCode+value;
+              }
+            }),
+            otpWidget(focusNode5,(String value){
+              if(value.length==0)
+                FocusScope.of(context).requestFocus(focusNode4);
+              else{
+                FocusScope.of(context).requestFocus(focusNode6);
+                smsCode=smsCode+value;
+              }
+            }),
+            otpWidget(focusNode6,(String value){
+              if(value.length==0)
+                FocusScope.of(context).requestFocus(focusNode5);
+              else
+                smsCode=smsCode+value;
+            }),
+          ],
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+          color: darkBlueColor,
+          child: FlatButton(
+            child: Text(
+              'Verify Otp',
+              style: kReferBtn,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget enterPhoneNumberWidget() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        NumberandOtpTitleWidget(context, "Please enter your phone number"),
+        Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Center(
-                child: Container(
-                  margin: EdgeInsets.all(2.0),
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(color: Colors.grey),
-                    ),
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
-                        'Please enter your phone number',
-                        style: kRewardTerms,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                padding: EdgeInsets.only(bottom: 10.0, left: 5.0),
+                child: Material(
+                  child: DropDownMainWidget(countryList, (String value) {
+                    setState(() {
+                      if (value != 'SGP') sgpCodes = null;
+                      selectedCountry = value;
+                    });
+                  }, selectedCountry),
                 ),
               ),
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    padding: EdgeInsets.only(bottom: 10.0, left: 5.0),
-                    child: Material(
-                      child: DropDownMainWidget(countryList, (String value) {
-                        setState(() {
-                          if (value != 'SGP') sgpCodes = null;
-                          selectedCountry = value;
-                        });
-                      }, selectedCountry),
-                    ),
-                  ),
+            Expanded(
+              flex: 3,
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 5.0),
+                height: 50.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7.0),
+                  border: Border.all(color: Colors.grey),
                 ),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7.0),
-                      border: Border.all(color: Colors.grey),
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        selectedCountry == null
-                            ? Container()
-                            : selectedCountry == 'HKG'
-                                ? numberRowContainer('+852')
-                                : selectedCountry == 'TWN'
-                                    ? numberRowContainer('+886')
-                                    : Container(
-                                        padding: EdgeInsets.only(
-                                            left: 10.0, right: 0.0),
-                                        child: DropdownButton<String>(
-                                          style: TextStyle(
-                                            color: Color(0xFf013F7C),
-                                          ),
-                                          hint: Text("Select"),
-                                          value: checkSelectedValue(sgpCodes),
-                                          items:
-                                              sgpCodeList.map((String value) {
-                                            return new DropdownMenuItem<String>(
-                                              value: value,
-                                              child: new Text(value),
-                                            );
-                                          }).toList(),
-                                          onChanged: (String value) {
-                                            setState(
-                                              () {
-                                                sgpCodes = value;
-                                              },
-                                            );
-                                          },
-                                        ),
+                child: Row(
+                  children: <Widget>[
+                    selectedCountry == null
+                        ? Container()
+                        : selectedCountry == 'HKG'
+                            ? numberRowContainer('+852')
+                            : selectedCountry == 'TWN'
+                                ? numberRowContainer('+886')
+                                : Container(
+                                    padding:
+                                        EdgeInsets.only(left: 10.0, right: 0.0),
+                                    child: DropdownButton<String>(
+                                      style: TextStyle(
+                                        color: Color(0xFf013F7C),
                                       ),
-                        Expanded(
-                          child: Container(
-                            child: Material(
-                              child: TextFormField(
-                                maxLength: 10,
-                                controller: _controller,
-                                keyboardType: TextInputType.number,
-                                decoration: new InputDecoration(
-                                  counterText: '',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
+                                      hint: Text("Select"),
+                                      value: checkSelectedValue(sgpCodes),
+                                      items: sgpCodeList.map((String value) {
+                                        return new DropdownMenuItem<String>(
+                                          value: value,
+                                          child: new Text(value),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String value) {
+                                        setState(
+                                          () {
+                                            sgpCodes = value;
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ),
-                                ),
-                                onChanged: (String value) {
-                                  setState(() {
-                                    phoneNo = value;
-                                  });
-                                },
+                    Expanded(
+                      child: Container(
+                        child: Material(
+                          child: TextFormField(
+                            maxLength: 10,
+                            controller: _controller,
+                            keyboardType: TextInputType.number,
+                            decoration: new InputDecoration(
+                              counterText: '',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0),
                               ),
                             ),
+                            onChanged: (String value) {
+                              setState(() {
+                                phoneNo = value;
+                              });
+                            },
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-              color: darkBlueColor,
-              child: FlatButton(
-                onPressed: verifyPhone,
-                child: Text(
-                  'Send Verification OTP',
-                  style: kReferBtn,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-              width: MediaQuery.of(context).size.width,
-              child: Text(
-                'Recover my Account',
-                style: kPrivacyPara,
-                textAlign: TextAlign.end,
               ),
             )
           ],
         ),
-      ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+          color: darkBlueColor,
+          child: FlatButton(
+            onPressed: verifyPhone,
+            child: Text(
+              'Send Verification OTP',
+              style: kReferBtn,
+            ),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+          width: MediaQuery.of(context).size.width,
+          child: Text(
+            'Recover my Account',
+            style: kPrivacyPara,
+            textAlign: TextAlign.end,
+          ),
+        )
+      ],
     );
   }
 
@@ -327,6 +392,63 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Text(
         text,
         style: kRewardTerms,
+      ),
+    );
+  }
+}
+
+class otpWidget extends StatelessWidget {
+  final FocusNode focusNode;
+  final Function onTap;
+
+  otpWidget(this.focusNode,this.onTap);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.all(5.0),
+        child: TextField(
+          keyboardType: TextInputType.number,
+          focusNode: focusNode,
+          autofocus: false,
+          onChanged: onTap,
+        ),
+      ),
+    );
+  }
+}
+
+class NumberandOtpTitleWidget extends StatelessWidget {
+  final BuildContext context;
+  final String title;
+
+  NumberandOtpTitleWidget(this.context, this.title);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Center(
+        child: Container(
+          margin: EdgeInsets.all(2.0),
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: Colors.grey),
+            ),
+          ),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                title,
+                style: kRewardTerms,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
