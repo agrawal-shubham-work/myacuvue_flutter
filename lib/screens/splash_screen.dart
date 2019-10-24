@@ -201,50 +201,49 @@ class _SplashScreenState extends State<SplashScreen> {
         Row(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            otpWidget(focusNode1,(String value){
-              if(value.length!=0)
-                {
-                  FocusScope.of(context).requestFocus(focusNode2);
-                  smsCode=value;
-                }
-            }),
-            otpWidget(focusNode2,(String value){
-              if(value.length==0)
-                FocusScope.of(context).requestFocus(focusNode1);
-              else{
-                FocusScope.of(context).requestFocus(focusNode3);
-                smsCode=smsCode+value;
-              }
-            }),
-            otpWidget(focusNode3,(String value){
-              if(value.length==0)
+            otpWidget(focusNode1, (String value) {
+              if (value.length != 0) {
                 FocusScope.of(context).requestFocus(focusNode2);
-              else{
-                FocusScope.of(context).requestFocus(focusNode4);
-                smsCode=smsCode+value;
+                smsCode = value;
               }
             }),
-            otpWidget(focusNode4,(String value){
-              if(value.length==0)
+            otpWidget(focusNode2, (String value) {
+              if (value.length == 0)
+                FocusScope.of(context).requestFocus(focusNode1);
+              else {
                 FocusScope.of(context).requestFocus(focusNode3);
-              else{
-                FocusScope.of(context).requestFocus(focusNode5);
-                smsCode=smsCode+value;
+                smsCode = smsCode + value;
               }
             }),
-            otpWidget(focusNode5,(String value){
-              if(value.length==0)
+            otpWidget(focusNode3, (String value) {
+              if (value.length == 0)
+                FocusScope.of(context).requestFocus(focusNode2);
+              else {
                 FocusScope.of(context).requestFocus(focusNode4);
-              else{
-                FocusScope.of(context).requestFocus(focusNode6);
-                smsCode=smsCode+value;
+                smsCode = smsCode + value;
               }
             }),
-            otpWidget(focusNode6,(String value){
-              if(value.length==0)
+            otpWidget(focusNode4, (String value) {
+              if (value.length == 0)
+                FocusScope.of(context).requestFocus(focusNode3);
+              else {
+                FocusScope.of(context).requestFocus(focusNode5);
+                smsCode = smsCode + value;
+              }
+            }),
+            otpWidget(focusNode5, (String value) {
+              if (value.length == 0)
+                FocusScope.of(context).requestFocus(focusNode4);
+              else {
+                FocusScope.of(context).requestFocus(focusNode6);
+                smsCode = smsCode + value;
+              }
+            }),
+            otpWidget(focusNode6, (String value) {
+              if (value.length == 0)
                 FocusScope.of(context).requestFocus(focusNode5);
               else
-                smsCode=smsCode+value;
+                smsCode = smsCode + value;
             }),
           ],
         ),
@@ -401,7 +400,7 @@ class otpWidget extends StatelessWidget {
   final FocusNode focusNode;
   final Function onTap;
 
-  otpWidget(this.focusNode,this.onTap);
+  otpWidget(this.focusNode, this.onTap);
 
   @override
   Widget build(BuildContext context) {
