@@ -14,6 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   TextEditingController _controller;
   String selectedCountry;
   String sgpCodes;
+  String selectedCountryCode;
   String phoneNo;
   String verificationId;
   String smsCode;
@@ -23,6 +24,8 @@ class _SplashScreenState extends State<SplashScreen> {
       focusNode4,
       focusNode5,
       focusNode6;
+  String opt1, opt2, otp3, opt4, opt5, opt6;
+  bool otpBox = false;
 
   @override
   void initState() {
@@ -61,8 +64,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
-      smsCodeDialog(context).then((value) {
-        print('Signed in');
+      setState(() {
+        otpBox = true;
       });
     };
 
@@ -84,43 +87,13 @@ class _SplashScreenState extends State<SplashScreen> {
         verificationFailed: veriFailed);
   }
 
-  Future<bool> smsCodeDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return new AlertDialog(
-            title: Text('Enter sms Code'),
-            content: TextField(
-              onChanged: (value) {
-                this.smsCode = value;
-              },
-            ),
-            contentPadding: EdgeInsets.all(10.0),
-            actions: <Widget>[
-              new FlatButton(
-                child: Text('Done'),
-                onPressed: () {
-                  FirebaseAuth.instance.currentUser().then((user) {
-                    if (user != null) {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushReplacementNamed(Home.route);
-                    } else {
-                      Navigator.of(context).pop();
-                      signIn();
-                    }
-                  });
-                },
-              )
-            ],
-          );
-        });
-  }
-
   signIn() {
     final AuthCredential credential = PhoneAuthProvider.getCredential(
         verificationId: verificationId, smsCode: smsCode);
     FirebaseAuth.instance.signInWithCredential(credential).then((user) {
+      setState(() {
+        otpBox = false;
+      });
       Navigator.of(context).pushReplacementNamed(Home.route);
     }).catchError((e) {
       print(e);
@@ -156,12 +129,15 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget mainPhotoWidget() {
     return SafeArea(
       child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Image.asset(
-          "images/splash_screen_main.png",
-          fit: BoxFit.cover,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/splash_screen_main.png'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.white.withOpacity(0.85), BlendMode.dstATop),
+          ),
         ),
+        constraints: BoxConstraints.expand(),
       ),
     );
   }
@@ -187,7 +163,7 @@ class _SplashScreenState extends State<SplashScreen> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(5.0)),
         margin: EdgeInsets.all(10.0),
-        child: enterPhoneNumberWidget(),
+        child: otpBox ? enterOtpWidget() : enterPhoneNumberWidget(),
       ),
     );
   }
@@ -197,53 +173,53 @@ class _SplashScreenState extends State<SplashScreen> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         NumberandOtpTitleWidget(
-            context, "Otp has been sent to $selectedCountry $phoneNo"),
+            context, "Otp has been sent to $selectedCountryCode $phoneNo"),
         Row(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             otpWidget(focusNode1, (String value) {
               if (value.length != 0) {
                 FocusScope.of(context).requestFocus(focusNode2);
-                smsCode = value;
               }
+              opt1 = value;
             }),
             otpWidget(focusNode2, (String value) {
               if (value.length == 0)
                 FocusScope.of(context).requestFocus(focusNode1);
               else {
                 FocusScope.of(context).requestFocus(focusNode3);
-                smsCode = smsCode + value;
               }
+              opt2 = value;
             }),
             otpWidget(focusNode3, (String value) {
               if (value.length == 0)
                 FocusScope.of(context).requestFocus(focusNode2);
               else {
                 FocusScope.of(context).requestFocus(focusNode4);
-                smsCode = smsCode + value;
               }
+              otp3 = value;
             }),
             otpWidget(focusNode4, (String value) {
               if (value.length == 0)
                 FocusScope.of(context).requestFocus(focusNode3);
               else {
                 FocusScope.of(context).requestFocus(focusNode5);
-                smsCode = smsCode + value;
               }
+              opt4 = value;
             }),
             otpWidget(focusNode5, (String value) {
               if (value.length == 0)
                 FocusScope.of(context).requestFocus(focusNode4);
               else {
                 FocusScope.of(context).requestFocus(focusNode6);
-                smsCode = smsCode + value;
               }
+              opt5 = value;
             }),
             otpWidget(focusNode6, (String value) {
-              if (value.length == 0)
+              if (value.length == 0) {
                 FocusScope.of(context).requestFocus(focusNode5);
-              else
-                smsCode = smsCode + value;
+              }
+              opt6 = value;
             }),
           ],
         ),
@@ -252,6 +228,10 @@ class _SplashScreenState extends State<SplashScreen> {
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
           color: darkBlueColor,
           child: FlatButton(
+            onPressed: () {
+              smsCode = '$opt1$opt2$otp3$opt4$opt5$opt6';
+              signIn();
+            },
             child: Text(
               'Verify Otp',
               style: kReferBtn,
@@ -277,7 +257,15 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Material(
                   child: DropDownMainWidget(countryList, (String value) {
                     setState(() {
-                      if (value != 'SGP') sgpCodes = null;
+                      if (value == 'SGP') {
+                        selectedCountryCode = null;
+                      } else if (value == 'HKG') {
+                        selectedCountryCode = '+852';
+                        sgpCodes = null;
+                      } else if (value == 'TWN') {
+                        sgpCodes = null;
+                        selectedCountryCode = '+886';
+                      }
                       selectedCountry = value;
                     });
                   }, selectedCountry),
@@ -320,6 +308,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                         setState(
                                           () {
                                             sgpCodes = value;
+                                            selectedCountryCode = value;
                                           },
                                         );
                                       },
@@ -407,9 +396,16 @@ class otpWidget extends StatelessWidget {
     return Expanded(
       child: Container(
         margin: EdgeInsets.all(5.0),
-        child: TextField(
+        child: TextFormField(
+          decoration: new InputDecoration(
+            counterText: '',
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+          ),
           keyboardType: TextInputType.number,
           focusNode: focusNode,
+          maxLength: 1,
           autofocus: false,
           onChanged: onTap,
         ),
