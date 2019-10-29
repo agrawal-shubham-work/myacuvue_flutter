@@ -81,7 +81,10 @@ const kStoreAddress = TextStyle(
   color: Color(0xFF013F7C),
 );
 const kContactUsTextStyle = TextStyle(fontSize: 16.0, color: Colors.black);
-const kContactUsLinkTextStyle = TextStyle(fontSize: 16.0, color: Colors.blue);
+const kContactHeadingTextStyle =
+    TextStyle(fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w900);
+const kContactUsLinkTextStyle = TextStyle(
+    fontSize: 16.0, color: Colors.blue, decoration: TextDecoration.underline);
 const kCartPointsText = TextStyle(fontSize: 14.0, color: Colors.blueGrey);
 
 const kRegisterStoreHeading = TextStyle(fontSize: 18.0, color: Colors.blueGrey);

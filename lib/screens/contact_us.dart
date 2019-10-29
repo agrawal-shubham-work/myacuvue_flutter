@@ -43,8 +43,8 @@ class _ContactUsState extends State<ContactUs> {
             ),
             child: Text(
               "For Product-Related enquires",
-              style: kContactUsTextStyle,
-              textAlign: TextAlign.center,
+              style: kContactHeadingTextStyle,
+              textAlign: TextAlign.start,
             ),
           ),
           Row(
@@ -120,8 +120,8 @@ class _ContactUsState extends State<ContactUs> {
             ),
             child: Text(
               "For MyACUVUE enquires",
-              style: kContactUsTextStyle,
-              textAlign: TextAlign.center,
+              style: kContactHeadingTextStyle,
+              textAlign: TextAlign.start,
             ),
           ),
           Row(
