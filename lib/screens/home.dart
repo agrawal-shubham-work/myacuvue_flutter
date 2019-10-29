@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
   List<Widget> tabs = [
     MainHome(),
     PlaceholderWidget(Colors.orange),
-    MainReward(),
+    MainReward(ScreenSelected.Wallet),
     MainStore()
   ];
   onTapped(int index) {

@@ -6,18 +6,23 @@ import 'package:my_acuvue_flutter/widget_methods/Reward/main_upper_container_for
 import 'package:my_acuvue_flutter/widget_methods/Reward/reward_btn_widget.dart';
 
 class MainReward extends StatefulWidget {
+  final ScreenSelected selected;
+
+  MainReward(this.selected);
+
   @override
   _MainRewardState createState() => _MainRewardState();
 }
 
-enum ScreenSelected {
-  Wallet,
-  AcuvuewReward,
-  LifestyleReward,
-}
-
 class _MainRewardState extends State<MainReward> {
-  ScreenSelected screenType = ScreenSelected.Wallet;
+  ScreenSelected screenType;
+
+  @override
+  void initState() {
+    super.initState();
+    screenType = widget.selected;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -172,13 +172,14 @@ class _CartState extends State<Cart> {
     );
   }
 
-  Widget _createCartBtn(String text, Color color) {
+  Widget _createCartBtn(String text, Color color, Function onTap) {
     return Expanded(
       flex: 1,
       child: Container(
         color: color,
         margin: EdgeInsets.all(5.0),
         child: FlatButton(
+          onPressed: onTap,
           child: Text(
             text,
             style: kRewardBtn,
@@ -205,10 +206,12 @@ class _CartState extends State<Cart> {
             padding: EdgeInsets.all(10.0),
             child: Row(
               children: <Widget>[
-                _createCartBtn("Continue Browsing", darkBlueColor),
+                _createCartBtn("Continue Browsing", darkBlueColor, () {
+                  Navigator.pop(context);
+                }),
                 GlobalVariable.lifeStyleRewardList.length != 0
-                    ? _createCartBtn("Checkout", darkBlueColor)
-                    : _createCartBtn("Checkout", lightRegularColor),
+                    ? _createCartBtn("Checkout", darkBlueColor, () {})
+                    : _createCartBtn("Checkout", lightRegularColor, () {}),
               ],
             ),
           )
