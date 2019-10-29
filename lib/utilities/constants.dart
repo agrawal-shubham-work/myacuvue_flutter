@@ -37,6 +37,7 @@ const kVipText = TextStyle(fontSize: 14.0, color: Color(0xFF013F7C));
 const kNotificationHeading =
     TextStyle(fontSize: 14.0, color: Color(0xFF013F7C));
 const kNotificationSubHeading = TextStyle(fontSize: 16.0, color: Colors.black);
+const kPointsExpiryText = TextStyle(fontSize: 14.0, color: Colors.black);
 const kNotificationDate = TextStyle(fontSize: 14.0, color: Colors.grey);
 const kMembershipHeading = TextStyle(
     fontSize: 14.0, color: Color(0xFF013F7C), fontWeight: FontWeight.w900);
@@ -72,6 +73,7 @@ const kRewardsHeading = TextStyle(fontSize: 24.0, color: Color(0xFf013F7C));
 const kRewardsSubHeading = TextStyle(fontSize: 20.0, color: Color(0xFf013F7C));
 const kReferBtn =
     TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w800);
+const kPointsTextStyle = TextStyle(fontSize: 14.0, color: Color(0xFF013F7C));
 const kRewardBtn =
     TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w600);
 const kStoreName = TextStyle(fontSize: 16.0, color: Colors.grey);

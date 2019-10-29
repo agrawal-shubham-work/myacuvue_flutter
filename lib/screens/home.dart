@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/screens/main_points.dart';
 import 'package:my_acuvue_flutter/utilities/navigation_drawer.dart';
 import 'package:my_acuvue_flutter/screens/main_home.dart';
 import 'package:my_acuvue_flutter/screens/main_reward.dart';
@@ -72,7 +73,7 @@ class _HomeState extends State<Home> {
 
   List<Widget> tabs = [
     MainHome(),
-    PlaceholderWidget(Colors.orange),
+    Points(),
     MainReward(ScreenSelected.Wallet),
     MainStore()
   ];
