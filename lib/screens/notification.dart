@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Notifications/notificationbox.dart';
 
@@ -10,9 +9,11 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       appBar: AppBar(
         title: Text('Notifications'),
       ),
@@ -20,7 +21,15 @@ class _NotificationsState extends State<Notifications> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            GlobalVariable.notificationList.clear();
+            if (GlobalVariable.notificationList.length != 0)
+              GlobalVariable.notificationList.clear();
+            else {
+              final snackbar = SnackBar(
+                content: Text('No Notification to delete'),
+                duration: Duration(milliseconds: 500),
+              );
+              _scaffoldkey.currentState.showSnackBar(snackbar);
+            }
           });
         },
         child: Icon(Icons.delete),
