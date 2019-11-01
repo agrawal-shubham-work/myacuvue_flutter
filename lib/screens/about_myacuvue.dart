@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/screens/contact_us.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/widget_methods/About/about_my_acuvue.dart';
 import 'package:my_acuvue_flutter/widget_methods/About/privacy_policy.dart';
@@ -41,7 +42,9 @@ class _AboutMyAcuvueState extends State<AboutMyAcuvue> {
             CreateAboutBtn('Privacy Policy', () {
               Navigator.of(context).pushNamed(PrivacyPolicy.routeName);
             }),
-            CreateAboutBtn('Contact us', () {}),
+            CreateAboutBtn('Contact us', () {
+              Navigator.of(context).pushNamed(ContactUs.routeName);
+            }),
           ],
         ),
       ),

@@ -12,7 +12,9 @@ class CreateBoxWithTwoText extends StatelessWidget {
       margin: EdgeInsets.all(5.0),
       child: Column(
         children: <Widget>[
-          Image.asset(imagepath),
+          Image.asset(
+            imagepath,
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 5.0),
             child: Text(

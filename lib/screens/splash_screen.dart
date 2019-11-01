@@ -149,8 +149,8 @@ class _SplashScreenState extends State<SplashScreen> {
         margin: EdgeInsets.only(top: 50.0),
         child: Image.asset(
           "images/splash_logo.png",
-          width: 250.0,
-          height: 250.0,
+          width: (MediaQuery.of(context).size.width) * 0.7,
+          height: (MediaQuery.of(context).size.width) * 0.7,
         ),
       ),
     );
