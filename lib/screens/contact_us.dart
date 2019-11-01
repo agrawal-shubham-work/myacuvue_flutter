@@ -1,5 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/widget_methods/About/privacy_policy.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUs extends StatefulWidget {
@@ -89,10 +91,32 @@ class _ContactUsState extends State<ContactUs> {
               ),
             ],
           ),
-          textCard(
+          /*textCard(
             "By Submitting your information, you agree that it will be governed by Johnson and Johnson Vision Privacy Policy.",
             () {},
             kContactUsTextStyle,
+          ),*/
+          RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                    text:
+                        "By Submitting your information, you agree that it will be governed by Johnson and Johnson Vision ",
+                    style: kContactUsTextStyle),
+                TextSpan(
+                  text: "Privacy Policy.",
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.of(context).pushNamed(PrivacyPolicy.routeName);
+                    },
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(
             height: 20.0,
