@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       focusNode5,
       focusNode6;
   String opt1, opt2, otp3, opt4, opt5, opt6;
-  bool otpBox = false;
+  bool otpBox = false, isRecoverAcoount = false;
 
   @override
   void initState() {
@@ -163,7 +163,11 @@ class _SplashScreenState extends State<SplashScreen> {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(5.0)),
         margin: EdgeInsets.all(10.0),
-        child: otpBox ? enterOtpWidget() : enterPhoneNumberWidget(),
+        child: otpBox
+            ? enterOtpWidget()
+            : isRecoverAcoount
+                ? recoverAccoutWidget()
+                : enterPhoneNumberWidget(),
       ),
     );
   }
@@ -239,6 +243,71 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget recoverAccoutWidget() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 2.0, top: 5.0, bottom: 5.0),
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    isRecoverAcoount = false;
+                  });
+                },
+                child: Icon(
+                  Icons.close,
+                  color: Color(0xff013f7c),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            'Recover your Account',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20.0,
+            ),
+          ),
+        ),
+        createSocialBTN("Facebook"),
+        createSocialBTN("Twitter"),
+        createSocialBTN("Google"),
+        Container(
+            margin: EdgeInsets.only(bottom: 5.0),
+            child: createSocialBTN("Email")),
+      ],
+    );
+  }
+
+  Widget createSocialBTN(String text) {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      margin: EdgeInsets.only(right: 5.0, left: 5.0, top: 5.0),
+      width: MediaQuery.of(context).size.width,
+      color: Color(0xff013f7c),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              text,
+              style: TextStyle(color: Colors.white, fontSize: 15.0),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -357,10 +426,17 @@ class _SplashScreenState extends State<SplashScreen> {
         Container(
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
           width: MediaQuery.of(context).size.width,
-          child: Text(
-            'Recover my Account',
-            style: kPrivacyPara,
-            textAlign: TextAlign.end,
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                isRecoverAcoount = true;
+              });
+            },
+            child: Text(
+              'Recover my Account',
+              style: kPrivacyPara,
+              textAlign: TextAlign.end,
+            ),
           ),
         )
       ],

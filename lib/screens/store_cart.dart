@@ -129,9 +129,9 @@ class _CartState extends State<Cart> {
                                   value:
                                       "${GlobalVariable.lifeStyleRewardList[index].productQuantity}",
                                   items: quantityList.map((String value) {
-                                    return new DropdownMenuItem<String>(
+                                    return DropdownMenuItem<String>(
                                       value: value,
-                                      child: new Text(value),
+                                      child: Text(value),
                                     );
                                   }).toList(),
                                   onChanged: (String value) {
