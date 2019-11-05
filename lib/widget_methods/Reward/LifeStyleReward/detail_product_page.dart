@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/lifestyle_reward_model.dart';
+import 'package:my_acuvue_flutter/models/lifestyle_reward_model.dart';
 import 'package:my_acuvue_flutter/screens/store_cart.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';

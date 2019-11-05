@@ -1,7 +1,7 @@
 import 'dart:async' show Completer, Future;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
-import 'package:my_acuvue_flutter/map_data_model.dart';
+import 'package:my_acuvue_flutter/models/map_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
 import 'package:my_acuvue_flutter/utilities/markers.dart';

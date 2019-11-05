@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/datetimepicker.dart';
-import 'package:my_acuvue_flutter/notification_model.dart' as Inside;
-import 'package:my_acuvue_flutter/screens/home.dart';
+import 'package:my_acuvue_flutter/models/notification_model.dart' as Inside;
+import 'package:my_acuvue_flutter/models/form_models.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/text_form_field_main_widget.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/text_form_field_widget.dart';
@@ -27,10 +29,12 @@ class _AboutMeState extends State<AboutMe> {
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _nricController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
+  final databaseRef = Firestore.instance;
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String dropdownValue;
-
+  String userId;
   Color buttonColor = Color(0xFf013F7C);
 
   String _firstname = '',
@@ -42,7 +46,9 @@ class _AboutMeState extends State<AboutMe> {
       _selectedContactLenses,
       _selectedContactLenseMonth;
 
-  bool checkPrivacyState1 = false, checkPrivacyState2 = false;
+  bool checkPrivacyState1 = false,
+      checkPrivacyState2 = false,
+      submitButtonEnabled;
 
   void validateFields() {
     if (_firstname.length == 0 ||
@@ -55,21 +61,27 @@ class _AboutMeState extends State<AboutMe> {
         !checkPrivacyState2 ||
         !checkPrivacyState1) {
       buttonColor = Colors.grey;
+      submitButtonEnabled = false;
     } else {
       if (_selectedContactLenses == 'No') {
         buttonColor = Color(0xFf013F7C);
+        submitButtonEnabled = true;
+        print(submitButtonEnabled);
       } else {
-        if (_selectedContactLenseMonth != null)
+        if (_selectedContactLenseMonth != null) {
           buttonColor = Color(0xFf013F7C);
-        else
+          submitButtonEnabled = true;
+          print(submitButtonEnabled);
+        } else {
           buttonColor = Colors.grey;
+          submitButtonEnabled = false;
+        }
       }
     }
   }
 
   @override
   void initState() {
-    validateFields();
     super.initState();
     var settingAndroid = new AndroidInitializationSettings('app_icon');
     var settingIOS = new IOSInitializationSettings(
@@ -82,9 +94,34 @@ class _AboutMeState extends State<AboutMe> {
   Future onSelectNotification(String payload) async =>
       await Navigator.of(context).pushNamed(AboutMe.routeName);
 
+  void saveUserDataInDatabase() async {
+    userId = await inputData();
+    FormModel form = FormModel(
+        _firstname,
+        _lastname,
+        _selectedGender,
+        GlobalVariable.userDOB,
+        _email,
+        _nric,
+        _selectedSpectacles,
+        _selectedContactLenses,
+        _selectedContactLenses == 'No' ? "No" : _selectedContactLenseMonth);
+    await databaseRef
+        .collection("form")
+        .document(userId)
+        .setData(form.toJson());
+
+    final snackbar = SnackBar(
+      content: Text('OK'),
+      duration: Duration(milliseconds: 500),
+    );
+    _scaffoldkey.currentState.showSnackBar(snackbar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       appBar: AppBar(
         title: Text('About me'),
       ),
@@ -238,12 +275,19 @@ class _AboutMeState extends State<AboutMe> {
                   ),
                   Expanded(
                     flex: 1,
-                    child: Container(
-                      color: buttonColor,
-                      child: FlatButton(
-                        child: Text(
-                          'Submit',
-                          style: TextStyle(color: Colors.white),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (submitButtonEnabled) {
+                          saveUserDataInDatabase();
+                        }
+                      },
+                      child: Container(
+                        color: buttonColor,
+                        child: FlatButton(
+                          child: Text(
+                            'Submit',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     ),

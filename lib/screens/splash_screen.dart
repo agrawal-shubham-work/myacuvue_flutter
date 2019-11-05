@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/models/user_model.dart';
 import 'package:my_acuvue_flutter/screens/home.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
+import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,7 +21,8 @@ class _SplashScreenState extends State<SplashScreen> {
   String selectedCountryCode;
   String phoneNo;
   String verificationId;
-  String smsCode;
+  String smsCode, currentUserId;
+  final dataBaseRef = Firestore.instance;
   FocusNode focusNode1,
       focusNode2,
       focusNode3,
@@ -90,14 +95,22 @@ class _SplashScreenState extends State<SplashScreen> {
   signIn() {
     final AuthCredential credential = PhoneAuthProvider.getCredential(
         verificationId: verificationId, smsCode: smsCode);
-    FirebaseAuth.instance.signInWithCredential(credential).then((user) {
+    FirebaseAuth.instance.signInWithCredential(credential).then((user) async {
       setState(() {
         otpBox = false;
       });
+      String userId = await inputData();
+      GlobalVariable.userId = userId;
+      createRecord(userId);
       Navigator.of(context).pushReplacementNamed(Home.route);
     }).catchError((e) {
       print(e);
     });
+  }
+
+  void createRecord(String id) async {
+    User user = User("+91$phoneNo");
+    await dataBaseRef.collection("users").document(id).setData(user.toJson());
   }
 
   @override

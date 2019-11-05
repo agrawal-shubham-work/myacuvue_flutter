@@ -4,6 +4,8 @@ import 'package:my_acuvue_flutter/utilities/check_date.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'dart:io' show Platform;
 
+import 'package:my_acuvue_flutter/utilities/global_variable.dart';
+
 class DateTimePickerMainWidget extends StatefulWidget {
   @override
   _DateTimePickerMainWidgetState createState() =>
@@ -23,6 +25,8 @@ class _DateTimePickerMainWidgetState extends State<DateTimePickerMainWidget> {
       setState(() {
         String month = checkDate(picked.month);
         _date = '$month ${picked.day}, ${picked.year}';
+        GlobalVariable.userDOB = '$month ${picked.day}, ${picked.year}';
+        print(GlobalVariable.userDOB);
       });
   }
 
@@ -68,6 +72,8 @@ class _DateTimePickerMainWidgetState extends State<DateTimePickerMainWidget> {
       String month = checkDate(date.month);
       setState(() {
         _date = '$month ${date.day}, ${date.year}';
+        GlobalVariable.userDOB = '$month ${date.day}, ${date.year}';
+        print(GlobalVariable.userDOB);
       });
     }, currentTime: DateTime.now(), locale: LocaleType.en);
   }

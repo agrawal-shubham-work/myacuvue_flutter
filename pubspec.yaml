@@ -38,6 +38,7 @@ dependencies:
   path_provider:
   firebase_auth:
   cloud_firestore:
+  firebase_database:
 
 
 

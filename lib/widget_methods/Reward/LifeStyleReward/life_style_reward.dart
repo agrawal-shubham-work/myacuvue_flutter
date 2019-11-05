@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_acuvue_flutter/lifestyle_reward_model.dart';
+import 'package:my_acuvue_flutter/models/lifestyle_reward_model.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/LifeStyleReward/detail_product_page.dart';
 
 class LifeStyleReward extends StatefulWidget {
