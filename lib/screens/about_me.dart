@@ -24,17 +24,26 @@ class AboutMe extends StatefulWidget {
 }
 
 class _AboutMeState extends State<AboutMe> {
-  var notifications = new FlutterLocalNotificationsPlugin();
+  var notifications = FlutterLocalNotificationsPlugin();
   TextEditingController _firstNameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _nricController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   final databaseRef = Firestore.instance;
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
+  bool showCircularBar = true,
+      dataInDatabase,
+      dataCircularBar = true,
+      dataSaved;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String dropdownValue;
-  String userId;
+  String userId,
+      firstNameData,
+      lastNameData,
+      genderData,
+      birthDateData,
+      emailData;
   Color buttonColor = Color(0xFf013F7C);
 
   String _firstname = '',
@@ -80,11 +89,30 @@ class _AboutMeState extends State<AboutMe> {
     }
   }
 
+  Future<void> checkDataIfExists() async {
+    userId = await inputData();
+    final snapShot =
+        await Firestore.instance.collection("form").document(userId).get();
+    if (snapShot.exists || snapShot != null) {
+      setState(() {
+        stroeDatainFields(userId);
+        dataInDatabase = true;
+        showCircularBar = false;
+      });
+    } else {
+      setState(() {
+        dataInDatabase = true;
+        showCircularBar = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    var settingAndroid = new AndroidInitializationSettings('app_icon');
-    var settingIOS = new IOSInitializationSettings(
+    checkDataIfExists();
+    var settingAndroid = AndroidInitializationSettings('app_icon');
+    var settingIOS = IOSInitializationSettings(
         onDidReceiveLocalNotification: (id, title, body, payload) =>
             onSelectNotification(payload));
     notifications.initialize(InitializationSettings(settingAndroid, settingIOS),
@@ -118,6 +146,22 @@ class _AboutMeState extends State<AboutMe> {
     _scaffoldkey.currentState.showSnackBar(snackbar);
   }
 
+  Widget dataAlreadyTheirWidget() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        children: <Widget>[
+          DataFromDatabaseFormWidget("First Name", firstNameData, true),
+          DataFromDatabaseFormWidget("Last Name", lastNameData, true),
+          DataFromDatabaseFormWidget("Gender", genderData, false),
+          DataFromDatabaseFormWidget("Date of Birth", birthDateData, false),
+          DataFromDatabaseFormWidget("Email", emailData, true),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,179 +169,267 @@ class _AboutMeState extends State<AboutMe> {
       appBar: AppBar(
         title: Text('About me'),
       ),
-      body: Container(
-          child: Form(
-        key: this._formKey,
-        child: ListView(
-          children: <Widget>[
-            TextFormFieldWidget(
-              'Firsr Name',
-              true,
-              TextFieldMainWidget('Shubham', TextInputType.text, (value) {
-                setState(() {
-                  _firstname = value;
-                  validateFields();
-                });
-              }, _firstNameController, 50),
-            ),
-            TextFormFieldWidget(
-              'Last Name',
-              true,
-              TextFieldMainWidget('Agrawal', TextInputType.text, (value) {
-                setState(() {
-                  _lastname = value;
-                  validateFields();
-                });
-              }, _lastNameController, 50),
-            ),
-            TextFormFieldWidget(
-              'Gender',
-              true,
-              DropDownMainWidget(genderList, (String value) {
-                setState(() {
-                  _selectedGender = value;
-                  validateFields();
-                });
-              }, _selectedGender),
-            ),
-            TextFormFieldWidget(
-              'Date of Birth',
-              true,
-              DateTimePickerMainWidget(),
-            ),
-            TextFormFieldWidget(
-              'Email',
-              true,
-              TextFieldMainWidget('abc@xyz.com', TextInputType.emailAddress,
-                  (value) {
-                setState(() {
-                  _email = value;
-                  validateFields();
-                });
-              }, _emailController, 50),
-            ),
-            TextFormFieldWidget(
-              'NRIC/FIN Number',
-              true,
-              TextFieldMainWidget('abcd1234ae', TextInputType.number, (value) {
-                setState(() {
-                  _nric = value;
-                  validateFields();
-                });
-              }, _nricController, 9),
-            ),
-            TextFormFieldWidget(
-              'Do you wear Spectacles?',
-              true,
-              DropDownMainWidget(spectacleList, (String value) {
-                setState(() {
-                  _selectedSpectacles = value;
-                  validateFields();
-                });
-              }, _selectedSpectacles),
-            ),
-            TextFormFieldWidget(
-              'Do you wear Contact Lenses?',
-              true,
-              DropDownMainWidget(contactLenseList, (String value) {
-                setState(() {
-                  _selectedContactLenses = value;
-                  if (value == 'No') _selectedContactLenseMonth = null;
-                  print(_selectedContactLenseMonth);
-                  validateFields();
-                });
-              }, _selectedContactLenses),
-            ),
-            _selectedContactLenses == 'No' || _selectedContactLenses == null
-                ? SizedBox(
-                    width: 0.0,
-                    height: 0.0,
-                  )
-                : TextFormFieldWidget(
-                    'How long have you worn contact lenses?',
-                    true,
-                    DropDownMainWidget(contactLenseListMonth, (String value) {
-                      setState(() {
-                        _selectedContactLenseMonth = value;
-                        validateFields();
-                      });
-                    }, _selectedContactLenseMonth),
-                  ),
-            PrivacyParaWidget('Privacy Policy', kPrivacyHeading),
-            PrivacyParaWidget(mPrivacyPara1, kPrivacyPara),
-            PrivacyParaWidget(mPrivacyPara2, kPrivacyPara),
-            CheckBoxMainWidgetState(checkPrivacyState1, mCheckPrivacyPara1,
-                (bool state) {
-              setState(() {
-                checkPrivacyState1 = state;
-                validateFields();
-              });
-            }),
-            CheckBoxMainWidgetState(checkPrivacyState2, mCheckPrivacyPara2,
-                (bool state) {
-              setState(() {
-                checkPrivacyState2 = state;
-                validateFields();
-              });
-            }),
-            Container(
-              margin: EdgeInsets.all(10.0),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      margin: EdgeInsets.only(right: 5.0),
-                      color: Colors.grey,
-                      child: FlatButton(
-                        onPressed: () {
-                          var now = DateTime.now();
-                          String moth = checkDate(now.month);
-                          String date =
-                              "$moth ${now.day}, ${now.year} ${DateFormat("H:m:s").format(now)}";
+      body: showCircularBar
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : dataInDatabase
+              ? dataAlreadyTheirWidget()
+              : dataNotInDatabaseWidget(),
+    );
+  }
 
-                          Inside.Notification notificaions = Inside.Notification(
-                              "Registration",
-                              "Complete your registration now to enjoy all the benefits of the MyACUVUE app.",
-                              "$date");
-                          GlobalVariable.notificationList.add(notificaions);
-                          showOngoingNotification(notifications,
-                              title: "Registration",
-                              body:
-                                  "Complete Registration now to enjoy all the benefits.");
-                        },
+  Container dataNotInDatabaseWidget() {
+    return Container(
+        child: Form(
+      key: this._formKey,
+      child: ListView(
+        children: <Widget>[
+          TextFormFieldWidget(
+            'Firsr Name',
+            true,
+            TextFieldMainWidget('Shubham', TextInputType.text, (value) {
+              setState(() {
+                _firstname = value;
+                validateFields();
+              });
+            }, _firstNameController, 50),
+          ),
+          TextFormFieldWidget(
+            'Last Name',
+            true,
+            TextFieldMainWidget('Agrawal', TextInputType.text, (value) {
+              setState(() {
+                _lastname = value;
+                validateFields();
+              });
+            }, _lastNameController, 50),
+          ),
+          TextFormFieldWidget(
+            'Gender',
+            true,
+            DropDownMainWidget(genderList, (String value) {
+              setState(() {
+                _selectedGender = value;
+                validateFields();
+              });
+            }, _selectedGender),
+          ),
+          TextFormFieldWidget(
+            'Date of Birth',
+            true,
+            DateTimePickerMainWidget(),
+          ),
+          TextFormFieldWidget(
+            'Email',
+            true,
+            TextFieldMainWidget('abc@xyz.com', TextInputType.emailAddress,
+                (value) {
+              setState(() {
+                _email = value;
+                validateFields();
+              });
+            }, _emailController, 50),
+          ),
+          TextFormFieldWidget(
+            'NRIC/FIN Number',
+            true,
+            TextFieldMainWidget('abcd1234ae', TextInputType.number, (value) {
+              setState(() {
+                _nric = value;
+                validateFields();
+              });
+            }, _nricController, 9),
+          ),
+          TextFormFieldWidget(
+            'Do you wear Spectacles?',
+            true,
+            DropDownMainWidget(spectacleList, (String value) {
+              setState(() {
+                _selectedSpectacles = value;
+                validateFields();
+              });
+            }, _selectedSpectacles),
+          ),
+          TextFormFieldWidget(
+            'Do you wear Contact Lenses?',
+            true,
+            DropDownMainWidget(contactLenseList, (String value) {
+              setState(() {
+                _selectedContactLenses = value;
+                if (value == 'No') _selectedContactLenseMonth = null;
+                print(_selectedContactLenseMonth);
+                validateFields();
+              });
+            }, _selectedContactLenses),
+          ),
+          _selectedContactLenses == 'No' || _selectedContactLenses == null
+              ? SizedBox(
+                  width: 0.0,
+                  height: 0.0,
+                )
+              : TextFormFieldWidget(
+                  'How long have you worn contact lenses?',
+                  true,
+                  DropDownMainWidget(contactLenseListMonth, (String value) {
+                    setState(() {
+                      _selectedContactLenseMonth = value;
+                      validateFields();
+                    });
+                  }, _selectedContactLenseMonth),
+                ),
+          PrivacyParaWidget('Privacy Policy', kPrivacyHeading),
+          PrivacyParaWidget(mPrivacyPara1, kPrivacyPara),
+          PrivacyParaWidget(mPrivacyPara2, kPrivacyPara),
+          CheckBoxMainWidgetState(checkPrivacyState1, mCheckPrivacyPara1,
+              (bool state) {
+            setState(() {
+              checkPrivacyState1 = state;
+              validateFields();
+            });
+          }),
+          CheckBoxMainWidgetState(checkPrivacyState2, mCheckPrivacyPara2,
+              (bool state) {
+            setState(() {
+              checkPrivacyState2 = state;
+              validateFields();
+            });
+          }),
+          Container(
+            margin: EdgeInsets.all(10.0),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    margin: EdgeInsets.only(right: 5.0),
+                    color: Colors.grey,
+                    child: FlatButton(
+                      onPressed: () {
+                        var now = DateTime.now();
+                        String moth = checkDate(now.month);
+                        String date =
+                            "$moth ${now.day}, ${now.year} ${DateFormat("H:m:s").format(now)}";
+
+                        Inside.Notification notificaions = Inside.Notification(
+                            "Registration",
+                            "Complete your registration now to enjoy all the benefits of the MyACUVUE app.",
+                            "$date");
+                        GlobalVariable.notificationList.add(notificaions);
+                        showOngoingNotification(notifications,
+                            title: "Registration",
+                            body:
+                                "Complete Registration now to enjoy all the benefits.");
+                      },
+                      child: Text(
+                        'Skip',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (submitButtonEnabled) {
+                        saveUserDataInDatabase();
+                      }
+                    },
+                    child: Container(
+                      color: buttonColor,
+                      child: FlatButton(
                         child: Text(
-                          'Skip',
+                          'Submit',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        if (submitButtonEnabled) {
-                          saveUserDataInDatabase();
-                        }
-                      },
-                      child: Container(
-                        color: buttonColor,
-                        child: FlatButton(
-                          child: Text(
-                            'Submit',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ));
+  }
+
+  Future<void> stroeDatainFields(String id) async {
+    String first, last, gen, birth, ema;
+    await Firestore.instance.collection('form').document(id).get().then(
+        (DocumentSnapshot) =>
+            first = DocumentSnapshot.data['firstName'].toString());
+    await Firestore.instance.collection('form').document(id).get().then(
+        (DocumentSnapshot) =>
+            last = DocumentSnapshot.data['lastName'].toString());
+    await Firestore.instance.collection('form').document(id).get().then(
+        (DocumentSnapshot) => gen = DocumentSnapshot.data['gender'].toString());
+    await Firestore.instance.collection('form').document(id).get().then(
+        (DocumentSnapshot) => birth = DocumentSnapshot.data['dob'].toString());
+    await Firestore.instance.collection('form').document(id).get().then(
+        (DocumentSnapshot) => ema = DocumentSnapshot.data['email'].toString());
+
+    setState(() {
+      firstNameData = first;
+      lastNameData = last;
+      genderData = gen;
+      birthDateData = birth;
+      emailData = ema;
+      dataCircularBar = false;
+      dataSaved = true;
+    });
+  }
+
+  Widget DataFromDatabaseFormWidget(
+      String headingText, String dataText, bool isEditable) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.all(3.0),
+            child: Text(
+              '$headingText :',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Color(0xff013f7c),
               ),
             ),
-          ],
+          ),
         ),
-      )),
+        Expanded(
+            child: dataCircularBar
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : dataSaved
+                    ? Container(
+                        padding: EdgeInsets.all(3.0),
+                        child: Text(
+                          dataText,
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      )
+                    : Container()),
+        isEditable
+            ? Container(
+                padding: EdgeInsets.all(3.0),
+                height: 20.0,
+                width: 20.0,
+                child: Icon(
+                  Icons.edit,
+                  color: Color(0xff013f7c),
+                ),
+              )
+            : SizedBox(
+                width: 20.0,
+                height: 20.0,
+              )
+      ],
     );
   }
 }
