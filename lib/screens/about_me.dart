@@ -33,8 +33,12 @@ class _AboutMeState extends State<AboutMe> {
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   bool showCircularBar = true,
       dataInDatabase,
+      updateBtnBar = false,
       dataCircularBar = true,
-      dataSaved;
+      dataSaved,
+      firstNameEdited = false,
+      lastNameEdited = false,
+      emailEdited = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String dropdownValue;
@@ -138,9 +142,12 @@ class _AboutMeState extends State<AboutMe> {
         .collection("form")
         .document(userId)
         .setData(form.toJson());
+    createSnackBar("OK");
+  }
 
+  createSnackBar(String text) {
     final snackbar = SnackBar(
-      content: Text('OK'),
+      content: Text(text),
       duration: Duration(milliseconds: 500),
     );
     _scaffoldkey.currentState.showSnackBar(snackbar);
@@ -152,11 +159,121 @@ class _AboutMeState extends State<AboutMe> {
       child: ListView(
         scrollDirection: Axis.vertical,
         children: <Widget>[
-          DataFromDatabaseFormWidget("First Name", firstNameData, true),
-          DataFromDatabaseFormWidget("Last Name", lastNameData, true),
-          DataFromDatabaseFormWidget("Gender", genderData, false),
-          DataFromDatabaseFormWidget("Date of Birth", birthDateData, false),
-          DataFromDatabaseFormWidget("Email", emailData, true),
+          DataFromDatabaseFormWidget(
+              "First Name",
+              firstNameData,
+              true,
+              () {
+                setState(() {
+                  if (firstNameEdited) {
+                    firstNameEdited = false;
+                  } else
+                    firstNameEdited = true;
+                });
+              },
+              firstNameEdited,
+              (String value) {
+                setState(() {
+                  firstNameData = value;
+                });
+              }),
+          DataFromDatabaseFormWidget(
+              "Last Name",
+              lastNameData,
+              true,
+              () {
+                setState(() {
+                  if (lastNameEdited) {
+                    lastNameEdited = false;
+                  } else
+                    lastNameEdited = true;
+                });
+              },
+              lastNameEdited,
+              (String value) {
+                setState(() {
+                  lastNameData = value;
+                });
+              }),
+          DataFromDatabaseFormWidget(
+              "Gender", genderData, false, () {}, false, () {}),
+          DataFromDatabaseFormWidget(
+              "Date of Birth", birthDateData, false, () {}, false, () {}),
+          DataFromDatabaseFormWidget(
+              "Email",
+              emailData,
+              true,
+              () {
+                setState(() {
+                  if (emailEdited) {
+                    emailEdited = false;
+                  } else
+                    emailEdited = true;
+                });
+              },
+              emailEdited,
+              (String value) {
+                setState(() {
+                  emailData = value;
+                });
+              }),
+          SizedBox(
+            height: 20.0,
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Container(),
+              ),
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      updateBtnBar = true;
+                    });
+                    Map<String, dynamic> toJson() => {
+                          "firstName": firstNameData,
+                          "lastName": lastNameData,
+                          "email": emailData,
+                        };
+                    Firestore.instance
+                        .collection("form")
+                        .document(userId)
+                        .updateData(toJson())
+                        .whenComplete(() {
+                      createSnackBar("PROFILE UPDATED SUCCESSFULLY");
+                      setState(() {
+                        updateBtnBar = false;
+                      });
+                    });
+
+                    stroeDatainFields(userId);
+                    setState(() {
+                      firstNameEdited = false;
+                      lastNameEdited = false;
+                      emailEdited = false;
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(15.0),
+                    color: Color(0xff013f7c),
+                    child: updateBtnBar
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Text(
+                            'UPDATE',
+                            style: kRewardBtn,
+                            textAlign: TextAlign.center,
+                          ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(),
+              )
+            ],
+          )
         ],
       ),
     );
@@ -355,6 +472,23 @@ class _AboutMeState extends State<AboutMe> {
     ));
   }
 
+  Widget editTextField(String dataText, Function tapFunc) {
+    return Padding(
+      padding: EdgeInsets.only(top: 10.0),
+      child: TextFormField(
+        initialValue: dataText,
+        keyboardType: TextInputType.text,
+        decoration: new InputDecoration(
+          counterText: '',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+        onChanged: tapFunc,
+      ),
+    );
+  }
+
   Future<void> stroeDatainFields(String id) async {
     String first, last, gen, birth, ema;
     await Firestore.instance.collection('form').document(id).get().then(
@@ -382,7 +516,12 @@ class _AboutMeState extends State<AboutMe> {
   }
 
   Widget DataFromDatabaseFormWidget(
-      String headingText, String dataText, bool isEditable) {
+      String headingText,
+      String dataText,
+      bool isEditable,
+      Function onTaped,
+      bool checkEditState,
+      Function onTapedForDataSaving) {
     return Row(
       children: <Widget>[
         Expanded(
@@ -398,36 +537,55 @@ class _AboutMeState extends State<AboutMe> {
           ),
         ),
         Expanded(
-            child: dataCircularBar
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : dataSaved
-                    ? Container(
-                        padding: EdgeInsets.all(3.0),
-                        child: Text(
-                          dataText,
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            color: Colors.black,
+          child: dataCircularBar
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : checkEditState
+                  ? editTextField(dataText, onTapedForDataSaving)
+                  : dataSaved
+                      ? Container(
+                          padding: EdgeInsets.all(3.0),
+                          child: Text(
+                            dataText,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.start,
                           ),
-                          textAlign: TextAlign.start,
-                        ),
-                      )
-                    : Container()),
+                        )
+                      : Container(),
+        ),
         isEditable
-            ? Container(
-                padding: EdgeInsets.all(3.0),
-                height: 20.0,
-                width: 20.0,
-                child: Icon(
-                  Icons.edit,
-                  color: Color(0xff013f7c),
-                ),
-              )
+            ? checkEditState
+                ? GestureDetector(
+                    onTap: onTaped,
+                    child: Container(
+                      padding: EdgeInsets.all(3.0),
+                      height: 30.0,
+                      width: 30.0,
+                      child: Icon(
+                        Icons.close,
+                        color: Color(0xff013f7c),
+                      ),
+                    ),
+                  )
+                : GestureDetector(
+                    onTap: onTaped,
+                    child: Container(
+                      padding: EdgeInsets.all(3.0),
+                      height: 30.0,
+                      width: 30.0,
+                      child: Icon(
+                        Icons.edit,
+                        color: Color(0xff013f7c),
+                      ),
+                    ),
+                  )
             : SizedBox(
-                width: 20.0,
-                height: 20.0,
+                width: 30.0,
+                height: 30.0,
               )
       ],
     );
