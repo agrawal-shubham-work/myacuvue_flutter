@@ -253,6 +253,7 @@ class _AboutMeState extends State<AboutMe> {
                         createSnackBar("PROFILE UPDATED SUCCESSFULLY");
                         setState(() {
                           updateBtnBar = false;
+                          enableUpdateBTN = false;
                         });
                       });
 
@@ -573,17 +574,9 @@ class _AboutMeState extends State<AboutMe> {
         ),
         isEditable
             ? checkEditState
-                ? GestureDetector(
-                    onTap: onTaped,
-                    child: Container(
-                      padding: EdgeInsets.all(3.0),
-                      height: 30.0,
-                      width: 30.0,
-                      child: Icon(
-                        Icons.close,
-                        color: Color(0xff013f7c),
-                      ),
-                    ),
+                ? SizedBox(
+                    width: 30.0,
+                    height: 30.0,
                   )
                 : GestureDetector(
                     onTap: onTaped,
