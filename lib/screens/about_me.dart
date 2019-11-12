@@ -38,7 +38,8 @@ class _AboutMeState extends State<AboutMe> {
       dataSaved,
       firstNameEdited = false,
       lastNameEdited = false,
-      emailEdited = false;
+      emailEdited = false,
+      enableUpdateBTN = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String dropdownValue;
@@ -47,7 +48,10 @@ class _AboutMeState extends State<AboutMe> {
       lastNameData,
       genderData,
       birthDateData,
-      emailData;
+      emailData,
+      editedFirstName,
+      editedLastName,
+      editedEmailId;
   Color buttonColor = Color(0xFf013F7C);
 
   String _firstname = '',
@@ -97,7 +101,7 @@ class _AboutMeState extends State<AboutMe> {
     userId = await inputData();
     final snapShot =
         await Firestore.instance.collection("form").document(userId).get();
-    if (snapShot.exists || snapShot != null) {
+    if (snapShot.exists) {
       setState(() {
         stroeDatainFields(userId);
         dataInDatabase = true;
@@ -105,7 +109,7 @@ class _AboutMeState extends State<AboutMe> {
       });
     } else {
       setState(() {
-        dataInDatabase = true;
+        dataInDatabase = false;
         showCircularBar = false;
       });
     }
@@ -143,6 +147,7 @@ class _AboutMeState extends State<AboutMe> {
         .document(userId)
         .setData(form.toJson());
     createSnackBar("OK");
+    checkDataIfExists();
   }
 
   createSnackBar(String text) {
@@ -175,6 +180,7 @@ class _AboutMeState extends State<AboutMe> {
               (String value) {
                 setState(() {
                   firstNameData = value;
+                  validateEditedFields();
                 });
               }),
           DataFromDatabaseFormWidget(
@@ -193,6 +199,7 @@ class _AboutMeState extends State<AboutMe> {
               (String value) {
                 setState(() {
                   lastNameData = value;
+                  validateEditedFields();
                 });
               }),
           DataFromDatabaseFormWidget(
@@ -215,6 +222,7 @@ class _AboutMeState extends State<AboutMe> {
               (String value) {
                 setState(() {
                   emailData = value;
+                  validateEditedFields();
                 });
               }),
           SizedBox(
@@ -228,35 +236,38 @@ class _AboutMeState extends State<AboutMe> {
               Expanded(
                 child: InkWell(
                   onTap: () {
-                    setState(() {
-                      updateBtnBar = true;
-                    });
-                    Map<String, dynamic> toJson() => {
-                          "firstName": firstNameData,
-                          "lastName": lastNameData,
-                          "email": emailData,
-                        };
-                    Firestore.instance
-                        .collection("form")
-                        .document(userId)
-                        .updateData(toJson())
-                        .whenComplete(() {
-                      createSnackBar("PROFILE UPDATED SUCCESSFULLY");
+                    if (enableUpdateBTN) {
                       setState(() {
-                        updateBtnBar = false;
+                        updateBtnBar = true;
                       });
-                    });
+                      Map<String, dynamic> toJson() => {
+                            "firstName": firstNameData,
+                            "lastName": lastNameData,
+                            "email": emailData,
+                          };
+                      Firestore.instance
+                          .collection("form")
+                          .document(userId)
+                          .updateData(toJson())
+                          .whenComplete(() {
+                        createSnackBar("PROFILE UPDATED SUCCESSFULLY");
+                        setState(() {
+                          updateBtnBar = false;
+                        });
+                      });
 
-                    stroeDatainFields(userId);
-                    setState(() {
-                      firstNameEdited = false;
-                      lastNameEdited = false;
-                      emailEdited = false;
-                    });
+                      stroeDatainFields(userId);
+                      setState(() {
+                        firstNameEdited = false;
+                        lastNameEdited = false;
+                        emailEdited = false;
+                      });
+                    } else
+                      createSnackBar("No Change in data");
                   },
                   child: Container(
                     padding: EdgeInsets.all(15.0),
-                    color: Color(0xff013f7c),
+                    color: enableUpdateBTN ? Color(0xff013f7c) : Colors.grey,
                     child: updateBtnBar
                         ? Center(
                             child: CircularProgressIndicator(),
@@ -506,6 +517,9 @@ class _AboutMeState extends State<AboutMe> {
 
     setState(() {
       firstNameData = first;
+      editedFirstName = first;
+      editedLastName = last;
+      editedEmailId = ema;
       lastNameData = last;
       genderData = gen;
       birthDateData = birth;
@@ -589,5 +603,18 @@ class _AboutMeState extends State<AboutMe> {
               )
       ],
     );
+  }
+
+  validateEditedFields() {
+    if (editedFirstName != firstNameData ||
+        editedLastName != lastNameData ||
+        editedEmailId != emailData) {
+      setState(() {
+        enableUpdateBTN = true;
+      });
+    } else
+      setState(() {
+        enableUpdateBTN = false;
+      });
   }
 }
