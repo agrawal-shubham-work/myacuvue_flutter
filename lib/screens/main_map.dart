@@ -203,7 +203,8 @@ class _MainMapState extends State<MainMap> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: _selectedIndex == index
-                          ? myDetailsContainerRegister(storeName, storeAddress)
+                          ? myDetailsContainerRegister(
+                              storeName, storeAddress, lat, long)
                           : myDetailsContainer1(storeName, storeAddress),
                     ),
                   ],

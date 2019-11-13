@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/screens/home.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/dialog/custom_dialog.dart';
 import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
 
 class myDetailsContainerRegister extends StatefulWidget {
   final String storeName, storeAddress;
+  double lat, long;
 
-  myDetailsContainerRegister(this.storeName, this.storeAddress);
+  myDetailsContainerRegister(
+      this.storeName, this.storeAddress, this.lat, this.long);
 
   @override
   _myDetailsContainerRegisterState createState() =>
@@ -39,6 +42,8 @@ class _myDetailsContainerRegisterState
   Map<String, dynamic> toJson() => {
         "storename": widget.storeName,
         "storeaddress": widget.storeAddress,
+        "lat": widget.lat,
+        "long": widget.long,
       };
 
   @override
@@ -117,13 +122,12 @@ class _myDetailsContainerRegisterState
 
   saveDataInDatabase(String userId) async {
     await Firestore.instance
-        .collection("registrationstore")
-        .document(userId)
         .collection("store")
-        .document(widget.storeName)
+        .document(userId)
         .setData(toJson())
         .whenComplete(() {
-      Navigator.of(context).pop();
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => Home("Register Store", 3)));
     });
   }
 }

@@ -121,7 +121,7 @@ class _SplashScreenState extends State<SplashScreen> {
           if (snapshot.hasData) {
             FirebaseUser user = snapshot.data; // this is your user instance
             print(snapshot.data);
-            return Home("MyACUVUE");
+            return Home("MyACUVUE", 0);
           }
           return otpScreen();
         });

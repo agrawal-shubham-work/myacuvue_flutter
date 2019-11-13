@@ -3,6 +3,7 @@ import 'package:my_acuvue_flutter/screens/about_me.dart';
 import 'package:my_acuvue_flutter/screens/about_myacuvue.dart';
 import 'package:my_acuvue_flutter/screens/contact_us.dart';
 import 'package:my_acuvue_flutter/screens/main_map.dart';
+import 'package:my_acuvue_flutter/screens/main_store.dart';
 import 'package:my_acuvue_flutter/screens/membership.dart';
 import 'package:my_acuvue_flutter/screens/notification.dart';
 import 'package:my_acuvue_flutter/screens/promotion_bannner.dart';
@@ -34,7 +35,8 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       routes: <String, WidgetBuilder>{
         SplashScreen.routeName: (BuildContext context) => SplashScreen(),
-        Home.route: (BuildContext context) => Home("MyACUVUE"),
+        MainStore.routeName: (BuildContext context) => MainStore(),
+        Home.route: (BuildContext context) => Home("MyACUVUE", 0),
         AboutMe.routeName: (BuildContext context) => AboutMe(),
         AboutMyAcuvue.routeName: (BuildContext context) => AboutMyAcuvue(),
         Settings.routeName: (BuildContext context) => Settings(),

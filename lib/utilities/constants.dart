@@ -96,6 +96,10 @@ const kRegisterStoreSubHeading = TextStyle(
   fontSize: 18.0,
   color: Color(0xFF013F7C),
 );
+const kStoreNameStyle = TextStyle(
+    fontSize: 16.0, color: Color(0xff013f7c), fontWeight: FontWeight.w600);
+const kStoreAddressStyle = TextStyle(
+    fontSize: 16.0, color: Colors.blueGrey, fontWeight: FontWeight.w600);
 
 const kFormHeadingStyle = TextStyle(color: Color(0xFF013F7C));
 const kAboutText = TextStyle(fontSize: 16.0, color: Color(0xFf013F7C));
