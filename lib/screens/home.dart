@@ -11,8 +11,7 @@ import 'trial.dart';
 
 class Home extends StatefulWidget {
   String title;
-  int forcingToSelectPage;
-  Home(this.title, this.forcingToSelectPage);
+  Home(this.title);
 
   static const String route = '/home';
   @override
@@ -80,7 +79,6 @@ class _HomeState extends State<Home> {
   onTapped(int index) {
     setState(() {
       currentTabIndex = index;
-      widget.forcingToSelectPage = null;
       switch (index) {
         case 0:
           widget.title = "MyACUVUE";
@@ -158,9 +156,7 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: widget.forcingToSelectPage == null
-          ? tabs[currentTabIndex]
-          : tabs[widget.forcingToSelectPage],
+      body: tabs[currentTabIndex],
       drawer: SafeArea(child: getDrawer(context)),
       bottomNavigationBar: buildBottomNavigationBar(),
     );

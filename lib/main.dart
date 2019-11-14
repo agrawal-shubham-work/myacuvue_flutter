@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         SplashScreen.routeName: (BuildContext context) => SplashScreen(),
         MainStore.routeName: (BuildContext context) => MainStore(),
-        Home.route: (BuildContext context) => Home("MyACUVUE", 0),
+        Home.route: (BuildContext context) => Home("MyACUVUE"),
         AboutMe.routeName: (BuildContext context) => AboutMe(),
         AboutMyAcuvue.routeName: (BuildContext context) => AboutMyAcuvue(),
         Settings.routeName: (BuildContext context) => Settings(),

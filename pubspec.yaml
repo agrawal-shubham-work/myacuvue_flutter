@@ -14,7 +14,7 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 
 
@@ -40,6 +40,8 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   firebase_database:
+  firebase_storage:
+  transparent_image:
 
 
 

@@ -126,8 +126,7 @@ class _myDetailsContainerRegisterState
         .document(userId)
         .setData(toJson())
         .whenComplete(() {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => Home("Register Store", 3)));
+      Navigator.pop(context);
     });
   }
 }

@@ -35,8 +35,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   height: 150.0,
                   width: 150.0,
                   margin: EdgeInsets.symmetric(vertical: 30.0),
-                  child: Image.asset(
-                    widget.modelList.productImage,
+                  child: Image.network(
+                    widget.modelList.imageUrl,
                     fit: BoxFit.cover,
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class reward_detail_widget extends StatelessWidget {
   final String imagePath, data, points;
@@ -15,9 +16,17 @@ class reward_detail_widget extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 2,
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.fill,
+            child: Stack(
+              children: <Widget>[
+                Center(child: CircularProgressIndicator()),
+                Center(
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: imagePath,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ],
             ),
           ),
           Expanded(

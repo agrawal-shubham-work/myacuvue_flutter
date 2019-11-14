@@ -70,9 +70,8 @@ class _CartState extends State<Cart> {
                       flex: 2,
                       child: Container(
                           padding: EdgeInsets.all(5.0),
-                          child: Image.asset(
-                            GlobalVariable
-                                .lifeStyleRewardList[index].productImage,
+                          child: Image.network(
+                            GlobalVariable.lifeStyleRewardList[index].imageUrl,
                             fit: BoxFit.cover,
                           ))),
                   Expanded(

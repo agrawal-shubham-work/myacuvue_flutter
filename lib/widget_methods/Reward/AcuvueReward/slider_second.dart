@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class SliderSecond extends StatelessWidget {
   final String imagePath;
@@ -24,9 +25,17 @@ class SliderSecond extends StatelessWidget {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.fill,
+            child: Stack(
+              children: <Widget>[
+                Center(child: CircularProgressIndicator()),
+                Center(
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: imagePath,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ],
             ),
           ),
           Expanded(
