@@ -68,8 +68,8 @@ class _CartState extends State<Cart> {
                   child: Text('Your cart is empty'),
                 ),
               ),*/
-            new FirebaseAnimatedList(
-          key: new ValueKey<bool>(_anchorToBottom),
+             FirebaseAnimatedList(
+          key:  ValueKey<bool>(_anchorToBottom),
           query: FirebaseDatabase.instance
               .reference()
               .child("cart")
@@ -80,7 +80,7 @@ class _CartState extends State<Cart> {
               : null,
           itemBuilder: (BuildContext context, DataSnapshot snapshot,
               Animation<double> animation, int index) {
-            return new SizeTransition(
+            return  SizeTransition(
               sizeFactor: animation,
               child: createCartList(snapshot),
             );

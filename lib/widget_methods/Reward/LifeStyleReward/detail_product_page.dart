@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/models/lifestyle_reward_model.dart';
@@ -16,8 +17,13 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  int count = 0;
+
   DatabaseReference cartRef =
       FirebaseDatabase.instance.reference().child("cart");
+  DatabaseReference countRef =
+      FirebaseDatabase.instance.reference().child("cart");
+
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -143,13 +149,50 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   addDataToDatabase(String userId, String imageUrl, String productName,
       String productPoints, String productDesc, String productQuantity) {
+    int count;
     cartRef.child(userId).push().set(<String, dynamic>{
       "imageUrl": imageUrl,
       "productName": productName,
       "productPoints": productPoints,
       "productDesc": productDesc,
       "productQuantity": productQuantity,
-    }).whenComplete(() {
+    }).whenComplete(() async {
+      final snapshot = await Firestore.instance
+          .collection("cart")
+          .document(userId)
+          .collection("totalcount")
+          .document("cartcount")
+          .get();
+
+      if (snapshot.exists) {
+        await Firestore.instance.collection('cart').document(userId)
+          ..collection("totalcount")
+              .document("cartcount")
+              .get()
+              .then((DocumentSnapshot) =>
+                  count = DocumentSnapshot.data['count'].toInt())
+              .whenComplete(() async {
+            count++;
+            await Firestore.instance.collection('cart').document(userId)
+              ..collection("totalcount")
+                  .document("cartcount")
+                  .setData(<String, int>{
+                "count": count,
+              }).whenComplete(() {
+                print("Ok ADDED MORE");
+              });
+          });
+      } else {
+        await Firestore.instance.collection('cart').document(userId)
+          ..collection("totalcount")
+              .document("cartcount")
+              .setData(<String, int>{
+            "count": 1,
+          }).whenComplete(() {
+            print("Ok ADDED");
+          });
+      }
+
       final snackbar = SnackBar(
         content: Text('Product Added to Cart'),
         action: SnackBarAction(
