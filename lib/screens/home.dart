@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/screens/main_points.dart';
+import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
 import 'package:my_acuvue_flutter/utilities/navigation_drawer.dart';
 import 'package:my_acuvue_flutter/screens/main_home.dart';
 import 'package:my_acuvue_flutter/screens/main_reward.dart';
@@ -19,6 +20,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String userId;
   BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
       onTap: onTapped,
@@ -97,6 +99,16 @@ class _HomeState extends State<Home> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    inputData().then((user) {
+      userId = user;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -110,7 +122,7 @@ class _HomeState extends State<Home> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (BuildContext context) => Cart(),
+                      builder: (BuildContext context) => Cart(userId),
                     ),
                   );
                 },

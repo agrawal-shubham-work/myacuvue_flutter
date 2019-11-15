@@ -100,7 +100,6 @@ class _SplashScreenState extends State<SplashScreen> {
         otpBox = false;
       });
       String userId = await inputData();
-      GlobalVariable.userId = userId;
       createRecord(userId);
       Navigator.of(context).pushReplacementNamed(Home.route);
     }).catchError((e) {

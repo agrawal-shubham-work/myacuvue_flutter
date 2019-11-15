@@ -1,7 +1,9 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/models/lifestyle_reward_model.dart';
 import 'package:my_acuvue_flutter/screens/store_cart.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -14,6 +16,8 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  DatabaseReference cartRef =
+      FirebaseDatabase.instance.reference().child("cart");
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -50,11 +54,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                       EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
                   color: Color(0xFf013F7C),
                   child: FlatButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      String userId = await inputData();
                       print(GlobalVariable.lifeStyleRewardList);
                       if (GlobalVariable.lifeStyleRewardList.length == 0) {
                         GlobalVariable.lifeStyleRewardList
                             .add(widget.modelList);
+                        addDataToDatabase(
+                            userId,
+                            widget.modelList.imageUrl,
+                            widget.modelList.productName,
+                            widget.modelList.productPoints,
+                            widget.modelList.productDesc,
+                            widget.modelList.productQuantity);
                       } else {
                         if (GlobalVariable.lifeStyleRewardList
                             .contains(widget.modelList)) {
@@ -66,7 +78,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Cart()));
+                                        builder: (context) => Cart(userId)));
                               },
                             ),
                           );
@@ -74,21 +86,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                         } else {
                           GlobalVariable.lifeStyleRewardList
                               .add(widget.modelList);
+                          addDataToDatabase(
+                              userId,
+                              widget.modelList.imageUrl,
+                              widget.modelList.productName,
+                              widget.modelList.productPoints,
+                              widget.modelList.productDesc,
+                              widget.modelList.productQuantity);
                         }
                       }
-                      final snackbar = SnackBar(
-                        content: Text('Product Added to Cart'),
-                        action: SnackBarAction(
-                          label: 'Go to Cart',
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Cart()));
-                          },
-                        ),
-                      );
-                      _scaffoldkey.currentState.showSnackBar(snackbar);
                     },
                     child: Text(
                       'Add to cart',
@@ -133,5 +139,28 @@ class _ProductDetailsState extends State<ProductDetails> {
         style: termsStyle,
       ),
     );
+  }
+
+  addDataToDatabase(String userId, String imageUrl, String productName,
+      String productPoints, String productDesc, String productQuantity) {
+    cartRef.child(userId).push().set(<String, dynamic>{
+      "imageUrl": imageUrl,
+      "productName": productName,
+      "productPoints": productPoints,
+      "productDesc": productDesc,
+      "productQuantity": productQuantity,
+    }).whenComplete(() {
+      final snackbar = SnackBar(
+        content: Text('Product Added to Cart'),
+        action: SnackBarAction(
+          label: 'Go to Cart',
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Cart(userId)));
+          },
+        ),
+      );
+      _scaffoldkey.currentState.showSnackBar(snackbar);
+    });
   }
 }

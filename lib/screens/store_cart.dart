@@ -1,15 +1,33 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/models/cart_model.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/main_upper_container_for_reward_and_cart.dart';
 
 class Cart extends StatefulWidget {
+  String userId;
+
+  Cart(this.userId);
+
   @override
   _CartState createState() => _CartState();
 }
 
 class _CartState extends State<Cart> {
+  bool _anchorToBottom = false;
+
+  // instance of util class
+
   String selectedValue = "1";
+
+  @override
+  void initState() {
+    super.initState();
+    print(widget.userId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +54,8 @@ class _CartState extends State<Cart> {
           ),
         ),
         margin: EdgeInsets.symmetric(vertical: 10.0),
-        child: GlobalVariable.lifeStyleRewardList.length != 0
+        child:
+            /*GlobalVariable.lifeStyleRewardList.length != 0
             ? ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: GlobalVariable.lifeStyleRewardList.length,
@@ -48,12 +67,32 @@ class _CartState extends State<Cart> {
                 child: Center(
                   child: Text('Your cart is empty'),
                 ),
-              ),
+              ),*/
+            new FirebaseAnimatedList(
+          key: new ValueKey<bool>(_anchorToBottom),
+          query: FirebaseDatabase.instance
+              .reference()
+              .child("cart")
+              .child(widget.userId),
+          reverse: _anchorToBottom,
+          sort: _anchorToBottom
+              ? (DataSnapshot a, DataSnapshot b) => b.key.compareTo(a.key)
+              : null,
+          itemBuilder: (BuildContext context, DataSnapshot snapshot,
+              Animation<double> animation, int index) {
+            return new SizeTransition(
+              sizeFactor: animation,
+              child: createCartList(snapshot),
+            );
+          },
+        ),
       ),
     );
   }
 
-  Widget createCartList(int index) {
+  Widget createCartList(DataSnapshot snapshot) {
+    CartModel model = CartModel.fromSnapshot(snapshot);
+    String Quantity;
     return Container(
       margin: EdgeInsets.all(10.0),
       child: Card(
@@ -71,7 +110,8 @@ class _CartState extends State<Cart> {
                       child: Container(
                           padding: EdgeInsets.all(5.0),
                           child: Image.network(
-                            GlobalVariable.lifeStyleRewardList[index].imageUrl,
+                            /*GlobalVariable.lifeStyleRewardList[index].imageUrl,*/
+                            model.imageUrl,
                             fit: BoxFit.cover,
                           ))),
                   Expanded(
@@ -82,13 +122,18 @@ class _CartState extends State<Cart> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text(GlobalVariable
-                              .lifeStyleRewardList[index].productName),
-                          Text(GlobalVariable
-                              .lifeStyleRewardList[index].productPoints),
                           Text(
-                            GlobalVariable
-                                .lifeStyleRewardList[index].productDesc,
+                              /*GlobalVariable
+                              .lifeStyleRewardList[index].productName*/
+                              model.productName),
+                          Text(
+                              /*GlobalVariable
+                              .lifeStyleRewardList[index].productPoints*/
+                              model.productPoints),
+                          Text(
+                            /*GlobalVariable
+                                .lifeStyleRewardList[index].productDesc*/
+                            model.productDesc,
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -126,7 +171,7 @@ class _CartState extends State<Cart> {
                                     color: Color(0xFf013F7C),
                                   ),
                                   value:
-                                      "${GlobalVariable.lifeStyleRewardList[index].productQuantity}",
+                                      "${/*GlobalVariable.lifeStyleRewardList[index].productQuantity*/ model.productQuantity}",
                                   items: quantityList.map((String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
@@ -135,11 +180,16 @@ class _CartState extends State<Cart> {
                                   }).toList(),
                                   onChanged: (String value) {
                                     setState(() {
-                                      GlobalVariable.lifeStyleRewardList[index]
-                                          .productQuantity = value;
-                                      print(GlobalVariable
-                                          .lifeStyleRewardList[index]
-                                          .productQuantity);
+                                      /*GlobalVariable.lifeStyleRewardList[index]
+                                          .productQuantity */
+                                      FirebaseDatabase.instance
+                                          .reference()
+                                          .child("cart")
+                                          .child(widget.userId)
+                                          .child(model.id)
+                                          .update(<String, dynamic>{
+                                        "productQuantity": value,
+                                      });
                                     });
                                   },
                                 ),
@@ -150,8 +200,14 @@ class _CartState extends State<Cart> {
                         FlatButton(
                           onPressed: () {
                             setState(() {
-                              GlobalVariable.lifeStyleRewardList
-                                  .removeAt(index);
+                              /*GlobalVariable.lifeStyleRewardList
+                                  .removeAt(index);*/
+                              FirebaseDatabase.instance
+                                  .reference()
+                                  .child("cart")
+                                  .child(widget.userId)
+                                  .child(model.id)
+                                  .remove();
                             });
                           },
                           child: Icon(
