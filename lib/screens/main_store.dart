@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/screens/main_map.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
+import 'package:my_acuvue_flutter/widget_methods/Maps/calendar%20Widget.dart';
 import 'package:my_acuvue_flutter/widget_methods/para_style_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -125,7 +126,12 @@ class _MainStoreState extends State<MainStore> {
                       MakeStoreCardBTN("CALL", () {
                         _launchCaller("800-101-3130");
                       }),
-                      MakeStoreCardBTN("BOOKING", () {}),
+                      MakeStoreCardBTN("BOOKING", () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return BookDate();
+                        }));
+                      }),
                       MakeStoreCardBTN("DIRECTIONS", () {}),
                     ],
                   ),
