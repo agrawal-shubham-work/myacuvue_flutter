@@ -376,55 +376,35 @@ class _MainStoreState extends State<MainStore> {
   }
 
   Future<void> getDataFromDataBase(String id) async {
-    String storeNaame, storeAdddress;
-    double latitude, longitude;
-    await Firestore.instance.collection('store').document(id).get().then(
-        (DocumentSnapshot) =>
-            storeNaame = DocumentSnapshot.data['storename'].toString());
-    await Firestore.instance.collection('store').document(id).get().then(
-        (DocumentSnapshot) =>
-            storeAdddress = DocumentSnapshot.data['storeaddress'].toString());
-    await Firestore.instance.collection('store').document(id).get().then(
-        (DocumentSnapshot) =>
-            latitude = DocumentSnapshot.data['lat'].toDouble());
-    await Firestore.instance.collection('store').document(id).get().then(
-        (DocumentSnapshot) =>
-            longitude = DocumentSnapshot.data['long'].toDouble());
-
+    DocumentSnapshot snapshot =
+        await Firestore.instance.collection("store").document(id).get();
     setState(() {
-      storeName = storeNaame;
-      storeAddress = storeAdddress;
-      lat = latitude;
-      long = longitude;
+      storeName = snapshot['storename'];
+      storeAddress = snapshot['storeaddress'];
+      lat = snapshot['lat'].toDouble();
+      long = snapshot['storename'].toDouble();
     });
   }
 
   Future<void> getFromAppointmentDatabase(String userId) async {
-    String date, time, status;
-
-    await Firestore.instance
-        .collection('appointment')
+    DocumentSnapshot snapshot = await Firestore.instance
+        .collection("appointment")
         .document(userId)
-        .get()
-        .then((DocumentSnapshot) =>
-            date = DocumentSnapshot.data['date'].toString());
-    await Firestore.instance
-        .collection('appointment')
-        .document(userId)
-        .get()
-        .then((DocumentSnapshot) =>
-            time = DocumentSnapshot.data['timing'].toString());
-    await Firestore.instance
-        .collection('appointment')
-        .document(userId)
-        .get()
-        .then((DocumentSnapshot) =>
-            status = DocumentSnapshot.data['status'].toString());
+        .get();
 
     setState(() {
-      appointmentDate = date;
-      appointmentTime = time;
-      appointmentStatus = status;
+      appointmentDate = snapshot['date'];
+      appointmentTime = snapshot['timing'];
+      appointmentStatus = snapshot['status'];
+    });
+  }
+
+  addDataToList(String name, String address, double lat, double long) {
+    setState(() {
+      storeName = name;
+      storeAddress = address;
+      lat = lat;
+      long = long;
     });
   }
 }

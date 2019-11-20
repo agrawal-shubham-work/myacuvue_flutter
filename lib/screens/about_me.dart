@@ -502,29 +502,18 @@ class _AboutMeState extends State<AboutMe> {
   }
 
   Future<void> stroeDatainFields(String id) async {
-    String first, last, gen, birth, ema;
-    await Firestore.instance.collection('form').document(id).get().then(
-        (DocumentSnapshot) =>
-            first = DocumentSnapshot.data['firstName'].toString());
-    await Firestore.instance.collection('form').document(id).get().then(
-        (DocumentSnapshot) =>
-            last = DocumentSnapshot.data['lastName'].toString());
-    await Firestore.instance.collection('form').document(id).get().then(
-        (DocumentSnapshot) => gen = DocumentSnapshot.data['gender'].toString());
-    await Firestore.instance.collection('form').document(id).get().then(
-        (DocumentSnapshot) => birth = DocumentSnapshot.data['dob'].toString());
-    await Firestore.instance.collection('form').document(id).get().then(
-        (DocumentSnapshot) => ema = DocumentSnapshot.data['email'].toString());
+    DocumentSnapshot snapshot =
+        await Firestore.instance.collection("form").document(id).get();
 
     setState(() {
-      firstNameData = first;
-      editedFirstName = first;
-      editedLastName = last;
-      editedEmailId = ema;
-      lastNameData = last;
-      genderData = gen;
-      birthDateData = birth;
-      emailData = ema;
+      firstNameData = snapshot['firstName'];
+      editedFirstName = snapshot['firstName'];
+      editedLastName = snapshot['lastName'];
+      editedEmailId = snapshot['email'];
+      lastNameData = snapshot['lastName'];
+      genderData = snapshot['gender'];
+      birthDateData = snapshot['dob'];
+      emailData = snapshot['email'];
       dataCircularBar = false;
       dataSaved = true;
     });
