@@ -1,27 +1,28 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/screens/main_points.dart';
-import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
-import 'package:my_acuvue_flutter/utilities/navigation_drawer.dart';
 import 'package:my_acuvue_flutter/screens/main_home.dart';
+import 'package:my_acuvue_flutter/screens/main_points.dart';
 import 'package:my_acuvue_flutter/screens/main_reward.dart';
 import 'package:my_acuvue_flutter/screens/main_store.dart';
 import 'package:my_acuvue_flutter/screens/store_cart.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
-import 'trial.dart';
+import 'package:my_acuvue_flutter/utilities/navigation_drawer.dart';
 
 class Home extends StatefulWidget {
   String title;
+
   Home(this.title);
 
   static const String route = '/home';
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   String userId;
+
   BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
       onTap: onTapped,
@@ -79,6 +80,7 @@ class _HomeState extends State<Home> {
     MainReward(ScreenSelected.Wallet),
     MainStore()
   ];
+
   onTapped(int index) {
     setState(() {
       currentTabIndex = index;
@@ -106,6 +108,7 @@ class _HomeState extends State<Home> {
 
     inputData().then((user) {
       userId = user;
+      GlobalVariable.userId = user;
     });
   }
 

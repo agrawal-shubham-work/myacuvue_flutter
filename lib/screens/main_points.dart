@@ -10,6 +10,7 @@ class _PointsState extends State<Points> {
   TextAlign start = TextAlign.start;
   TextAlign center = TextAlign.center;
   double height = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(

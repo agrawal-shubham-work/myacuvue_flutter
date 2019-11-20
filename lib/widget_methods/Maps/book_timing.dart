@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
+import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 
 class BookTiming extends StatefulWidget {
   DateTime selectedDate;
@@ -107,10 +108,9 @@ class _BookTimingState extends State<BookTiming> {
           InkWell(
             onTap: () async {
               if (currentIndex != -1) {
-                String userId = await inputData();
                 await Firestore.instance
                     .collection("appointment")
-                    .document(userId)
+                    .document(GlobalVariable.userId)
                     .setData({
                   "timing": timingList[currentIndex],
                   "date":

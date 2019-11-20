@@ -11,6 +11,7 @@ import 'package:my_acuvue_flutter/widget_methods/Maps/map_details_card.dart';
 
 class MainMap extends StatefulWidget {
   static const String routeName = '/mainmap';
+
   @override
   _MainMapState createState() => _MainMapState();
 }
@@ -24,6 +25,7 @@ class _MainMapState extends State<MainMap> {
   TextEditingController controller = TextEditingController();
   String filter;
   bool isDropDownSelected = true;
+
   Future<String> _loadMapData() async {
     return await rootBundle.loadString('assets/map.json');
   }

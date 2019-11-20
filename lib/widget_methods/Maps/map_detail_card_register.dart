@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/screens/home.dart';
-import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/dialog/custom_dialog.dart';
+import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
+import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 
 class myDetailsContainerRegister extends StatefulWidget {
   final String storeName, storeAddress;
@@ -19,8 +19,6 @@ class myDetailsContainerRegister extends StatefulWidget {
 
 class _myDetailsContainerRegisterState
     extends State<myDetailsContainerRegister> {
-  String userId;
-
   bool isUserRegistered = true, loadData = false;
 
   Future<void> checkDataIfExists(String userId) async {
@@ -80,10 +78,9 @@ class _myDetailsContainerRegisterState
                       setState(() {
                         loadData = true;
                       });
-                      userId = await inputData();
-                      checkDataIfExists(userId);
+                      checkDataIfExists(GlobalVariable.userId);
                       isUserRegistered
-                          ? saveDataInDatabase(userId)
+                          ? saveDataInDatabase(GlobalVariable.userId)
                           : showDialog(
                               context: context,
                               builder: (BuildContext context) => CustomDialog(

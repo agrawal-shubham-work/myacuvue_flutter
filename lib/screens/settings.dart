@@ -4,6 +4,7 @@ import 'package:my_acuvue_flutter/utilities/constants.dart';
 
 class Settings extends StatefulWidget {
   static const String routeName = '/settings';
+
   @override
   _SettingsState createState() => _SettingsState();
 }
@@ -16,6 +17,7 @@ class _SettingsState extends State<Settings> {
   bool isGoogle = false;
   bool isTwitter = false;
   bool isEmail = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

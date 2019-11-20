@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/dialog/custom_dialog.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/AcuvueReward/slider_second.dart';
+
 import 'slider_first.dart';
-import 'package:my_acuvue_flutter/dialog/custom_dialog.dart';
 
 class RewardsSlider extends StatefulWidget {
   static const String routeName = '/rewardslider';

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/widget_methods/Membership/membership_regular.dart';
 import 'package:my_acuvue_flutter/widget_methods/Membership/vip_page.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/reward_btn_widget.dart';
-import 'package:my_acuvue_flutter/utilities/constants.dart';
 
 class Membership extends StatefulWidget {
   static const String routeName = '/membership';
+
   @override
   _MembershipState createState() => _MembershipState();
 }
@@ -17,6 +18,7 @@ enum MembershipType {
 
 class _MembershipState extends State<Membership> {
   MembershipType membership = MembershipType.VIP;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -3,6 +3,7 @@ import 'package:my_acuvue_flutter/widget_methods/WebViews/WebViewContainer.dart'
 
 class PromotionsAndEvents extends StatefulWidget {
   static const String routeName = '/promotions';
+
   @override
   _PromotionsAndEventsState createState() => _PromotionsAndEventsState();
 }

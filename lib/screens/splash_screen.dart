@@ -5,11 +5,11 @@ import 'package:my_acuvue_flutter/models/user_model.dart';
 import 'package:my_acuvue_flutter/screens/home.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
-import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = "/splash";
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }

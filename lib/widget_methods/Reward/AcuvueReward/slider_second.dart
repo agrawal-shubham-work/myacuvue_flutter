@@ -4,6 +4,7 @@ import 'package:transparent_image/transparent_image.dart';
 
 class SliderSecond extends StatelessWidget {
   final String imagePath;
+
   SliderSecond(this.imagePath);
 
   Widget createTextForTerms(String text) {

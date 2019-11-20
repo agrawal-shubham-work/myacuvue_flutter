@@ -25,6 +25,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       FirebaseDatabase.instance.reference().child("cart");
 
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,13 +62,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                   color: Color(0xFf013F7C),
                   child: FlatButton(
                     onPressed: () async {
-                      String userId = await inputData();
                       print(GlobalVariable.lifeStyleRewardList);
                       if (GlobalVariable.lifeStyleRewardList.length == 0) {
                         GlobalVariable.lifeStyleRewardList
                             .add(widget.modelList);
                         addDataToDatabase(
-                            userId,
+                            GlobalVariable.userId,
                             widget.modelList.imageUrl,
                             widget.modelList.productName,
                             widget.modelList.productPoints,
@@ -84,7 +84,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Cart(userId)));
+                                        builder: (context) =>
+                                            Cart(GlobalVariable.userId)));
                               },
                             ),
                           );
@@ -93,7 +94,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           GlobalVariable.lifeStyleRewardList
                               .add(widget.modelList);
                           addDataToDatabase(
-                              userId,
+                              GlobalVariable.userId,
                               widget.modelList.imageUrl,
                               widget.modelList.productName,
                               widget.modelList.productPoints,

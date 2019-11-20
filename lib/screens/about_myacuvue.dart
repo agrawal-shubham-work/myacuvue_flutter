@@ -7,6 +7,7 @@ import 'package:my_acuvue_flutter/widget_methods/About/terms_of_use.dart';
 
 class AboutMyAcuvue extends StatefulWidget {
   static const String routeName = '/aboutmyacuvue';
+
   @override
   _AboutMyAcuvueState createState() => _AboutMyAcuvueState();
 }
@@ -80,7 +81,9 @@ class _AboutMyAcuvueState extends State<AboutMyAcuvue> {
 class CreateAboutBtn extends StatelessWidget {
   final String btnText;
   final Function onTaped;
+
   CreateAboutBtn(this.btnText, this.onTaped);
+
   @override
   Widget build(BuildContext context) {
     return Container(

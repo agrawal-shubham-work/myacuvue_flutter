@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ContactUs extends StatefulWidget {
   static const String routeName = '/contactus';
+
   @override
   _ContactUsState createState() => _ContactUsState();
 }

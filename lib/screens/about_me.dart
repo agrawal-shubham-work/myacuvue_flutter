@@ -1,24 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
-import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
-import 'package:my_acuvue_flutter/widget_methods/Forms/datetimepicker.dart';
-import 'package:my_acuvue_flutter/models/notification_model.dart' as Inside;
-import 'package:my_acuvue_flutter/models/form_models.dart';
-import 'package:my_acuvue_flutter/utilities/global_variable.dart';
-import 'package:my_acuvue_flutter/widget_methods/Forms/text_form_field_main_widget.dart';
-import 'package:my_acuvue_flutter/widget_methods/Forms/text_form_field_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:my_acuvue_flutter/utilities/constants.dart';
-import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
+import 'package:intl/intl.dart';
+import 'package:my_acuvue_flutter/models/form_models.dart';
+import 'package:my_acuvue_flutter/models/notification_model.dart' as Inside;
 import 'package:my_acuvue_flutter/utilities/check_date.dart';
+import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
+import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/checkbox.dart';
+import 'package:my_acuvue_flutter/widget_methods/Forms/datetimepicker.dart';
+import 'package:my_acuvue_flutter/widget_methods/Forms/dropdown.dart';
+import 'package:my_acuvue_flutter/widget_methods/Forms/text_form_field_main_widget.dart';
+import 'package:my_acuvue_flutter/widget_methods/Forms/text_form_field_widget.dart';
 import 'package:my_acuvue_flutter/widget_methods/Notifications/local_notifications_helper.dart';
 import 'package:my_acuvue_flutter/widget_methods/para_style_widget.dart';
 
 class AboutMe extends StatefulWidget {
   static const String routeName = '/aboutme';
+
   @override
   _AboutMeState createState() => _AboutMeState();
 }
@@ -43,8 +44,7 @@ class _AboutMeState extends State<AboutMe> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String dropdownValue;
-  String userId,
-      firstNameData,
+  String firstNameData,
       lastNameData,
       genderData,
       birthDateData,
@@ -98,12 +98,13 @@ class _AboutMeState extends State<AboutMe> {
   }
 
   Future<void> checkDataIfExists() async {
-    userId = await inputData();
-    final snapShot =
-        await Firestore.instance.collection("form").document(userId).get();
+    final snapShot = await Firestore.instance
+        .collection("form")
+        .document(GlobalVariable.userId)
+        .get();
     if (snapShot.exists) {
       setState(() {
-        stroeDatainFields(userId);
+        stroeDatainFields(GlobalVariable.userId);
         dataInDatabase = true;
         showCircularBar = false;
       });
@@ -131,7 +132,6 @@ class _AboutMeState extends State<AboutMe> {
       await Navigator.of(context).pushNamed(AboutMe.routeName);
 
   void saveUserDataInDatabase() async {
-    userId = await inputData();
     FormModel form = FormModel(
         _firstname,
         _lastname,
@@ -144,7 +144,7 @@ class _AboutMeState extends State<AboutMe> {
         _selectedContactLenses == 'No' ? "No" : _selectedContactLenseMonth);
     await databaseRef
         .collection("form")
-        .document(userId)
+        .document(GlobalVariable.userId)
         .setData(form.toJson());
     createSnackBar("OK");
     checkDataIfExists();
@@ -247,7 +247,7 @@ class _AboutMeState extends State<AboutMe> {
                           };
                       Firestore.instance
                           .collection("form")
-                          .document(userId)
+                          .document(GlobalVariable.userId)
                           .updateData(toJson())
                           .whenComplete(() {
                         createSnackBar("PROFILE UPDATED SUCCESSFULLY");
@@ -257,7 +257,7 @@ class _AboutMeState extends State<AboutMe> {
                         });
                       });
 
-                      stroeDatainFields(userId);
+                      stroeDatainFields(GlobalVariable.userId);
                       setState(() {
                         firstNameEdited = false;
                         lastNameEdited = false;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'map_card_details.dart';
 
 class MapBoxes extends StatefulWidget {

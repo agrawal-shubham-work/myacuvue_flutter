@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +9,7 @@ import 'package:transparent_image/transparent_image.dart';
 
 class LifeStyleReward extends StatefulWidget {
   static const String routeName = '/lifestylereward';
+
   @override
   _LifeStyleRewardState createState() => _LifeStyleRewardState();
 }

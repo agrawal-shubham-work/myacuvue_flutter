@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/screens/main_map.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
+import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Maps/calendar%20Widget.dart';
 import 'package:my_acuvue_flutter/widget_methods/para_style_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MainStore extends StatefulWidget {
   static const String routeName = '/mainstore';
+
   @override
   _MainStoreState createState() => _MainStoreState();
 }
@@ -27,14 +29,15 @@ class _MainStoreState extends State<MainStore> {
   double lat, long;
 
   Future<void> checkDataIfExists() async {
-    String userId = await inputData();
-    final snapShot =
-        await Firestore.instance.collection("store").document(userId).get();
+    final snapShot = await Firestore.instance
+        .collection("store")
+        .document(GlobalVariable.userId)
+        .get();
     if (snapShot.exists) {
       setState(() {
-        getDataFromDataBase(userId).whenComplete(() {
+        getDataFromDataBase(GlobalVariable.userId).whenComplete(() {
           dataInRegisteredBase = true;
-          checkDataInAppointment(userId);
+          checkDataInAppointment(GlobalVariable.userId);
         });
       });
     } else {
@@ -288,10 +291,9 @@ class _MainStoreState extends State<MainStore> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        String userId = await inputData();
                                         Firestore.instance
                                             .collection("appointment")
-                                            .document(userId)
+                                            .document(GlobalVariable.userId)
                                             .delete()
                                             .then((result) {
                                           dataLoading = true;
@@ -381,8 +383,8 @@ class _MainStoreState extends State<MainStore> {
     setState(() {
       storeName = snapshot['storename'];
       storeAddress = snapshot['storeaddress'];
-      lat = snapshot['lat'].toDouble();
-      long = snapshot['storename'].toDouble();
+      /*lat = snapshot['lat'].toDouble();
+      long = snapshot['storename'].toDouble();*/
     });
   }
 

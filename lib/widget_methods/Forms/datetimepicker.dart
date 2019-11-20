@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/utilities/check_date.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'dart:io' show Platform;
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:my_acuvue_flutter/utilities/check_date.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 
 class DateTimePickerMainWidget extends StatefulWidget {
