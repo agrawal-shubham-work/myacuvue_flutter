@@ -126,7 +126,7 @@ class _myDetailsContainerRegisterState
         .document(userId)
         .setData(toJson())
         .whenComplete(() {
-      Navigator.pop(context);
+      Navigator.pop(context, true);
     });
   }
 }

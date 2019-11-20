@@ -15,26 +15,54 @@ class MainStore extends StatefulWidget {
 }
 
 class _MainStoreState extends State<MainStore> {
-  bool dataInRegisteredBase = false;
+  bool dataInRegisteredBase = false,
+      appointmentData = false,
+      bookAppointmentBTN;
   bool dataLoading = true;
-  String storeName, storeAddress;
+  String storeName,
+      storeAddress,
+      appointmentDate,
+      appointmentTime,
+      appointmentStatus;
   double lat, long;
 
   Future<void> checkDataIfExists() async {
     String userId = await inputData();
-    print(userId);
     final snapShot =
         await Firestore.instance.collection("store").document(userId).get();
     if (snapShot.exists) {
       setState(() {
-        getDataFromDataBase(userId);
-        dataInRegisteredBase = true;
-        dataLoading = false;
+        getDataFromDataBase(userId).whenComplete(() {
+          dataInRegisteredBase = true;
+          checkDataInAppointment(userId);
+        });
       });
     } else {
       setState(() {
         dataInRegisteredBase = false;
         dataLoading = false;
+      });
+    }
+  }
+
+  Future<void> checkDataInAppointment(String userId) async {
+    final snapShot = await Firestore.instance
+        .collection("appointment")
+        .document(userId)
+        .get();
+    if (snapShot.exists) {
+      setState(() {
+        getFromAppointmentDatabase(userId).whenComplete(() {
+          appointmentData = true;
+          dataLoading = false;
+          bookAppointmentBTN = false;
+        });
+      });
+    } else {
+      setState(() {
+        appointmentData = false;
+        dataLoading = false;
+        bookAppointmentBTN = true;
       });
     }
   }
@@ -106,8 +134,17 @@ class _MainStoreState extends State<MainStore> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(MainMap.routeName);
+                      onTap: () async {
+                        await Navigator.of(context)
+                            .pushNamed(MainMap.routeName)
+                            .then((result) async {
+                          if (result == true) {
+                            setState(() {
+                              dataLoading = true;
+                              checkDataIfExists();
+                            });
+                          }
+                        });
                       },
                       child: Container(
                         padding: EdgeInsets.all(10.0),
@@ -126,16 +163,158 @@ class _MainStoreState extends State<MainStore> {
                       MakeStoreCardBTN("CALL", () {
                         _launchCaller("800-101-3130");
                       }),
-                      MakeStoreCardBTN("BOOKING", () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return BookDate();
-                        }));
-                      }),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () async {
+                            if (bookAppointmentBTN) {
+                              await Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return BookDate();
+                              })).then((result) async {
+                                if (result == true) {
+                                  dataLoading = true;
+                                  checkDataIfExists();
+                                }
+                              });
+                            }
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(15.0),
+                            margin: EdgeInsets.all(2.0),
+                            decoration: BoxDecoration(
+                                color: bookAppointmentBTN
+                                    ? Color(0xff013f7c)
+                                    : Colors.grey,
+                                borderRadius: BorderRadius.circular(5.0)),
+                            child: Text(
+                              'BOOKING',
+                              style: kRewardBtn,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
                       MakeStoreCardBTN("DIRECTIONS", () {}),
                     ],
                   ),
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: !appointmentData
+                      ? Center(
+                          child: Text(
+                            'No Appointment Booked',
+                            style: TextStyle(
+                                fontSize: 16.0, color: Color(0xff013f7c)),
+                          ),
+                        )
+                      : Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 5.0),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      appointmentDate,
+                                      style: kStoreAddress,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      appointmentTime,
+                                      style: kStoreAddress,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(
+                                      'Status:',
+                                      style: kContactUsTextStyle,
+                                    ),
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 4.0),
+                                      padding: EdgeInsets.all(10.0),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: appointmentStatus == 'pending'
+                                            ? Colors.yellow.shade700
+                                            : Colors.green.shade700,
+                                      ),
+                                    ),
+                                    Text(
+                                      appointmentStatus == 'pending'
+                                          ? 'Pending'
+                                          : 'Success',
+                                      style: kContactUsTextStyle,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    InkWell(
+                                      onTap: () async {
+                                        await Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return BookDate();
+                                        })).then((result) async {
+                                          if (true) {
+                                            dataLoading = true;
+                                            checkDataIfExists();
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10.0),
+                                        margin: EdgeInsets.only(right: 5.0),
+                                        color: Color(0xff013f7c),
+                                        child: Text(
+                                          'Reschedule',
+                                          style: kRewardBtn,
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () async {
+                                        String userId = await inputData();
+                                        Firestore.instance
+                                            .collection("appointment")
+                                            .document(userId)
+                                            .delete()
+                                            .then((result) {
+                                          dataLoading = true;
+                                          checkDataIfExists();
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10.0, horizontal: 25.0),
+                                        color: Color(0xff013f7c),
+                                        child: Text(
+                                          'Cancel',
+                                          style: kRewardBtn,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                ),
               ],
             ),
           );
@@ -217,6 +396,35 @@ class _MainStoreState extends State<MainStore> {
       storeAddress = storeAdddress;
       lat = latitude;
       long = longitude;
+    });
+  }
+
+  Future<void> getFromAppointmentDatabase(String userId) async {
+    String date, time, status;
+
+    await Firestore.instance
+        .collection('appointment')
+        .document(userId)
+        .get()
+        .then((DocumentSnapshot) =>
+            date = DocumentSnapshot.data['date'].toString());
+    await Firestore.instance
+        .collection('appointment')
+        .document(userId)
+        .get()
+        .then((DocumentSnapshot) =>
+            time = DocumentSnapshot.data['timing'].toString());
+    await Firestore.instance
+        .collection('appointment')
+        .document(userId)
+        .get()
+        .then((DocumentSnapshot) =>
+            status = DocumentSnapshot.data['status'].toString());
+
+    setState(() {
+      appointmentDate = date;
+      appointmentTime = time;
+      appointmentStatus = status;
     });
   }
 }

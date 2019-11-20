@@ -44,12 +44,16 @@ class _BookDateState extends State<BookDate> {
                 InkWell(
                   onTap: () {
                     if (enableNextBTN) {
-                      setState(() {
-                        Navigator.pushReplacement(
+                      setState(() async {
+                        await Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    BookTiming(selectedDate)));
+                                    BookTiming(selectedDate))).then((result) {
+                          if (result == true) {
+                            Navigator.pop(context, true);
+                          }
+                        });
                       });
                     } else {
                       showSnackBar("Select date of appointment");

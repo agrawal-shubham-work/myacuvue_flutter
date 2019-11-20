@@ -1,19 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
-
-enum selectedTiming {
-  ElvenToTwelve,
-  TwelveToOne,
-  OneToTwo,
-  TwoToThree,
-  ThreeToFour,
-  FourToFive,
-  FiveToSix,
-  SixToSeven,
-  SevenToEight,
-  EightToNine,
-}
+import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
 
 class BookTiming extends StatefulWidget {
   DateTime selectedDate;
@@ -25,7 +14,23 @@ class BookTiming extends StatefulWidget {
 }
 
 class _BookTimingState extends State<BookTiming> {
-  selectedTiming selected;
+  /*selectedTiming selected;*/
+
+  int currentIndex = -1;
+
+  List<String> timingList = [
+    '11:00 - 12:00',
+    '12:00 - 13:00',
+    '13:00 - 14:00',
+    '14:00 - 15:00',
+    '15:00 - 16:00',
+    '16:00 - 17:00',
+    '17:00 - 18:00',
+    '18:00 - 19:00',
+    '19:00 - 20:00',
+    '20:00 - 21:00'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,181 +72,20 @@ class _BookTimingState extends State<BookTiming> {
                 ),
                 GridView.count(
                   crossAxisCount: 3,
-                  childAspectRatio: 2,
+                  childAspectRatio: 2.0,
                   controller: new ScrollController(keepScrollOffset: false),
                   shrinkWrap: true,
-                  children: <Widget>[
-                    selected == selectedTiming.ElvenToTwelve
-                        ? BookAppointmentByTime(
-                            '11:00 - 12:00',
-                            () {
-                              setTimingState(selectedTiming.ElvenToTwelve);
-                            },
-                            Colors.blueAccent,
-                            Colors.white,
-                          )
-                        : BookAppointmentByTime(
-                            '11:00 - 12:00',
-                            () {
-                              setTimingState(selectedTiming.ElvenToTwelve);
-                            },
-                            Colors.white,
-                            Colors.blueGrey,
-                          ),
-                    selected == selectedTiming.TwelveToOne
-                        ? BookAppointmentByTime(
-                            '12:00 - 13:00',
-                            () {
-                              setTimingState(selectedTiming.TwelveToOne);
-                            },
-                            Colors.blueAccent,
-                            Colors.white,
-                          )
-                        : BookAppointmentByTime(
-                            '12:00 - 13:00',
-                            () {
-                              setTimingState(selectedTiming.TwelveToOne);
-                            },
-                            Colors.white,
-                            Colors.blueGrey,
-                          ),
-                    selected == selectedTiming.OneToTwo
-                        ? BookAppointmentByTime(
-                            '13:00 - 14:00',
-                            () {
-                              setTimingState(selectedTiming.OneToTwo);
-                            },
-                            Colors.blueAccent,
-                            Colors.white,
-                          )
-                        : BookAppointmentByTime(
-                            '13:00 - 14:00',
-                            () {
-                              setTimingState(selectedTiming.OneToTwo);
-                            },
-                            Colors.white,
-                            Colors.blueGrey,
-                          ),
-                    selected == selectedTiming.TwoToThree
-                        ? BookAppointmentByTime(
-                            '14:00 - 15:00',
-                            () {
-                              setTimingState(selectedTiming.TwoToThree);
-                            },
-                            Colors.blueAccent,
-                            Colors.white,
-                          )
-                        : BookAppointmentByTime(
-                            '14:00 - 15:00',
-                            () {
-                              setTimingState(selectedTiming.TwoToThree);
-                            },
-                            Colors.white,
-                            Colors.blueGrey,
-                          ),
-                    selected == selectedTiming.ThreeToFour
-                        ? BookAppointmentByTime(
-                            '15:00 - 16:00',
-                            () {
-                              setTimingState(selectedTiming.ThreeToFour);
-                            },
-                            Colors.blueAccent,
-                            Colors.white,
-                          )
-                        : BookAppointmentByTime(
-                            '15:00 - 16:00',
-                            () {
-                              setTimingState(selectedTiming.ThreeToFour);
-                            },
-                            Colors.white,
-                            Colors.blueGrey,
-                          ),
-                    selected == selectedTiming.FourToFive
-                        ? BookAppointmentByTime(
-                            '16:00 - 17:00',
-                            () {
-                              setTimingState(selectedTiming.FourToFive);
-                            },
-                            Colors.blueAccent,
-                            Colors.white,
-                          )
-                        : BookAppointmentByTime(
-                            '16:00 - 17:00',
-                            () {
-                              setTimingState(selectedTiming.FourToFive);
-                            },
-                            Colors.white,
-                            Colors.blueGrey,
-                          ),
-                    selected == selectedTiming.FiveToSix
-                        ? BookAppointmentByTime(
-                            '17:00 - 18:00',
-                            () {
-                              setTimingState(selectedTiming.FiveToSix);
-                            },
-                            Colors.blueAccent,
-                            Colors.white,
-                          )
-                        : BookAppointmentByTime(
-                            '17:00 - 18:00',
-                            () {
-                              setTimingState(selectedTiming.FiveToSix);
-                            },
-                            Colors.white,
-                            Colors.blueGrey,
-                          ),
-                    selected == selectedTiming.SixToSeven
-                        ? BookAppointmentByTime(
-                            '18:00 - 19:00',
-                            () {
-                              setTimingState(selectedTiming.SixToSeven);
-                            },
-                            Colors.blueAccent,
-                            Colors.white,
-                          )
-                        : BookAppointmentByTime(
-                            '18:00 - 19:00',
-                            () {
-                              setTimingState(selectedTiming.SixToSeven);
-                            },
-                            Colors.white,
-                            Colors.blueGrey,
-                          ),
-                    selected == selectedTiming.SevenToEight
-                        ? BookAppointmentByTime(
-                            '19:00 - 20:00',
-                            () {
-                              setTimingState(selectedTiming.SevenToEight);
-                            },
-                            Colors.blueAccent,
-                            Colors.white,
-                          )
-                        : BookAppointmentByTime(
-                            '19:00 - 20:00',
-                            () {
-                              setTimingState(selectedTiming.SevenToEight);
-                            },
-                            Colors.white,
-                            Colors.blueGrey,
-                          ),
-                    selected == selectedTiming.EightToNine
-                        ? BookAppointmentByTime(
-                            '20:00 - 21:00',
-                            () {
-                              setTimingState(selectedTiming.EightToNine);
-                            },
-                            Colors.blueAccent,
-                            Colors.white,
-                          )
-                        : BookAppointmentByTime(
-                            '20:00 - 21:00',
-                            () {
-                              setTimingState(selectedTiming.EightToNine);
-                            },
-                            Colors.white,
-                            Colors.blueGrey,
-                          ),
-                  ],
+                  children: timingList.map((item) {
+                    var index = timingList.indexOf(item);
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          currentIndex = index;
+                        });
+                      },
+                      child: BookAppointmentByTime(item, index == currentIndex),
+                    );
+                  }).toList(),
                 ),
                 SizedBox(
                   height: 20.0,
@@ -261,11 +105,28 @@ class _BookTimingState extends State<BookTiming> {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              if (currentIndex != -1) {
+                String userId = await inputData();
+                await Firestore.instance
+                    .collection("appointment")
+                    .document(userId)
+                    .setData({
+                  "timing": timingList[currentIndex],
+                  "date":
+                      DateFormat.yMMMMd("en_US").format(widget.selectedDate),
+                  "status": "pending",
+                }).whenComplete(() {
+                  print(
+                      "Appointment Book Successfully  time=${timingList[currentIndex]} and date=${DateFormat.yMMMMd("en_US").format(widget.selectedDate)}");
+                  Navigator.pop(context, true);
+                });
+              }
+            },
             child: Container(
               margin: EdgeInsets.all(5.0),
               padding: EdgeInsets.all(15.0),
-              color: selected == null ? Colors.grey : Color(0xff013f7c),
+              color: currentIndex == -1 ? Colors.grey : Color(0xFF013F7C),
               child: Center(
                   child: Text(
                 'Submit',
@@ -276,12 +137,6 @@ class _BookTimingState extends State<BookTiming> {
         ],
       ),
     );
-  }
-
-  setTimingState(selectedTiming set) {
-    setState(() {
-      selected = set;
-    });
   }
 
   Row timingAvailability(BuildContext context, Color color, String text) {
@@ -307,30 +162,27 @@ class _BookTimingState extends State<BookTiming> {
 
 class BookAppointmentByTime extends StatelessWidget {
   String time;
-  Function onTaped;
-  Color containerColor, textColor;
+  bool isSelected;
 
-  BookAppointmentByTime(
-      this.time, this.onTaped, this.containerColor, this.textColor);
+  BookAppointmentByTime(this.time, this.isSelected);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTaped,
-      child: Container(
-        margin: EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-          color: containerColor,
-          border: Border.all(
-            color: Colors.blueGrey,
-          ),
-          borderRadius: BorderRadius.circular(5.0),
+    return Container(
+      margin: EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        color: isSelected ? Colors.blueAccent : Colors.white,
+        border: Border.all(
+          color: Colors.blueGrey,
         ),
-        child: Center(
-          child: Text(
-            time,
-            style: TextStyle(fontSize: 14.0, color: textColor),
-          ),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Center(
+        child: Text(
+          time,
+          style: TextStyle(
+              fontSize: 14.0,
+              color: isSelected ? Colors.white : Colors.blueGrey),
         ),
       ),
     );
