@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/screens/main_map.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
-import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Maps/calendar%20Widget.dart';
 import 'package:my_acuvue_flutter/widget_methods/para_style_widget.dart';
@@ -17,6 +16,7 @@ class MainStore extends StatefulWidget {
 }
 
 class _MainStoreState extends State<MainStore> {
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   bool dataInRegisteredBase = false,
       appointmentData = false,
       bookAppointmentBTN;
@@ -76,9 +76,18 @@ class _MainStoreState extends State<MainStore> {
     checkDataIfExists();
   }
 
+  showSnackBar(String message) {
+    final snackbar = SnackBar(
+      content: Text(message),
+      duration: Duration(milliseconds: 500),
+    );
+    _scaffoldkey.currentState.showSnackBar(snackbar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       body: dataLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -138,16 +147,20 @@ class _MainStoreState extends State<MainStore> {
                     ),
                     InkWell(
                       onTap: () async {
-                        await Navigator.of(context)
-                            .pushNamed(MainMap.routeName)
-                            .then((result) async {
-                          if (result == true) {
-                            setState(() {
-                              dataLoading = true;
-                              checkDataIfExists();
-                            });
-                          }
-                        });
+                        if (!bookAppointmentBTN) {
+                          await Navigator.of(context)
+                              .pushNamed(MainMap.routeName)
+                              .then((result) async {
+                            if (result == true) {
+                              setState(() {
+                                dataLoading = true;
+                                checkDataIfExists();
+                              });
+                            }
+                          });
+                        } else {
+                          showSnackBar("First cancel the appointment to register another store");
+                        }
                       },
                       child: Container(
                         padding: EdgeInsets.all(10.0),
