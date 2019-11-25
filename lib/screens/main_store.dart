@@ -159,7 +159,8 @@ class _MainStoreState extends State<MainStore> {
                             }
                           });
                         } else {
-                          showSnackBar("First cancel the appointment to register another store");
+                          showSnackBar(
+                              "First cancel the appointment to register another store");
                         }
                       },
                       child: Container(
