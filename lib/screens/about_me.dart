@@ -293,7 +293,6 @@ class _AboutMeState extends State<AboutMe> {
 
   @override
   Widget build(BuildContext context) {
-    checkDataIfExists();
     return Scaffold(
       key: _scaffoldkey,
       appBar: AppBar(

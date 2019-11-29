@@ -342,13 +342,16 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: DropDownMainWidget(countryList, (String value) {
                     setState(() {
                       if (value == 'SGP') {
+                        selectedCountryCode = null;
                         sgpCodes = "+65";
                       } else if (value == 'HKG') {
                         selectedCountryCode = '+852';
                         sgpCodes = null;
+                        sgpCodes = null;
                       } else if (value == 'TWN') {
                         sgpCodes = null;
                         selectedCountryCode = '+886';
+                        sgpCodes = null;
                       }
                       selectedCountry = value;
                     });
@@ -435,7 +438,7 @@ class _SplashScreenState extends State<SplashScreen> {
           color: darkBlueColor,
           child: FlatButton(
             onPressed: () {
-              if (selectedCountryCode == null || selectedCountryCode == "") {
+              if (selectedCountryCode == null && sgpCodes == null) {
                 final snackbar = SnackBar(
                   content: Text('Select your country code'),
                   duration: Duration(milliseconds: 500),
