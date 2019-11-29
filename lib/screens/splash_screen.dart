@@ -342,7 +342,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: DropDownMainWidget(countryList, (String value) {
                     setState(() {
                       if (value == 'SGP') {
-                        selectedCountryCode = null;
                         sgpCodes = "+65";
                       } else if (value == 'HKG') {
                         selectedCountryCode = '+852';

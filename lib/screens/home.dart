@@ -25,7 +25,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String userId;
-  DatabaseReference cartDatabase;
 
   BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
@@ -113,25 +112,6 @@ class _HomeState extends State<Home> {
     inputData().then((user) async {
       userId = user;
       GlobalVariable.userId = user;
-
-      cartDatabase = FirebaseDatabase.instance
-          .reference()
-          .child("cart")
-          .child(GlobalVariable.userId);
-
-      cartDatabase.once().then((DataSnapshot snapshot) {
-        Map<dynamic, dynamic> values = snapshot.value;
-        values.forEach((key, values) {
-          GlobalVariable.lifeStyleRewardList.add(LifestyleRewardModel(
-              values['imageUrl'],
-              values['productName'],
-              values['productPoints'],
-              values['productDesc'],
-              values['productQuantity']));
-        });
-        print(GlobalVariable.lifeStyleRewardList.length);
-        print("Sucessfully added");
-      });
     });
   }
 
