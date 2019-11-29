@@ -363,7 +363,7 @@ class _AboutMeState extends State<AboutMe> {
           TextFormFieldWidget(
             'NRIC/FIN Number',
             true,
-            TextFieldMainWidget('abcd1234ae', TextInputType.number, (value) {
+            TextFieldMainWidget('abcd1234ae', TextInputType.text, (value) {
               setState(() {
                 _nric = value;
                 validateFields();

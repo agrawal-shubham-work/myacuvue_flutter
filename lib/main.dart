@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_acuvue_flutter/screens/about_me.dart';
 import 'package:my_acuvue_flutter/screens/about_myacuvue.dart';
 import 'package:my_acuvue_flutter/screens/contact_us.dart';
@@ -27,6 +28,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

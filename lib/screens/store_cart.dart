@@ -53,8 +53,7 @@ class _CartState extends State<Cart> {
           ),
         ),
         margin: EdgeInsets.symmetric(vertical: 10.0),
-        child:
-            /*GlobalVariable.lifeStyleRewardList.length != 0
+        child: GlobalVariable.lifeStyleRewardList.length != 0
             ? ListView.builder(
                 scrollDirection: Axis.vertical,
                 itemCount: GlobalVariable.lifeStyleRewardList.length,
@@ -66,8 +65,8 @@ class _CartState extends State<Cart> {
                 child: Center(
                   child: Text('Your cart is empty'),
                 ),
-              ),*/
-            FirebaseAnimatedList(
+              ),
+        /* FirebaseAnimatedList(
           key: ValueKey<bool>(_anchorToBottom),
           query: FirebaseDatabase.instance
               .reference()
@@ -84,13 +83,13 @@ class _CartState extends State<Cart> {
               child: createCartList(snapshot),
             );
           },
-        ),
+        ),*/
       ),
     );
   }
 
-  Widget createCartList(DataSnapshot snapshot) {
-    CartModel model = CartModel.fromSnapshot(snapshot);
+  Widget createCartList(int index) {
+    /*CartModel model = CartModel.fromSnapshot(snapshot);*/
     String Quantity;
     return Container(
       margin: EdgeInsets.all(10.0),
@@ -109,8 +108,8 @@ class _CartState extends State<Cart> {
                       child: Container(
                           padding: EdgeInsets.all(5.0),
                           child: Image.network(
-                            /*GlobalVariable.lifeStyleRewardList[index].imageUrl,*/
-                            model.imageUrl,
+                            GlobalVariable.lifeStyleRewardList[index].imageUrl,
+                            /*model.imageUrl,*/
                             fit: BoxFit.cover,
                           ))),
                   Expanded(
@@ -121,18 +120,16 @@ class _CartState extends State<Cart> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
+                          Text(GlobalVariable
+                                  .lifeStyleRewardList[index].productName
+                              /*model.productName*/),
+                          Text(GlobalVariable
+                                  .lifeStyleRewardList[index].productPoints
+                              /*model.productPoints*/),
                           Text(
-                              /*GlobalVariable
-                              .lifeStyleRewardList[index].productName*/
-                              model.productName),
-                          Text(
-                              /*GlobalVariable
-                              .lifeStyleRewardList[index].productPoints*/
-                              model.productPoints),
-                          Text(
-                            /*GlobalVariable
-                                .lifeStyleRewardList[index].productDesc*/
-                            model.productDesc,
+                            GlobalVariable
+                                .lifeStyleRewardList[index].productDesc
+                            /*model.productDesc*/,
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -170,7 +167,7 @@ class _CartState extends State<Cart> {
                                     color: Color(0xFf013F7C),
                                   ),
                                   value:
-                                      "${/*GlobalVariable.lifeStyleRewardList[index].productQuantity*/ model.productQuantity}",
+                                      "${GlobalVariable.lifeStyleRewardList[index].productQuantity /*model.productQuantity*/}",
                                   items: quantityList.map((String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
@@ -179,16 +176,16 @@ class _CartState extends State<Cart> {
                                   }).toList(),
                                   onChanged: (String value) {
                                     setState(() {
-                                      /*GlobalVariable.lifeStyleRewardList[index]
-                                          .productQuantity */
-                                      FirebaseDatabase.instance
+                                      GlobalVariable.lifeStyleRewardList[index]
+                                          .productQuantity;
+                                      /* FirebaseDatabase.instance
                                           .reference()
                                           .child("cart")
                                           .child(widget.userId)
                                           .child(model.id)
                                           .update(<String, dynamic>{
                                         "productQuantity": value,
-                                      });
+                                      });*/
                                     });
                                   },
                                 ),
@@ -199,14 +196,14 @@ class _CartState extends State<Cart> {
                         FlatButton(
                           onPressed: () {
                             setState(() {
-                              /*GlobalVariable.lifeStyleRewardList
-                                  .removeAt(index);*/
-                              FirebaseDatabase.instance
+                              GlobalVariable.lifeStyleRewardList
+                                  .removeAt(index);
+                              /*FirebaseDatabase.instance
                                   .reference()
                                   .child("cart")
                                   .child(widget.userId)
                                   .child(model.id)
-                                  .remove();
+                                  .remove();*/
                             });
                           },
                           child: Icon(

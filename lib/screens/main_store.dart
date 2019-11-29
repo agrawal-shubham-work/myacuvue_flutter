@@ -147,7 +147,7 @@ class _MainStoreState extends State<MainStore> {
                     ),
                     InkWell(
                       onTap: () async {
-                        if (!bookAppointmentBTN) {
+                        if (bookAppointmentBTN) {
                           await Navigator.of(context)
                               .pushNamed(MainMap.routeName)
                               .then((result) async {

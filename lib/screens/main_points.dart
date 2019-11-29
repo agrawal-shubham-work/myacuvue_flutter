@@ -45,12 +45,12 @@ class _PointsState extends State<Points> {
             padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
             child: SliderTheme(
               data: SliderTheme.of(context).copyWith(
-                inactiveTrackColor: Color(0xFF013F7C),
+                inactiveTrackColor: Colors.grey,
                 activeTrackColor: Colors.grey,
-                thumbColor: Color(0xFFEB1555),
+                thumbColor: Color(0xff013f7c),
                 overlayColor: Color(0x29EB1555),
-                thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.0),
-                overlayShape: RoundSliderOverlayShape(overlayRadius: 15.0),
+                thumbShape: RoundSliderThumbShape(enabledThumbRadius: 3.0),
+                overlayShape: RoundSliderOverlayShape(overlayRadius: 5.0),
               ),
               child: Slider(
                 value: height,

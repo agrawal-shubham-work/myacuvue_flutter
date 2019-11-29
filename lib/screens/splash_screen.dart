@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_acuvue_flutter/models/user_model.dart';
 import 'package:my_acuvue_flutter/screens/home.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
@@ -15,6 +16,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   TextEditingController _controller;
   String selectedCountry;
   String sgpCodes;
@@ -128,6 +130,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Widget otpScreen() {
     return Scaffold(
+      key: _scaffoldkey,
       body: Stack(
         children: <Widget>[
           mainPhotoWidget(),
@@ -340,6 +343,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     setState(() {
                       if (value == 'SGP') {
                         selectedCountryCode = null;
+                        sgpCodes = "+65";
                       } else if (value == 'HKG') {
                         selectedCountryCode = '+852';
                         sgpCodes = null;
@@ -402,6 +406,9 @@ class _SplashScreenState extends State<SplashScreen> {
                             maxLength: 10,
                             controller: _controller,
                             keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              WhitelistingTextInputFormatter.digitsOnly
+                            ],
                             decoration: new InputDecoration(
                               counterText: '',
                               border: OutlineInputBorder(
@@ -428,7 +435,16 @@ class _SplashScreenState extends State<SplashScreen> {
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
           color: darkBlueColor,
           child: FlatButton(
-            onPressed: verifyPhone,
+            onPressed: () {
+              if (selectedCountryCode == null || selectedCountryCode == "") {
+                final snackbar = SnackBar(
+                  content: Text('Select your country code'),
+                  duration: Duration(milliseconds: 500),
+                );
+                _scaffoldkey.currentState.showSnackBar(snackbar);
+              } else
+                verifyPhone();
+            },
             child: Text(
               'Send Verification OTP',
               style: kReferBtn,
@@ -485,6 +501,7 @@ class otpWidget extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.all(5.0),
         child: TextFormField(
+          textAlign: TextAlign.center,
           decoration: new InputDecoration(
             counterText: '',
             border: OutlineInputBorder(
