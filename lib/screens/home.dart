@@ -141,7 +141,7 @@ class _HomeState extends State<Home> {
                         color: Colors.white,
                       ),
                     ),
-                    GlobalVariable.lifeStyleRewardList.length == 0
+                    /* GlobalVariable.lifeStyleRewardList.length == 0
                         ? Container()
                         : Positioned(
                             child: Stack(
@@ -167,7 +167,7 @@ class _HomeState extends State<Home> {
                                 ),
                               ],
                             ),
-                          ),
+                          ),*/
                   ],
                 ),
               ),

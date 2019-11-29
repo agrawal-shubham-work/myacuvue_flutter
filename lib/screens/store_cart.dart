@@ -201,6 +201,7 @@ class _CartState extends State<Cart> {
                             setState(() {
                               /*GlobalVariable.lifeStyleRewardList
                                   .removeAt(index);*/
+
                               FirebaseDatabase.instance
                                   .reference()
                                   .child("cart")
