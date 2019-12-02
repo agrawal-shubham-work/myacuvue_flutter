@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/models/lifestyle_reward_model.dart';
 import 'package:my_acuvue_flutter/screens/store_cart.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
-import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -20,8 +19,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   int count = 0;
 
   DatabaseReference cartRef =
-      FirebaseDatabase.instance.reference().child("cart");
-  DatabaseReference countRef =
       FirebaseDatabase.instance.reference().child("cart");
 
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
@@ -62,10 +59,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                   color: Color(0xFf013F7C),
                   child: FlatButton(
                     onPressed: () async {
-                      print(GlobalVariable.lifeStyleRewardList);
-                      if (GlobalVariable.lifeStyleRewardList.length == 0) {
-                        GlobalVariable.lifeStyleRewardList
-                            .add(widget.modelList);
+                      if (await checkCondition(widget.modelList.productName)) {
+                        final snackbar = SnackBar(
+                          content: Text('Product already in Cart'),
+                          action: SnackBarAction(
+                            label: 'Go to Cart',
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          Cart(GlobalVariable.userId)));
+                            },
+                          ),
+                        );
+                        _scaffoldkey.currentState.showSnackBar(snackbar);
+                      } else {
                         addDataToDatabase(
                             GlobalVariable.userId,
                             widget.modelList.imageUrl,
@@ -73,34 +82,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                             widget.modelList.productPoints,
                             widget.modelList.productDesc,
                             widget.modelList.productQuantity);
-                      } else {
-                        if (GlobalVariable.lifeStyleRewardList
-                            .contains(widget.modelList)) {
-                          final snackbar = SnackBar(
-                            content: Text('Product already in Cart'),
-                            action: SnackBarAction(
-                              label: 'Go to Cart',
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            Cart(GlobalVariable.userId)));
-                              },
-                            ),
-                          );
-                          _scaffoldkey.currentState.showSnackBar(snackbar);
-                        } else {
-                          GlobalVariable.lifeStyleRewardList
-                              .add(widget.modelList);
-                          addDataToDatabase(
-                              GlobalVariable.userId,
-                              widget.modelList.imageUrl,
-                              widget.modelList.productName,
-                              widget.modelList.productPoints,
-                              widget.modelList.productDesc,
-                              widget.modelList.productQuantity);
-                        }
                       }
                     },
                     child: Text(
@@ -206,5 +187,28 @@ class _ProductDetailsState extends State<ProductDetails> {
       );
       _scaffoldkey.currentState.showSnackBar(snackbar);
     });
+  }
+
+  Future<bool> checkCondition(String productName) async {
+    List<String> productsName = [];
+
+    await FirebaseDatabase.instance
+        .reference()
+        .child("cart")
+        .child(GlobalVariable.userId)
+        .once()
+        .then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      if (values != null) {
+        values.forEach((key, values) {
+          productsName.add(values['productName']);
+        });
+      }
+    });
+
+    if (productsName.contains(productName))
+      return true;
+    else
+      return false;
   }
 }
