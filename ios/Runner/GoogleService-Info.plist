@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>106968834479-hdpffqu6i8c5faor05un4ie04hh6q61m.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.106968834479-hdpffqu6i8c5faor05un4ie04hh6q61m</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>106968834479-to7okou65rdihg3pi1pmc935tjscfnl0.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCi0EF2i-FCOTJwCt3-LlWmphKbIPwGr48</string>
+	<key>GCM_SENDER_ID</key>
+	<string>106968834479</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>myacuvueflutter.myAcuvueFlutter</string>
+	<key>PROJECT_ID</key>
+	<string>myacuvue-252019</string>
+	<key>STORAGE_BUCKET</key>
+	<string>myacuvue-252019.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:106968834479:ios:7574153baab9a210ea4f5a</string>
+	<key>DATABASE_URL</key>
+	<string>https://myacuvue-252019.firebaseio.com</string>
+</dict>
+</plist>

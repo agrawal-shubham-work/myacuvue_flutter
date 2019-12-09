@@ -20,7 +20,7 @@ class _MainStoreState extends State<MainStore> {
   bool dataInRegisteredBase = false,
       appointmentData = false,
       bookAppointmentBTN;
-  bool dataLoading = true;
+  bool dataLoading = false;
   String storeName,
       storeAddress,
       appointmentDate,
