@@ -148,7 +148,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
       if (snapshot.exists) {
         await Firestore.instance.collection('cart').document(userId)
-          ..collection("totalcount")
+            .collection("totalcount")
               .document("cartcount")
               .get()
               .then((DocumentSnapshot) =>
