@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
       focusNode5,
       focusNode6;
   String opt1, opt2, otp3, opt4, opt5, opt6;
-  bool otpBox = false, isRecoverAcoount = false;
+  bool otpBox = false, isRecoverAcoount = false, startLoading = false;
 
   @override
   void initState() {
@@ -73,6 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
       this.verificationId = verId;
       setState(() {
         otpBox = true;
+        startLoading = false;
       });
     };
 
@@ -85,13 +86,19 @@ class _SplashScreenState extends State<SplashScreen> {
       print('${exception.message}');
     };
 
-    await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: "+91$phoneNo",
-        codeAutoRetrievalTimeout: autoRetrieve,
-        codeSent: smsCodeSent,
-        timeout: const Duration(seconds: 5),
-        verificationCompleted: verifiedSuccess,
-        verificationFailed: veriFailed);
+    await FirebaseAuth.instance
+        .verifyPhoneNumber(
+            phoneNumber: "+91$phoneNo",
+            codeAutoRetrievalTimeout: autoRetrieve,
+            codeSent: smsCodeSent,
+            timeout: const Duration(seconds: 5),
+            verificationCompleted: verifiedSuccess,
+            verificationFailed: veriFailed)
+        .whenComplete(() {
+      setState(() {
+        startLoading = true;
+      });
+    });
   }
 
   signIn() {
@@ -105,7 +112,11 @@ class _SplashScreenState extends State<SplashScreen> {
       createRecord(userId);
       Navigator.of(context).pushReplacementNamed(Home.route);
     }).catchError((e) {
-      print(e);
+      final snackbar = SnackBar(
+        content: Text("Please enter the correct OTP"),
+        duration: Duration(milliseconds: 500),
+      );
+      _scaffoldkey.currentState.showSnackBar(snackbar);
     });
   }
 
@@ -134,11 +145,23 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         children: <Widget>[
           mainPhotoWidget(),
+          loadingContainer(),
           acuvueLogoContainer(),
           bottomMainContainer(),
         ],
       ),
     );
+  }
+
+  Widget loadingContainer() {
+    return startLoading
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : SizedBox(
+            height: 0.0,
+            width: 0.0,
+          );
   }
 
   Widget mainPhotoWidget() {
@@ -192,7 +215,7 @@ class _SplashScreenState extends State<SplashScreen> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         NumberandOtpTitleWidget(
-            context, "Otp has been sent to $selectedCountryCode $phoneNo"),
+            context, "OTP has been sent to $selectedCountryCode $phoneNo"),
         Row(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
@@ -252,7 +275,7 @@ class _SplashScreenState extends State<SplashScreen> {
               signIn();
             },
             child: Text(
-              'Verify Otp',
+              'Verify OTP',
               style: kReferBtn,
             ),
           ),
@@ -435,7 +458,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Container(
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-          color: darkBlueColor,
+          color: startLoading ? Colors.grey : darkBlueColor,
           child: FlatButton(
             onPressed: () {
               if (selectedCountryCode == null && sgpCodes == null) {

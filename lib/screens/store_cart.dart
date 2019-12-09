@@ -5,6 +5,7 @@ import 'package:my_acuvue_flutter/models/cart_model.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/main_upper_container_for_reward_and_cart.dart';
+import 'package:my_acuvue_flutter/dialog/confirmationdialog.dart';
 
 class Cart extends StatefulWidget {
   String userId;
@@ -182,7 +183,6 @@ class _CartState extends State<Cart> {
                                           .reference()
                                           .child("cart")
                                           .child(widget.userId)
-                                          .child(widget.userId)
                                           .child(model.id)
                                           .update(<String, dynamic>{
                                         "productQuantity": value,
@@ -200,16 +200,24 @@ class _CartState extends State<Cart> {
                               /*GlobalVariable.lifeStyleRewardList
                                   .removeAt(index);*/
 
-                              FirebaseDatabase.instance
-                                  .reference()
-                                  .child("cart")
-                                  .child(widget.userId)
-                                  .child(model.id)
-                                  .remove();
+                              showConfirmationDialog(context, model.productName,
+                                  "Do you really want to delete ${model.productName}",
+                                  () {
+                                Navigator.pop(context);
+                              }, () {
+                                FirebaseDatabase.instance
+                                    .reference()
+                                    .child("cart")
+                                    .child(widget.userId)
+                                    .child(model.id)
+                                    .remove();
 
-                              setState(() {
-                                loading = true;
-                                checkCondition();
+                                setState(() {
+                                  loading = true;
+                                  checkCondition();
+
+                                  Navigator.pop(context);
+                                });
                               });
                             });
                           },

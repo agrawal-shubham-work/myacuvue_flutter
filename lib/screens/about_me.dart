@@ -1,3 +1,4 @@
+import 'package:my_acuvue_flutter/dialog/confirmationdialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +6,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:my_acuvue_flutter/models/form_models.dart';
 import 'package:my_acuvue_flutter/models/notification_model.dart' as Inside;
+import 'package:my_acuvue_flutter/screens/home.dart';
 import 'package:my_acuvue_flutter/utilities/check_date.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
-import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/checkbox.dart';
 import 'package:my_acuvue_flutter/widget_methods/Forms/datetimepicker.dart';
@@ -52,7 +53,7 @@ class _AboutMeState extends State<AboutMe> {
       editedFirstName,
       editedLastName,
       editedEmailId;
-  Color buttonColor = Color(0xFf013F7C);
+  Color buttonColor = Colors.grey;
 
   String _firstname = '',
       _lastname = '',
@@ -65,7 +66,7 @@ class _AboutMeState extends State<AboutMe> {
 
   bool checkPrivacyState1 = false,
       checkPrivacyState2 = false,
-      submitButtonEnabled;
+      submitButtonEnabled = false;
 
   void validateFields() {
     if (_firstname.length == 0 ||
@@ -76,7 +77,8 @@ class _AboutMeState extends State<AboutMe> {
         _selectedSpectacles.length == 0 ||
         _selectedContactLenses.length == 0 ||
         !checkPrivacyState2 ||
-        !checkPrivacyState1) {
+        !checkPrivacyState1 ||
+        !validateEmail(_email)) {
       buttonColor = Colors.grey;
       submitButtonEnabled = false;
     } else {
@@ -95,6 +97,16 @@ class _AboutMeState extends State<AboutMe> {
         }
       }
     }
+  }
+
+  bool validateEmail(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (!regex.hasMatch(value))
+      return false;
+    else
+      return true;
   }
 
   Future<void> checkDataIfExists() async {
@@ -435,20 +447,28 @@ class _AboutMeState extends State<AboutMe> {
                     color: Colors.grey,
                     child: FlatButton(
                       onPressed: () {
-                        var now = DateTime.now();
-                        String moth = checkDate(now.month);
-                        String date =
-                            "$moth ${now.day}, ${now.year} ${DateFormat("H:m:s").format(now)}";
+                        showConfirmationDialog(context, "Registration",
+                            "Do you really want to skip the registration", () {
+                          Navigator.pop(context);
+                        }, () {
+                          var now = DateTime.now();
+                          String moth = checkDate(now.month);
+                          String date =
+                              "$moth ${now.day}, ${now.year} ${DateFormat("H:m:s").format(now)}";
 
-                        Inside.Notification notificaions = Inside.Notification(
-                            "Registration",
-                            "Complete your registration now to enjoy all the benefits of the MyACUVUE app.",
-                            "$date");
-                        GlobalVariable.notificationList.add(notificaions);
-                        showOngoingNotification(notifications,
-                            title: "Registration",
-                            body:
-                                "Complete Registration now to enjoy all the benefits.");
+                          Inside.Notification notificaions = Inside.Notification(
+                              "Registration",
+                              "Complete your registration now to enjoy all the benefits of the MyACUVUE app.",
+                              "$date");
+                          GlobalVariable.notificationList.add(notificaions);
+                          showOngoingNotification(notifications,
+                              title: "Registration",
+                              body:
+                                  "Complete Registration now to enjoy all the benefits.");
+
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        });
                       },
                       child: Text(
                         'Skip',
