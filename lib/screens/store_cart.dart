@@ -19,12 +19,14 @@ class _CartState extends State<Cart> {
   bool _anchorToBottom = false;
 
   // instance of util class
+  bool emptyContainer = false, loading = true;
 
   String selectedValue = "1";
 
   @override
   void initState() {
     super.initState();
+    checkCondition();
     print(widget.userId);
   }
 
@@ -53,38 +55,33 @@ class _CartState extends State<Cart> {
           ),
         ),
         margin: EdgeInsets.symmetric(vertical: 10.0),
-        child:
-            /*GlobalVariable.lifeStyleRewardList.length != 0
-            ? ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: GlobalVariable.lifeStyleRewardList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return createCartList(index);
-                },
-              )
-            : Container(
-                child: Center(
-                  child: Text('Your cart is empty'),
-                ),
-              ),*/
-            FirebaseAnimatedList(
-          key: ValueKey<bool>(_anchorToBottom),
-          query: FirebaseDatabase.instance
-              .reference()
-              .child("cart")
-              .child(widget.userId),
-          reverse: _anchorToBottom,
-          sort: _anchorToBottom
-              ? (DataSnapshot a, DataSnapshot b) => b.key.compareTo(a.key)
-              : null,
-          itemBuilder: (BuildContext context, DataSnapshot snapshot,
-              Animation<double> animation, int index) {
-            return SizeTransition(
-              sizeFactor: animation,
-              child: createCartList(snapshot),
-            );
-          },
-        ),
+        child: loading
+            ? Center(child: CircularProgressIndicator())
+            : !emptyContainer
+                ? FirebaseAnimatedList(
+                    key: ValueKey<bool>(_anchorToBottom),
+                    query: FirebaseDatabase.instance
+                        .reference()
+                        .child("cart")
+                        .child(widget.userId),
+                    reverse: _anchorToBottom,
+                    sort: _anchorToBottom
+                        ? (DataSnapshot a, DataSnapshot b) =>
+                            b.key.compareTo(a.key)
+                        : null,
+                    itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                        Animation<double> animation, int index) {
+                      return SizeTransition(
+                        sizeFactor: animation,
+                        child: createCartList(snapshot),
+                      );
+                    },
+                  )
+                : Container(
+                    child: Center(
+                      child: Text('Your cart is empty'),
+                    ),
+                  ),
       ),
     );
   }
@@ -185,6 +182,7 @@ class _CartState extends State<Cart> {
                                           .reference()
                                           .child("cart")
                                           .child(widget.userId)
+                                          .child(widget.userId)
                                           .child(model.id)
                                           .update(<String, dynamic>{
                                         "productQuantity": value,
@@ -208,6 +206,11 @@ class _CartState extends State<Cart> {
                                   .child(widget.userId)
                                   .child(model.id)
                                   .remove();
+
+                              setState(() {
+                                loading = true;
+                                checkCondition();
+                              });
                             });
                           },
                           child: Icon(
@@ -264,7 +267,7 @@ class _CartState extends State<Cart> {
                 _createCartBtn("Continue Browsing", darkBlueColor, () {
                   Navigator.pop(context);
                 }),
-                GlobalVariable.lifeStyleRewardList.length != 0
+                !emptyContainer
                     ? _createCartBtn("Checkout", darkBlueColor, () {})
                     : _createCartBtn("Checkout", lightRegularColor, () {}),
               ],
@@ -273,6 +276,27 @@ class _CartState extends State<Cart> {
         ],
       ),
     );
+  }
+
+  Future<void> checkCondition() async {
+    await FirebaseDatabase.instance
+        .reference()
+        .child("cart")
+        .child(GlobalVariable.userId)
+        .once()
+        .then((DataSnapshot snapshot) {
+      Map<dynamic, dynamic> values = snapshot.value;
+      if (values == null) {
+        setState(() {
+          emptyContainer = true;
+          loading = false;
+        });
+      } else
+        setState(() {
+          emptyContainer = false;
+          loading = false;
+        });
+    });
   }
 }
 
