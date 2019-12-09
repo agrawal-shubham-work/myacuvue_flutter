@@ -267,7 +267,7 @@ class _CartState extends State<Cart> {
                 _createCartBtn("Continue Browsing", darkBlueColor, () {
                   Navigator.pop(context);
                 }),
-                GlobalVariable.lifeStyleRewardList.length != 0
+                !emptyContainer
                     ? _createCartBtn("Checkout", darkBlueColor, () {})
                     : _createCartBtn("Checkout", lightRegularColor, () {}),
               ],
