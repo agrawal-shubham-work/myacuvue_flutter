@@ -15,7 +15,7 @@ class _PromotionsAndEventsState extends State<PromotionsAndEvents> {
       appBar: AppBar(
         title: Text('Promotions and Events'),
       ),
-      body: webViewCreate("https://myacuvue.acuvue.com.sg/myacuvue-promo"),
+      body: webViewCreate("https://www.acuvue.com.sg/app/myacuvue-promo"),
     );
   }
 }

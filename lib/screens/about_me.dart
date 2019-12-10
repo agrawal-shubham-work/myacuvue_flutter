@@ -73,9 +73,12 @@ class _AboutMeState extends State<AboutMe> {
         _lastname.length == 0 ||
         _email.length == 0 ||
         _nric.length == 0 ||
-        _selectedGender.length == 0 ||
-        _selectedSpectacles.length == 0 ||
-        _selectedContactLenses.length == 0 ||
+        _selectedGender.length == '' ||
+        _selectedGender == null ||
+        _selectedSpectacles == null ||
+        _selectedContactLenses == null ||
+        _selectedSpectacles.length == '' ||
+        _selectedContactLenses.length == '' ||
         !checkPrivacyState2 ||
         !checkPrivacyState1 ||
         !validateEmail(_email)) {
@@ -385,12 +388,48 @@ class _AboutMeState extends State<AboutMe> {
           TextFormFieldWidget(
             'Do you wear Spectacles?',
             true,
-            DropDownMainWidget(spectacleList, (String value) {
+            /*DropDownMainWidget(spectacleList, (String value) {
               setState(() {
                 _selectedSpectacles = value;
                 validateFields();
               });
-            }, _selectedSpectacles),
+            }, _selectedSpectacles),*/
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Container(
+                height: 50.0,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(7.0),
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: DropdownButton<String>(
+                    style: TextStyle(
+                      color: Color(0xFf013F7C),
+                    ),
+                    hint: Text("Select"),
+                    value: _selectedSpectacles == ''
+                        ? "Select"
+                        : _selectedSpectacles,
+                    items: spectacleList.map((String value) {
+                      return new DropdownMenuItem<String>(
+                        value: value,
+                        child: new Text(value),
+                      );
+                    }).toList(),
+                    isExpanded: true,
+                    onChanged: (String value) {
+                      setState(() {
+                        _selectedSpectacles = value;
+                        validateFields();
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ),
           ),
           TextFormFieldWidget(
             'Do you wear Contact Lenses?',

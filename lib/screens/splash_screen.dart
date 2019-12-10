@@ -67,13 +67,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> verifyPhone() async {
     final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
       this.verificationId = verId;
-      setState(() {
-        startLoading = true;
-      });
     };
 
     final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
+      setState(() {
+        otpBox = true;
+        startLoading = false;
+      });
     };
 
     final PhoneVerificationCompleted verifiedSuccess =
@@ -104,8 +105,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     }).whenComplete(() {
       setState(() {
-        otpBox = true;
-        startLoading = false;
+        startLoading = true;
       });
     });
   }

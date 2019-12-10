@@ -3,6 +3,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/models/cart_model.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/dialog/custom_dialog.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/main_upper_container_for_reward_and_cart.dart';
 import 'package:my_acuvue_flutter/dialog/confirmationdialog.dart';
@@ -276,7 +277,17 @@ class _CartState extends State<Cart> {
                   Navigator.pop(context);
                 }),
                 !emptyContainer
-                    ? _createCartBtn("Checkout", darkBlueColor, () {})
+                    ? _createCartBtn("Checkout", darkBlueColor, () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => CustomDialog(
+                            title: "Chekout",
+                            description:
+                                "You don't have enough rewards points to redeem this coupons.",
+                            buttonText: "Okay",
+                          ),
+                        );
+                      })
                     : _createCartBtn("Checkout", lightRegularColor, () {}),
               ],
             ),

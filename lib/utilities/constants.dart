@@ -43,8 +43,7 @@ const kMembershipHeading = TextStyle(
     fontSize: 14.0, color: Color(0xFF013F7C), fontWeight: FontWeight.w900);
 const kVipFinalText = TextStyle(fontSize: 14.0, color: Colors.grey);
 const kSettingText = TextStyle(fontSize: 18.0, color: Colors.grey);
-const kDrawerTextStyle = TextStyle(
-    fontSize: 14.0, color: Color(0xFF013F7C), fontWeight: FontWeight.w500);
+const kDrawerTextStyle = TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500);
 const kVipHeading = TextStyle(
     color: Color(0xFF013F7C), fontSize: 14.0, fontWeight: FontWeight.w900);
 const kMandatorySign = TextStyle(color: Colors.red);

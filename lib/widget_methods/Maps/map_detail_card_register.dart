@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/dialog/custom_dialog.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
-import 'package:my_acuvue_flutter/utilities/get_current_user_id.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 
 class myDetailsContainerRegister extends StatefulWidget {
