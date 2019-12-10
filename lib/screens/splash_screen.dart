@@ -67,14 +67,13 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> verifyPhone() async {
     final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
       this.verificationId = verId;
+      setState(() {
+        startLoading = true;
+      });
     };
 
     final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
-      setState(() {
-        otpBox = true;
-        startLoading = false;
-      });
     };
 
     final PhoneVerificationCompleted verifiedSuccess =
@@ -94,9 +93,19 @@ class _SplashScreenState extends State<SplashScreen> {
             timeout: const Duration(seconds: 5),
             verificationCompleted: verifiedSuccess,
             verificationFailed: veriFailed)
-        .whenComplete(() {
+        .catchError((e) {
+      final snackbar = SnackBar(
+        content: Text('${e}'),
+        duration: Duration(milliseconds: 500),
+      );
+      _scaffoldkey.currentState.showSnackBar(snackbar);
       setState(() {
-        startLoading = true;
+        startLoading = false;
+      });
+    }).whenComplete(() {
+      setState(() {
+        otpBox = true;
+        startLoading = false;
       });
     });
   }

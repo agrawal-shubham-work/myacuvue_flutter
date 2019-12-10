@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 
@@ -28,7 +29,7 @@ class _PointsState extends State<Points> {
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(bottom: 5.0),
       decoration: BoxDecoration(
-        color: Color(0xFFD3F5ED),
+        color: Color(0xFFD5D9DA),
         border: Border(
           bottom: BorderSide(color: Colors.grey),
         ),
@@ -83,15 +84,14 @@ class _PointsState extends State<Points> {
             start,
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 5.0),
+            padding: EdgeInsets.only(bottom: 10.0, left: 10.0),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(color: Colors.grey),
               ),
             ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
+            child: Container(
+              padding: EdgeInsets.only(left: 10.0, bottom: 10.0),
               child: Row(
                 children: <Widget>[
                   Text(
@@ -111,8 +111,8 @@ class _PointsState extends State<Points> {
             kPointsTextStyle,
             start,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
+          Container(
+            padding: EdgeInsets.only(left: 15.0, bottom: 10.0),
             child: Row(
               children: <Widget>[
                 pointsExpiryMonth("Current month :", "0"),
@@ -169,6 +169,7 @@ class _PointsState extends State<Points> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
+        padding: EdgeInsets.all(10.0),
         width: MediaQuery.of(context).size.width,
         child: Text(
           text,

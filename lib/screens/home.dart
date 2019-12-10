@@ -29,6 +29,8 @@ class _HomeState extends State<Home> {
   BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
       onTap: onTapped,
+      showUnselectedLabels: true,
+      showSelectedLabels: true,
       currentIndex: currentTabIndex,
       items: [
         BottomNavigationBarItem(
