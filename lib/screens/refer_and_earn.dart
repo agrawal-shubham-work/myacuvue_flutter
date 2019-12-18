@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/background_image_widget.dart';
 import 'package:my_acuvue_flutter/widget_methods/para_style_widget.dart';
+import 'package:share/share.dart';
 
 class ReferAndEarn extends StatefulWidget {
   static const String routeName = '/refer';
@@ -48,6 +50,10 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                   color: Color(0xFf013F7C),
                   margin: EdgeInsets.only(top: 40.0),
                   child: FlatButton(
+                    onPressed: () {
+                      Share.share(
+                          'Please use my code to get discount ${GlobalVariable.userId}',subject: "Sharing referal code");
+                    },
                     child: Text(
                       'INVITE FRIEND',
                       style: kReferBtn,
