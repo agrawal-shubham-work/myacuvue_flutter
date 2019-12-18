@@ -52,7 +52,8 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                   child: FlatButton(
                     onPressed: () {
                       Share.share(
-                          'Please use my code to get discount ${GlobalVariable.userId}',subject: "Sharing referal code");
+                          'Please use my code to get discount ${GlobalVariable.userId}',
+                          subject: "Sharing referal code");
                     },
                     child: Text(
                       'INVITE FRIEND',
