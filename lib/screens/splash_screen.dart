@@ -84,6 +84,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final PhoneVerificationFailed veriFailed = (AuthException exception) {
       print('${exception.message}');
+      setState(() {
+        startLoading = false;
+      });
+      final snackbar = SnackBar(
+        content: Text('${exception.message}'),
+        duration: Duration(milliseconds: 500),
+      );
+      _scaffoldkey.currentState.showSnackBar(snackbar);
     };
 
     await FirebaseAuth.instance
