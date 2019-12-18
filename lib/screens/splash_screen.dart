@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -228,76 +230,83 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Widget enterOtpWidget() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        NumberandOtpTitleWidget(
-            context, "OTP has been sent to $selectedCountryCode $phoneNo"),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            otpWidget(focusNode1, (String value) {
-              if (value.length != 0) {
-                FocusScope.of(context).requestFocus(focusNode2);
-              }
-              opt1 = value;
-            }),
-            otpWidget(focusNode2, (String value) {
-              if (value.length == 0)
-                FocusScope.of(context).requestFocus(focusNode1);
-              else {
-                FocusScope.of(context).requestFocus(focusNode3);
-              }
-              opt2 = value;
-            }),
-            otpWidget(focusNode3, (String value) {
-              if (value.length == 0)
-                FocusScope.of(context).requestFocus(focusNode2);
-              else {
-                FocusScope.of(context).requestFocus(focusNode4);
-              }
-              otp3 = value;
-            }),
-            otpWidget(focusNode4, (String value) {
-              if (value.length == 0)
-                FocusScope.of(context).requestFocus(focusNode3);
-              else {
-                FocusScope.of(context).requestFocus(focusNode5);
-              }
-              opt4 = value;
-            }),
-            otpWidget(focusNode5, (String value) {
-              if (value.length == 0)
-                FocusScope.of(context).requestFocus(focusNode4);
-              else {
-                FocusScope.of(context).requestFocus(focusNode6);
-              }
-              opt5 = value;
-            }),
-            otpWidget(focusNode6, (String value) {
-              if (value.length == 0) {
-                FocusScope.of(context).requestFocus(focusNode5);
-              }
-              opt6 = value;
-            }),
-          ],
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-          color: darkBlueColor,
-          child: FlatButton(
-            onPressed: () {
-              smsCode = '$opt1$opt2$otp3$opt4$opt5$opt6';
-              signIn();
-            },
-            child: Text(
-              'Verify OTP',
-              style: kReferBtn,
+    return WillPopScope(
+      onWillPop: () {
+        setState(() {
+          otpBox = false;
+        });
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          NumberandOtpTitleWidget(
+              context, "OTP has been sent to $selectedCountryCode $phoneNo"),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              otpWidget(focusNode1, (String value) {
+                if (value.length != 0) {
+                  FocusScope.of(context).requestFocus(focusNode2);
+                }
+                opt1 = value;
+              }),
+              otpWidget(focusNode2, (String value) {
+                if (value.length == 0)
+                  FocusScope.of(context).requestFocus(focusNode1);
+                else {
+                  FocusScope.of(context).requestFocus(focusNode3);
+                }
+                opt2 = value;
+              }),
+              otpWidget(focusNode3, (String value) {
+                if (value.length == 0)
+                  FocusScope.of(context).requestFocus(focusNode2);
+                else {
+                  FocusScope.of(context).requestFocus(focusNode4);
+                }
+                otp3 = value;
+              }),
+              otpWidget(focusNode4, (String value) {
+                if (value.length == 0)
+                  FocusScope.of(context).requestFocus(focusNode3);
+                else {
+                  FocusScope.of(context).requestFocus(focusNode5);
+                }
+                opt4 = value;
+              }),
+              otpWidget(focusNode5, (String value) {
+                if (value.length == 0)
+                  FocusScope.of(context).requestFocus(focusNode4);
+                else {
+                  FocusScope.of(context).requestFocus(focusNode6);
+                }
+                opt5 = value;
+              }),
+              otpWidget(focusNode6, (String value) {
+                if (value.length == 0) {
+                  FocusScope.of(context).requestFocus(focusNode5);
+                }
+                opt6 = value;
+              }),
+            ],
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+            color: darkBlueColor,
+            child: FlatButton(
+              onPressed: () {
+                smsCode = '$opt1$opt2$otp3$opt4$opt5$opt6';
+                signIn();
+              },
+              child: Text(
+                'Verify OTP',
+                style: kReferBtn,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -367,149 +376,154 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Widget enterPhoneNumberWidget() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        NumberandOtpTitleWidget(context, "Please enter your phone number"),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Container(
-                padding: EdgeInsets.only(bottom: 10.0, left: 5.0),
-                child: Material(
-                  child: DropDownMainWidget(countryList, (String value) {
-                    setState(() {
-                      if (value == 'SGP') {
-                        selectedCountryCode = null;
-                        sgpCodes = "+65";
-                      } else if (value == 'HKG') {
-                        selectedCountryCode = '+852';
-                        sgpCodes = null;
-                        sgpCodes = null;
-                      } else if (value == 'TWN') {
-                        sgpCodes = null;
-                        selectedCountryCode = '+886';
-                        sgpCodes = null;
-                      }
-                      selectedCountry = value;
-                    });
-                  }, selectedCountry),
+    return WillPopScope(
+      onWillPop: () {
+        Platform.isAndroid ? SystemNavigator.pop() : exit(0);
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          NumberandOtpTitleWidget(context, "Please enter your phone number"),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Container(
+                  padding: EdgeInsets.only(bottom: 10.0, left: 5.0),
+                  child: Material(
+                    child: DropDownMainWidget(countryList, (String value) {
+                      setState(() {
+                        if (value == 'SGP') {
+                          selectedCountryCode = null;
+                          sgpCodes = "+65";
+                        } else if (value == 'HKG') {
+                          selectedCountryCode = '+852';
+                          sgpCodes = null;
+                          sgpCodes = null;
+                        } else if (value == 'TWN') {
+                          sgpCodes = null;
+                          selectedCountryCode = '+886';
+                          sgpCodes = null;
+                        }
+                        selectedCountry = value;
+                      });
+                    }, selectedCountry),
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                height: 50.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(7.0),
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: Row(
-                  children: <Widget>[
-                    selectedCountry == null
-                        ? Container()
-                        : selectedCountry == 'HKG'
-                            ? numberRowContainer('+852')
-                            : selectedCountry == 'TWN'
-                                ? numberRowContainer('+886')
-                                : Container(
-                                    padding:
-                                        EdgeInsets.only(left: 10.0, right: 0.0),
-                                    child: DropdownButton<String>(
-                                      style: TextStyle(
-                                        color: Color(0xFf013F7C),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7.0),
+                    border: Border.all(color: Colors.grey),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      selectedCountry == null
+                          ? Container()
+                          : selectedCountry == 'HKG'
+                              ? numberRowContainer('+852')
+                              : selectedCountry == 'TWN'
+                                  ? numberRowContainer('+886')
+                                  : Container(
+                                      padding: EdgeInsets.only(
+                                          left: 10.0, right: 0.0),
+                                      child: DropdownButton<String>(
+                                        style: TextStyle(
+                                          color: Color(0xFf013F7C),
+                                        ),
+                                        hint: Text("Select"),
+                                        value: checkSelectedValue(sgpCodes),
+                                        items: sgpCodeList.map((String value) {
+                                          return new DropdownMenuItem<String>(
+                                            value: value,
+                                            child: new Text(value),
+                                          );
+                                        }).toList(),
+                                        onChanged: (String value) {
+                                          setState(
+                                            () {
+                                              sgpCodes = value;
+                                              selectedCountryCode = value;
+                                            },
+                                          );
+                                        },
                                       ),
-                                      hint: Text("Select"),
-                                      value: checkSelectedValue(sgpCodes),
-                                      items: sgpCodeList.map((String value) {
-                                        return new DropdownMenuItem<String>(
-                                          value: value,
-                                          child: new Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String value) {
-                                        setState(
-                                          () {
-                                            sgpCodes = value;
-                                            selectedCountryCode = value;
-                                          },
-                                        );
-                                      },
                                     ),
-                                  ),
-                    Expanded(
-                      child: Container(
-                        child: Material(
-                          child: TextFormField(
-                            maxLength: 10,
-                            controller: _controller,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              WhitelistingTextInputFormatter.digitsOnly
-                            ],
-                            decoration: new InputDecoration(
-                              counterText: '',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
+                      Expanded(
+                        child: Container(
+                          child: Material(
+                            child: TextFormField(
+                              maxLength: 10,
+                              controller: _controller,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                WhitelistingTextInputFormatter.digitsOnly
+                              ],
+                              decoration: new InputDecoration(
+                                counterText: '',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
                               ),
+                              onChanged: (String value) {
+                                setState(() {
+                                  phoneNo = value;
+                                });
+                              },
                             ),
-                            onChanged: (String value) {
-                              setState(() {
-                                phoneNo = value;
-                              });
-                            },
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
+              )
+            ],
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+            color: startLoading ? Colors.grey : darkBlueColor,
+            child: FlatButton(
+              onPressed: () {
+                if (selectedCountryCode == null && sgpCodes == null) {
+                  final snackbar = SnackBar(
+                    content: Text('Select your country code'),
+                    duration: Duration(milliseconds: 500),
+                  );
+                  _scaffoldkey.currentState.showSnackBar(snackbar);
+                } else
+                  verifyPhone();
+              },
+              child: Text(
+                'Send Verification OTP',
+                style: kReferBtn,
               ),
-            )
-          ],
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-          color: startLoading ? Colors.grey : darkBlueColor,
-          child: FlatButton(
-            onPressed: () {
-              if (selectedCountryCode == null && sgpCodes == null) {
-                final snackbar = SnackBar(
-                  content: Text('Select your country code'),
-                  duration: Duration(milliseconds: 500),
-                );
-                _scaffoldkey.currentState.showSnackBar(snackbar);
-              } else
-                verifyPhone();
-            },
-            child: Text(
-              'Send Verification OTP',
-              style: kReferBtn,
             ),
           ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-          width: MediaQuery.of(context).size.width,
-          child: GestureDetector(
-            onTap: () {
-              setState(() {
-                isRecoverAcoount = true;
-              });
-            },
-            child: Text(
-              'Recover my Account',
-              style: kPrivacyPara,
-              textAlign: TextAlign.end,
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+            width: MediaQuery.of(context).size.width,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  isRecoverAcoount = true;
+                });
+              },
+              child: Text(
+                'Recover my Account',
+                style: kPrivacyPara,
+                textAlign: TextAlign.end,
+              ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 
