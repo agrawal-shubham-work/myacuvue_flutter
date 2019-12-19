@@ -332,7 +332,7 @@ class _AboutMeState extends State<AboutMe> {
           TextFormFieldWidget(
             'Firsr Name',
             true,
-            TextFieldMainWidget('Shubham', TextInputType.text, (value) {
+            TextFieldMainWidget('', TextInputType.text, (value) {
               setState(() {
                 _firstname = value;
                 validateFields();
@@ -342,7 +342,7 @@ class _AboutMeState extends State<AboutMe> {
           TextFormFieldWidget(
             'Last Name',
             true,
-            TextFieldMainWidget('Agrawal', TextInputType.text, (value) {
+            TextFieldMainWidget('', TextInputType.text, (value) {
               setState(() {
                 _lastname = value;
                 validateFields();
@@ -367,7 +367,7 @@ class _AboutMeState extends State<AboutMe> {
           TextFormFieldWidget(
             'Email',
             true,
-            TextFieldMainWidget('abc@xyz.com', TextInputType.emailAddress,
+            TextFieldMainWidget('', TextInputType.emailAddress,
                 (value) {
               setState(() {
                 _email = value;
@@ -378,7 +378,7 @@ class _AboutMeState extends State<AboutMe> {
           TextFormFieldWidget(
             'NRIC/FIN Number',
             true,
-            TextFieldMainWidget('abcd1234ae', TextInputType.text, (value) {
+            TextFieldMainWidget('', TextInputType.text, (value) {
               setState(() {
                 _nric = value;
                 validateFields();
