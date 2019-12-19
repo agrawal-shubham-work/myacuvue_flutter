@@ -1,7 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:my_acuvue_flutter/models/lifestyle_reward_model.dart';
 import 'package:my_acuvue_flutter/screens/main_home.dart';
 import 'package:my_acuvue_flutter/screens/main_points.dart';
 import 'package:my_acuvue_flutter/screens/main_reward.dart';
@@ -29,12 +26,17 @@ class _HomeState extends State<Home> {
   BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
       onTap: onTapped,
+      elevation: 0.0,
+      showUnselectedLabels: true,
+      showSelectedLabels: true,
+      unselectedItemColor: Colors.grey,
+      selectedItemColor: Color(0xff013f7c),
       currentIndex: currentTabIndex,
       items: [
         BottomNavigationBarItem(
           icon: Icon(
             Icons.home,
-            color: Color(0xFF0137FC),
+            /*color: Color(0xFF0137FC),*/
           ),
           title: Text(
             "Home",
@@ -44,7 +46,7 @@ class _HomeState extends State<Home> {
         BottomNavigationBarItem(
           icon: Icon(
             Icons.star_border,
-            color: Color(0xFF0137FC),
+            /*color: Color(0xFF0137FC),*/
           ),
           title: Text(
             "Points",
@@ -54,7 +56,7 @@ class _HomeState extends State<Home> {
         BottomNavigationBarItem(
           icon: Icon(
             Icons.attach_money,
-            color: Color(0xFF0137FC),
+            /*color: Color(0xFF0137FC),*/
           ),
           title: Text(
             "Rewards",
@@ -64,7 +66,7 @@ class _HomeState extends State<Home> {
         BottomNavigationBarItem(
           icon: Icon(
             Icons.store,
-            color: Color(0xFF0137FC),
+            /*color: Color(0xFF0137FC),*/
           ),
           title: Text(
             "Store",

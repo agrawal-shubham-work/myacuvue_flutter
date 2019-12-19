@@ -49,7 +49,7 @@ class _getDrawerState extends State<getDrawer> {
         ),
         onTap: () {
           setState(() {
-            if (s == 'Logout') {
+            if (routeName == SplashScreen.routeName) {
               FirebaseAuth.instance.signOut();
             }
             Navigator.of(context).pop();

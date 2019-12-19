@@ -3,8 +3,10 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/models/cart_model.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
+import 'package:my_acuvue_flutter/dialog/custom_dialog.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Reward/main_upper_container_for_reward_and_cart.dart';
+import 'package:my_acuvue_flutter/dialog/confirmationdialog.dart';
 
 class Cart extends StatefulWidget {
   String userId;
@@ -119,16 +121,11 @@ class _CartState extends State<Cart> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Text(
-                              /*GlobalVariable
-                              .lifeStyleRewardList[index].productName*/
-                              model.productName),
+                            model.productName,
+                            style: TextStyle(fontFamily: 'GRABBOLD'),
+                          ),
+                          Text(model.productPoints),
                           Text(
-                              /*GlobalVariable
-                              .lifeStyleRewardList[index].productPoints*/
-                              model.productPoints),
-                          Text(
-                            /*GlobalVariable
-                                .lifeStyleRewardList[index].productDesc*/
                             model.productDesc,
                             textAlign: TextAlign.center,
                           ),
@@ -164,10 +161,9 @@ class _CartState extends State<Cart> {
                                 margin: EdgeInsets.symmetric(horizontal: 10.0),
                                 child: DropdownButton<String>(
                                   style: TextStyle(
-                                    color: Color(0xFf013F7C),
-                                  ),
-                                  value:
-                                      "${/*GlobalVariable.lifeStyleRewardList[index].productQuantity*/ model.productQuantity}",
+                                      color: Color(0xFf013F7C),
+                                      fontFamily: 'GRABBOLD'),
+                                  value: "${model.productQuantity}",
                                   items: quantityList.map((String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
@@ -199,16 +195,24 @@ class _CartState extends State<Cart> {
                               /*GlobalVariable.lifeStyleRewardList
                                   .removeAt(index);*/
 
-                              FirebaseDatabase.instance
-                                  .reference()
-                                  .child("cart")
-                                  .child(widget.userId)
-                                  .child(model.id)
-                                  .remove();
+                              showConfirmationDialog(context, model.productName,
+                                  "Do you really want to delete ${model.productName}",
+                                  () {
+                                Navigator.pop(context);
+                              }, () {
+                                FirebaseDatabase.instance
+                                    .reference()
+                                    .child("cart")
+                                    .child(widget.userId)
+                                    .child(model.id)
+                                    .remove();
 
-                              setState(() {
-                                loading = true;
-                                checkCondition();
+                                setState(() {
+                                  loading = true;
+                                  checkCondition();
+
+                                  Navigator.pop(context);
+                                });
                               });
                             });
                           },
@@ -267,7 +271,17 @@ class _CartState extends State<Cart> {
                   Navigator.pop(context);
                 }),
                 !emptyContainer
-                    ? _createCartBtn("Checkout", darkBlueColor, () {})
+                    ? _createCartBtn("Checkout", darkBlueColor, () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => CustomDialog(
+                            title: "Chekout",
+                            description:
+                                "You don't have enough rewards points to redeem this coupons.",
+                            buttonText: "Okay",
+                          ),
+                        );
+                      })
                     : _createCartBtn("Checkout", lightRegularColor, () {}),
               ],
             ),

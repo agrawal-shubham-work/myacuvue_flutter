@@ -132,7 +132,11 @@ class _LifeStyleRewardState extends State<LifeStyleReward> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Text(lisfestyleRewardList[index].productName),
+                      Text(
+                        lisfestyleRewardList[index].productName,
+                        style: TextStyle(
+                            color: Colors.blueGrey, fontFamily: 'GRABBOLD'),
+                      ),
                       Text(lisfestyleRewardList[index].productPoints),
                       Text(
                         lisfestyleRewardList[index].productDesc,

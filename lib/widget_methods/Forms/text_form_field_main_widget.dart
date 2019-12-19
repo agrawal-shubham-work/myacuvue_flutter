@@ -7,7 +7,6 @@ class TextFieldMainWidget extends StatelessWidget {
   final Function tapFunc;
   final TextEditingController controller;
   final int maxCount;
-
   TextFieldMainWidget(
       this.hintText, this.type, this.tapFunc, this.controller, this.maxCount);
 

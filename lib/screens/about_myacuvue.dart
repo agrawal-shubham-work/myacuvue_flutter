@@ -94,7 +94,7 @@ class CreateAboutBtn extends StatelessWidget {
         onPressed: onTaped,
         child: Text(
           btnText,
-          style: kRewardBtn,
+          style: kAboutBTN,
         ),
       ),
     );

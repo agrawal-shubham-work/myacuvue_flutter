@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
@@ -97,26 +98,30 @@ class _ContactUsState extends State<ContactUs> {
             () {},
             kContactUsTextStyle,
           ),*/
-          RichText(
-            text: TextSpan(
-              children: <TextSpan>[
-                TextSpan(
-                    text:
-                        "By Submitting your information, you agree that it will be governed by Johnson and Johnson Vision ",
-                    style: kContactUsTextStyle),
-                TextSpan(
-                  text: "Privacy Policy.",
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      Navigator.of(context).pushNamed(PrivacyPolicy.routeName);
-                    },
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.blue,
-                    decoration: TextDecoration.underline,
+          Container(
+            padding: EdgeInsets.only(left: 5.0, top: 10.0),
+            child: RichText(
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                      text:
+                          "By Submitting your information, you agree that it will be governed by Johnson and Johnson Vision ",
+                      style: kContactUsTextStyle),
+                  TextSpan(
+                    text: "Privacy Policy.",
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.of(context)
+                            .pushNamed(PrivacyPolicy.routeName);
+                      },
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                        fontFamily: 'GRABLIGHT'),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           SizedBox(

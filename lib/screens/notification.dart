@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/dialog/confirmationdialog.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
 import 'package:my_acuvue_flutter/widget_methods/Notifications/notificationbox.dart';
 
@@ -24,7 +25,15 @@ class _NotificationsState extends State<Notifications> {
         onPressed: () {
           setState(() {
             if (GlobalVariable.notificationList.length != 0)
-              GlobalVariable.notificationList.clear();
+              showConfirmationDialog(context, "Notification",
+                  "Do you really want to delete all notification", () {
+                Navigator.pop(context);
+              }, () {
+                setState(() {
+                  GlobalVariable.notificationList.clear();
+                });
+                Navigator.pop(context);
+              });
             else {
               final snackbar = SnackBar(
                 content: Text('No Notification to delete'),
