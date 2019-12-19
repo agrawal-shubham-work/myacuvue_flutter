@@ -52,7 +52,7 @@ class _AboutMeState extends State<AboutMe> {
       editedFirstName,
       editedLastName,
       editedEmailId;
-  Color buttonColor = Color(0xFf013F7C);
+  Color buttonColor = Colors.grey;
 
   String _firstname = '',
       _lastname = '',
@@ -65,7 +65,7 @@ class _AboutMeState extends State<AboutMe> {
 
   bool checkPrivacyState1 = false,
       checkPrivacyState2 = false,
-      submitButtonEnabled;
+      submitButtonEnabled=false;
 
   void validateFields() {
     if (_firstname.length == 0 ||

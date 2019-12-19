@@ -17,10 +17,10 @@ class MainStore extends StatefulWidget {
 
 class _MainStoreState extends State<MainStore> {
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
-  bool dataInRegisteredBase = false,
+  bool dataInRegisteredBase,
       appointmentData = false,
-      bookAppointmentBTN;
-  bool dataLoading = false;
+      bookAppointmentBTN=false;
+  bool dataLoading = true;
   String storeName,
       storeAddress,
       appointmentDate,

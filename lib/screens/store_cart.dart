@@ -182,7 +182,6 @@ class _CartState extends State<Cart> {
                                           .reference()
                                           .child("cart")
                                           .child(widget.userId)
-                                          .child(widget.userId)
                                           .child(model.id)
                                           .update(<String, dynamic>{
                                         "productQuantity": value,

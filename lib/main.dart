@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       theme: Theme.of(context).copyWith(
         primaryColor: Color(0xFF013F7C),
       ),
-      home: Home("MyACUVUE"),
+      home: SplashScreen(),
       routes: <String, WidgetBuilder>{
         SplashScreen.routeName: (BuildContext context) => SplashScreen(),
         MainStore.routeName: (BuildContext context) => MainStore(),
