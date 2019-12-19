@@ -134,7 +134,8 @@ class _LifeStyleRewardState extends State<LifeStyleReward> {
                     children: <Widget>[
                       Text(
                         lisfestyleRewardList[index].productName,
-                        style: TextStyle(fontFamily: 'GRABBOLD'),
+                        style: TextStyle(
+                            color: Colors.blueGrey, fontFamily: 'GRABBOLD'),
                       ),
                       Text(lisfestyleRewardList[index].productPoints),
                       Text(
