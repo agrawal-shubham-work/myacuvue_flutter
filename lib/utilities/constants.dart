@@ -35,7 +35,7 @@ final Color darkBlueColor = Color(0xFF013F7C);
 final Color lightRegularColor = Color(0xFF5F86B4);
 const kVipText = TextStyle(fontSize: 14.0, color: Color(0xFF013F7C));
 const kNotificationHeading =
-    TextStyle(fontSize: 14.0, color: Color(0xFF013F7C));
+    TextStyle(fontSize: 14.0, color: Color(0xFF013F7C), fontFamily: 'GRABBOLD');
 const kNotificationSubHeading = TextStyle(fontSize: 16.0, color: Colors.black);
 const kPointsExpiryText = TextStyle(fontSize: 14.0, color: Colors.black);
 const kNotificationDate = TextStyle(fontSize: 14.0, color: Colors.grey);
