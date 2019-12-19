@@ -42,20 +42,22 @@ class selectedAndroidPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      style: TextStyle(
-        color: Color(0xFf013F7C),
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<String>(
+        style: TextStyle(
+          color: Color(0xFf013F7C),
+        ),
+        hint: Text("Select"),
+        value: checkSelectedValue(selectedValue),
+        items: dataList.map((String value) {
+          return new DropdownMenuItem<String>(
+            value: value,
+            child: new Text(value),
+          );
+        }).toList(),
+        isExpanded: true,
+        onChanged: onTap,
       ),
-      hint: Text("Select"),
-      value: checkSelectedValue(selectedValue),
-      items: dataList.map((String value) {
-        return new DropdownMenuItem<String>(
-          value: value,
-          child: new Text(value),
-        );
-      }).toList(),
-      isExpanded: true,
-      onChanged: onTap,
     );
   }
 

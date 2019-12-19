@@ -405,27 +405,29 @@ class _AboutMeState extends State<AboutMe> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(10.0),
-                  child: DropdownButton<String>(
-                    style: TextStyle(
-                      color: Color(0xFf013F7C),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      style: TextStyle(
+                        color: Color(0xFf013F7C),
+                      ),
+                      hint: Text("Select"),
+                      value: _selectedSpectacles == ''
+                          ? "Select"
+                          : _selectedSpectacles,
+                      items: spectacleList.map((String value) {
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          child: new Text(value),
+                        );
+                      }).toList(),
+                      isExpanded: true,
+                      onChanged: (String value) {
+                        setState(() {
+                          _selectedSpectacles = value;
+                          validateFields();
+                        });
+                      },
                     ),
-                    hint: Text("Select"),
-                    value: _selectedSpectacles == ''
-                        ? "Select"
-                        : _selectedSpectacles,
-                    items: spectacleList.map((String value) {
-                      return new DropdownMenuItem<String>(
-                        value: value,
-                        child: new Text(value),
-                      );
-                    }).toList(),
-                    isExpanded: true,
-                    onChanged: (String value) {
-                      setState(() {
-                        _selectedSpectacles = value;
-                        validateFields();
-                      });
-                    },
                   ),
                 ),
               ),
