@@ -62,9 +62,18 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   fonts:
-    - family:  MyFlutterApp
+    - family: GRABLIGHT
       fonts:
-        - asset: assets\fonts\MyFlutterApp.ttf
+        - asset: assets/fonts/grab_light.ttf
+          weight: 100
+
+    - family: GRABBOLD
+      fonts:
+        - asset: assets/fonts/grab_bold_medium.ttf
+          weight: 900
+
+
+
 
   assets:
     - images/

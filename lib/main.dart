@@ -37,6 +37,12 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: Theme.of(context).copyWith(
         primaryColor: Color(0xFF013F7C),
+        textTheme: Theme.of(context).textTheme.apply(fontFamily: 'GRABLIGHT'),
+        primaryTextTheme: Theme.of(context)
+            .textTheme
+            .apply(fontFamily: 'GRABBOLD', bodyColor: Colors.white),
+        accentTextTheme:
+            Theme.of(context).textTheme.apply(fontFamily: 'GRABBOLD'),
       ),
       home: SplashScreen(),
       routes: <String, WidgetBuilder>{

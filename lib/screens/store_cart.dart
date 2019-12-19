@@ -121,16 +121,11 @@ class _CartState extends State<Cart> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Text(
-                              /*GlobalVariable
-                              .lifeStyleRewardList[index].productName*/
-                              model.productName),
+                            model.productName,
+                            style: TextStyle(fontFamily: 'GRABBOLD'),
+                          ),
+                          Text(model.productPoints),
                           Text(
-                              /*GlobalVariable
-                              .lifeStyleRewardList[index].productPoints*/
-                              model.productPoints),
-                          Text(
-                            /*GlobalVariable
-                                .lifeStyleRewardList[index].productDesc*/
                             model.productDesc,
                             textAlign: TextAlign.center,
                           ),
@@ -166,10 +161,9 @@ class _CartState extends State<Cart> {
                                 margin: EdgeInsets.symmetric(horizontal: 10.0),
                                 child: DropdownButton<String>(
                                   style: TextStyle(
-                                    color: Color(0xFf013F7C),
-                                  ),
-                                  value:
-                                      "${/*GlobalVariable.lifeStyleRewardList[index].productQuantity*/ model.productQuantity}",
+                                      color: Color(0xFf013F7C),
+                                      fontFamily: 'GRABBOLD'),
+                                  value: "${model.productQuantity}",
                                   items: quantityList.map((String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,

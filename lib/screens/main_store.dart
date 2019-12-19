@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_acuvue_flutter/dialog/confirmationdialog.dart';
 import 'package:my_acuvue_flutter/screens/main_map.dart';
 import 'package:my_acuvue_flutter/utilities/constants.dart';
 import 'package:my_acuvue_flutter/utilities/global_variable.dart';
@@ -305,13 +306,22 @@ class _MainStoreState extends State<MainStore> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        Firestore.instance
-                                            .collection("appointment")
-                                            .document(GlobalVariable.userId)
-                                            .delete()
-                                            .then((result) {
-                                          dataLoading = true;
-                                          checkDataIfExists();
+                                        showConfirmationDialog(
+                                            context,
+                                            "Cancel Appointment",
+                                            "Do you really want to the appointment of the ${storeName} store",
+                                            () {
+                                          Navigator.pop(context);
+                                        }, () {
+                                          Firestore.instance
+                                              .collection("appointment")
+                                              .document(GlobalVariable.userId)
+                                              .delete()
+                                              .then((result) {
+                                            dataLoading = true;
+                                            checkDataIfExists();
+                                          });
+                                          Navigator.pop(context);
                                         });
                                       },
                                       child: Container(

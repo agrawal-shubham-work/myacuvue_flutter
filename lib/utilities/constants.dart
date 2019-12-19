@@ -40,23 +40,38 @@ const kNotificationSubHeading = TextStyle(fontSize: 16.0, color: Colors.black);
 const kPointsExpiryText = TextStyle(fontSize: 14.0, color: Colors.black);
 const kNotificationDate = TextStyle(fontSize: 14.0, color: Colors.grey);
 const kMembershipHeading = TextStyle(
-    fontSize: 14.0, color: Color(0xFF013F7C), fontWeight: FontWeight.w900);
+    fontSize: 14.0,
+    color: Color(0xFF013F7C),
+    fontWeight: FontWeight.w900,
+    fontFamily: 'GRABBOLD');
 const kVipFinalText = TextStyle(fontSize: 14.0, color: Colors.grey);
 const kSettingText = TextStyle(fontSize: 18.0, color: Colors.grey);
 const kDrawerTextStyle = TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500);
 const kVipHeading = TextStyle(
-    color: Color(0xFF013F7C), fontSize: 14.0, fontWeight: FontWeight.w900);
+    color: Color(0xFF013F7C),
+    fontSize: 14.0,
+    fontWeight: FontWeight.w900,
+    fontFamily: 'GRABBOLD');
 const kMandatorySign = TextStyle(color: Colors.red);
 const kPrivacyHeading = TextStyle(
-    color: Color(0xFF013F7C), fontSize: 16.0, fontWeight: FontWeight.w900);
+    color: Color(0xFF013F7C),
+    fontSize: 16.0,
+    fontWeight: FontWeight.w900,
+    fontFamily: 'GRABBOLD');
 const kStoreHeading = TextStyle(
     color: Color(0xFF013F7C), fontSize: 14.0, fontWeight: FontWeight.w600);
 const kStoreSubHeading = TextStyle(
     color: Color(0xFF013F7C), fontSize: 14.0, fontWeight: FontWeight.w400);
-const kHomeHeading =
-    TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w900);
+const kHomeHeading = TextStyle(
+    color: Colors.black,
+    fontSize: 18.0,
+    fontWeight: FontWeight.w900,
+    fontFamily: 'GRABBOLD');
 const kHomeReferHeading = TextStyle(
-    color: Colors.blueAccent, fontSize: 18.0, fontWeight: FontWeight.w900);
+    color: Colors.blueAccent,
+    fontSize: 18.0,
+    fontWeight: FontWeight.w900,
+    fontFamily: 'GRABBOLD');
 const kHomeSubHeading = TextStyle(color: Colors.grey, fontSize: 16.0);
 const kPrivacyPara = TextStyle(color: Color(0xFF013F7C), fontSize: 12.0);
 const kReferPara = TextStyle(color: Color(0xFF013F7C), fontSize: 14.0);
@@ -67,7 +82,10 @@ const kReferSubPara = TextStyle(
 
 const kRewardTerms = TextStyle(fontSize: 18.0, color: Color(0xFF013F7C));
 const kSettingsHeading = TextStyle(
-    fontSize: 18.0, color: Color(0xFF013F7C), fontWeight: FontWeight.w900);
+    fontSize: 18.0,
+    color: Color(0xFF013F7C),
+    fontWeight: FontWeight.w900,
+    fontFamily: 'GRABBOLD');
 const kRewardsHeading = TextStyle(fontSize: 24.0, color: Color(0xFf013F7C));
 const kRewardsSubHeading = TextStyle(fontSize: 20.0, color: Color(0xFf013F7C));
 const kReferBtn =
@@ -75,15 +93,24 @@ const kReferBtn =
 const kPointsTextStyle = TextStyle(fontSize: 14.0, color: Color(0xFF013F7C));
 const kRewardBtn =
     TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w600);
+const kAboutBTN = TextStyle(
+    color: Colors.white,
+    fontSize: 14.0,
+    fontWeight: FontWeight.w600,
+    fontFamily: 'GRABBOLD');
 const kStoreName = TextStyle(fontSize: 16.0, color: Colors.grey);
 
 const kStoreAddress = TextStyle(
   fontSize: 16.0,
   color: Color(0xFF013F7C),
 );
-const kContactUsTextStyle = TextStyle(fontSize: 16.0, color: Colors.black);
-const kContactHeadingTextStyle =
-    TextStyle(fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w900);
+const kContactUsTextStyle =
+    TextStyle(fontSize: 16.0, color: Colors.black, fontFamily: 'GRABLIGHT');
+const kContactHeadingTextStyle = TextStyle(
+    fontSize: 16.0,
+    color: Colors.black,
+    fontWeight: FontWeight.w900,
+    fontFamily: 'GRABBOLD');
 const kContactUsLinkTextStyle = TextStyle(
     fontSize: 16.0, color: Colors.blue, decoration: TextDecoration.underline);
 const kCartPointsText = TextStyle(fontSize: 14.0, color: Colors.blueGrey);
@@ -96,7 +123,10 @@ const kRegisterStoreSubHeading = TextStyle(
   color: Color(0xFF013F7C),
 );
 const kStoreNameStyle = TextStyle(
-    fontSize: 16.0, color: Color(0xff013f7c), fontWeight: FontWeight.w600);
+    fontSize: 16.0,
+    color: Color(0xff013f7c),
+    fontWeight: FontWeight.w700,
+    fontFamily: 'GRABBOLD');
 const kStoreAddressStyle = TextStyle(
     fontSize: 16.0, color: Colors.blueGrey, fontWeight: FontWeight.w600);
 
