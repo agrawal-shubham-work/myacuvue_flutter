@@ -23,11 +23,13 @@ class CreateImageSlider extends StatelessWidget {
           onImageTap: (index) {
             openNewPageForSelectedImage(index, context);
           },
+          dotIncreaseSize:1.5,
+          dotBgColor: Colors.transparent,
+          dotIncreasedColor: Color(0xff013f7c),
           boxFit: BoxFit.fill,
           autoplay: true,
           autoplayDuration: Duration(seconds: 6),
-          animationCurve: Curves.fastOutSlowIn,
-          animationDuration: Duration(seconds: 4),
+          animationDuration: Duration(seconds: 2),
         ),
       ),
     );

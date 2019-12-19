@@ -39,7 +39,7 @@ class MainHomeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(10.0),
-      elevation: 8.0,
+      elevation: 2.0,
       child: childWidget,
     );
   }

@@ -26,11 +26,11 @@ class _HomeState extends State<Home> {
   BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
       onTap: onTapped,
-      elevation: 0.0,
+      elevation: 10.0,
       showUnselectedLabels: true,
       showSelectedLabels: true,
       unselectedItemColor: Colors.grey,
-      selectedItemColor: Color(0xff013f7c),
+      selectedItemColor: Color(0xffff00a1e2),
       currentIndex: currentTabIndex,
       items: [
         BottomNavigationBarItem(

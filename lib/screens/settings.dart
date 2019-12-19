@@ -39,7 +39,7 @@ class _SettingsState extends State<Settings> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
+              padding: EdgeInsets.only(top: 24.0,bottom: 6.0),
               child: CreateTextWidget('Notifications', kSettingsHeading),
             ),
             _createSwitchContainer("Marketing", kSettingText, (val) {
@@ -58,7 +58,7 @@ class _SettingsState extends State<Settings> {
               });
             }, isReminders),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
+              padding: EdgeInsets.only(top: 16.0,bottom: 6.0),
               child: CreateTextWidget(
                   'Account recovery options', kSettingsHeading),
             ),
@@ -98,9 +98,10 @@ class _SettingsState extends State<Settings> {
   Widget _createSwitchContainer(String titleText, TextStyle style,
       Function onChanged, bool selectedValue) {
     return Container(
+      padding: EdgeInsets.all(5.0),
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: Colors.grey),
+          bottom: titleText=="Reminders" || titleText=="Email"?BorderSide.none:BorderSide(color: Color(0xffd9d9d9)),
         ),
       ),
       child: Row(

@@ -65,12 +65,12 @@ const kStoreSubHeading = TextStyle(
 const kHomeHeading = TextStyle(
     color: Colors.black,
     fontSize: 18.0,
-    fontWeight: FontWeight.w900,
+    fontWeight: FontWeight.w500,
     fontFamily: 'GRABBOLD');
 const kHomeReferHeading = TextStyle(
     color: Colors.blueAccent,
     fontSize: 18.0,
-    fontWeight: FontWeight.w900,
+    fontWeight: FontWeight.w500,
     fontFamily: 'GRABBOLD');
 const kHomeSubHeading = TextStyle(color: Colors.grey, fontSize: 16.0);
 const kPrivacyPara = TextStyle(color: Color(0xFF013F7C), fontSize: 12.0);
