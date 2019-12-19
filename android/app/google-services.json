@@ -15,11 +15,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "106968834479-kvbs0c5ljs285ofakmcv29ffrmpomk2s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "myacuvueflutter.my_acuvue_flutter",
+            "certificate_hash": "7433cbe6260f53f4f92952ff04c6387d80b0c5ac"
+          }
+        },
+        {
           "client_id": "106968834479-to7okou65rdihg3pi1pmc935tjscfnl0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "myacuvueflutter.my_acuvue_flutter",
             "certificate_hash": "04a46786187c6416a8ef49c40e39d8a76ca3f959"
+          }
+        },
+        {
+          "client_id": "106968834479-ieo5lfpe24i6dbk75l89ecpoi0e9df5b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "myacuvueflutter.my_acuvue_flutter",
+            "certificate_hash": "6e204bbc7d96fd9a1ff66bb125f1792913a7a488"
           }
         },
         {
@@ -38,6 +54,13 @@
             {
               "client_id": "106968834479-9nk8vmmua9ck6414ji49u939e6ovoofo.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "106968834479-hdpffqu6i8c5faor05un4ie04hh6q61m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "myacuvueflutter.myAcuvueFlutter"
+              }
             }
           ]
         }
